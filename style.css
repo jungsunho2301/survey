@@ -72,31 +72,20 @@ button {
 
 .reason {
   font-size: 15px;
-}
-/* Q5 가로 정렬 */
-.q5-row {
-  display: flex;
-  gap: 20px;
-  align-items: flex-end;
+
+/* Q5 상세 영역 */
+#q5Detail {
+  margin-top: 15px;
+  padding: 15px;
+  border: 1px dashed #888;
+  display: none; /* JS toggle 사용 */
 }
 
-.q5-item {
-  display: flex;
-  flex-direction: column;
+#q5Detail label {
+  margin-right: 10px;
 }
 
-/* Q5 예/아니오 + 입항예정일 한 줄 */
-.q5-inline {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.q5-arrival label {
-  font-size: 14px;
-}
-
-.q5-arrival input[type="date"] {
-  margin-left: 5px;
+#q5Detail select,
+#q5Detail input[type="date"] {
+  margin-right: 15px;
 }
