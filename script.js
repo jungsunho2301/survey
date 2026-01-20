@@ -50,10 +50,10 @@ for (let q of requiredQuestions) {
 /* Q5 예일 경우 상세 입력 검사 */
 if (f.get("q5") === "yes") {
   if (!f.get("q5_region")) {
-    missing.push("Q5 출항·경유 지역");
+    missing.push("Q5 승선국가");
   }
   if (!f.get("q5_departure_date")) {
-    missing.push("Q5 출항일");
+    missing.push("Q5 승선일자");
   }
 }
 
