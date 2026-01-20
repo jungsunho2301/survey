@@ -70,6 +70,53 @@ const countryDays = {
 };
 
 /* =========================
+   국가별 감염병 이름
+========================= */
+const countryDisease = {
+  // 페스트
+  mada: "페스트",
+  mongolia: "페스트",
+  nm_usa: "페스트",
+  congo: "페스트",
+  // 동물인플루엔자
+  mexico: "동물인플루엔자 인체감염증",
+  wa_usa: "동물인플루엔자 인체감염증",
+  ca_usa: "동물인플루엔자 인체감염증",
+  bangladesh: "동물인플루엔자 인체감염증",
+  vietnam_hcm: "동물인플루엔자 인체감염증",
+  vietnam_dn: "동물인플루엔자 인체감염증",
+  vietnam_dninh: "동물인플루엔자 인체감염증",
+  india: "동물인플루엔자 인체감염증",
+  china_gd: "동물인플루엔자 인체감염증",
+  china_gx: "동물인플루엔자 인체감염증",
+  china_gz: "동물인플루엔자 인체감염증",
+  china_sx: "동물인플루엔자 인체감염증",
+  china_sc: "동물인플루엔자 인체감염증",
+  china_cq: "동물인플루엔자 인체감염증",
+  china_tj: "동물인플루엔자 인체감염증",
+  china_hn: "동물인플루엔자 인체감염증",
+  china_hn2: "동물인플루엔자 인체감염증",
+  china_hb: "동물인플루엔자 인체감염증",
+  cambodia: "동물인플루엔자 인체감염증",
+  // MERS
+  lebanon: "중동호흡기증후군(MERS)",
+  bahrain: "중동호흡기증후군(MERS)",
+  saudi: "중동호흡기증후군(MERS)",
+  syria: "중동호흡기증후군(MERS)",
+  uae: "중동호흡기증후군(MERS)",
+  yemen: "중동호흡기증후군(MERS)",
+  oman: "중동호흡기증후군(MERS)",
+  jordan: "중동호흡기증후군(MERS)",
+  iraq: "중동호흡기증후군(MERS)",
+  iran: "중동호흡기증후군(MERS)",
+  israel: "중동호흡기증후군(MERS)",
+  qatar: "중동호흡기증후군(MERS)",
+  kuwait: "중동호흡기증후군(MERS)",
+  // 마버그열
+  ethiopia: "마버그열"
+};
+
+/* =========================
    결과 계산 로직
 ========================= */
 function calculateResult() {
@@ -126,6 +173,8 @@ function calculateResult() {
     }
 
     const daysLimit = countryDays[region];
+    const diseaseName = countryDisease[region] || ""; // 감염병 이름
+
     if (!daysLimit) {
       return showResult("서류검역","선택한 국가("+regionLabel(region)+") 기준일 정보 없음");
     }
@@ -134,10 +183,12 @@ function calculateResult() {
 
     if (diffDays > daysLimit) {
       return showResult("서류검역",
-        `중점검역관리지역(${regionLabel(region)}) 출항 또는 경유 (${daysLimit}일 초과)`);
+        `${diseaseName} 관련 중점검역관리지역(${regionLabel(region)}) 출항 또는 경유 (${daysLimit}일 초과)`
+      );
     } else {
       return showResult("승선검역",
-        `중점검역관리지역(${regionLabel(region)}) 출항 또는 경유 (${daysLimit}일 이내)`);
+        `${diseaseName} 관련 중점검역관리지역(${regionLabel(region)}) 출항 또는 경유 (${daysLimit}일 이내)`
+      );
     }
   }
 
