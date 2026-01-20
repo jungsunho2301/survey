@@ -49,11 +49,11 @@
     <input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오
   </label>
 
-  <!-- 입항 예정일 (예/아니오 버튼 바로 옆) -->
-  <label style="margin-left:20px; display:flex; flex-direction:column;">
-    입항 예정일:
-    <input type="date" name="q5_arrival_date">
-  </label>
+  <!-- 입항 예정일 (예/아니오 버튼 오른쪽) -->
+<div style="display:inline-block; margin-left:20px;">
+  <label>입항 예정일:</label><br>
+  <input type="date" name="q5_arrival_date" style="width:150px;">
+</div>
 
   <!-- 예 선택 시 상세 입력 -->
   <div id="q5Detail" style="display:none; margin-top:15px;">
