@@ -23,6 +23,47 @@ function regionLabel(value) {
 function calculateResult() {
   const form = document.getElementById("surveyForm");
   const f = new FormData(form);
+   /* =========================
+   필수 질문 선택 여부 확인
+========================= */
+const requiredQuestions = [
+  { name: "q1", label: "Q1. 검역감염병 환자 여부" },
+  { name: "q2", label: "Q2. 선박 내 사망자 여부" },
+  { name: "q3", label: "Q3. 증상자 여부" },
+  { name: "q4", label: "Q4. 감염병 매개체 여부" },
+  { name: "q5", label: "Q5. 중점검역관리지역 여부" },
+  { name: "q6", label: "Q6. 선원 교대 여부" },
+  { name: "q7", label: "Q7. 위생증명서 여부" },
+  { name: "depart48", label: "48시간 이내 출항 여부" },
+  { name: "boarding", label: "승선자 여부" },
+  { name: "dock", label: "선박 접안 여부" }
+];
+
+let missing = [];
+
+for (let q of requiredQuestions) {
+  if (!f.get(q.name)) {
+    missing.push(q.label);
+  }
+}
+
+/* Q5 예일 경우 상세 입력 검사 */
+if (f.get("q5") === "yes") {
+  if (!f.get("q5_region")) {
+    missing.push("Q5 출항·경유 지역");
+  }
+  if (!f.get("q5_departure_date")) {
+    missing.push("Q5 출항일");
+  }
+}
+
+if (missing.length > 0) {
+  alert(
+    "다음 항목을 선택해주세요:\n\n" +
+    missing.join("\n")
+  );
+  return;
+}
 
   /* -------------------------
      1️⃣ 즉시 승선검역 (Q1~Q4)
