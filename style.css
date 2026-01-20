@@ -73,3 +73,30 @@ button {
 .reason {
   font-size: 15px;
 }
+/* Q5 가로 정렬 */
+.q5-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+}
+
+.q5-item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Q5 예/아니오 + 입항예정일 한 줄 */
+.q5-inline {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.q5-arrival label {
+  font-size: 14px;
+}
+
+.q5-arrival input[type="date"] {
+  margin-left: 5px;
+}
