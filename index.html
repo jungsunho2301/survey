@@ -35,31 +35,33 @@
     <label><input type="radio" name="q4" value="no"> 아니오</label>
   </fieldset>
 
-  <!-- Q5 -->
-  <fieldset>
-    <legend>Ⅱ. 중점검역관리지역 관련</legend>
+<!-- Q5 -->
+<fieldset>
+  <legend>Ⅱ. 중점검역관리지역 관련</legend>
 
-    <p>
-      Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?
-    </p>
-    <label>
-      <input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예
-    </label>
-    <label>
-      <input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오
-    </label>
+  <p>
+    Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?
+  </p>
+  <label>
+    <input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예
+  </label>
+  <label>
+    <input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오
+  </label>
 
-    <!-- 입항 예정일 (예/아니오 버튼 바로 옆) -->
-    <label style="margin-left:20px;">
-      입항 예정일:
-      <input type="date" name="q5_arrival_date">
-    </label>
+  <!-- 입항 예정일 (예/아니오 버튼 바로 옆) -->
+  <label style="margin-left:20px; display:flex; flex-direction:column;">
+    입항 예정일:
+    <input type="date" name="q5_arrival_date">
+  </label>
 
-    <!-- 예 선택 시 상세 입력 -->
-    <div id="q5Detail" style="display:none; margin-top:15px;">
-
-      <p>
-        출항·경유 지역:
+  <!-- 예 선택 시 상세 입력 -->
+  <div id="q5Detail" style="display:none; margin-top:15px;">
+    <div style="display:flex; gap:40px; align-items:flex-start;">
+      
+      <!-- 출항경유지역 + 드롭다운 -->
+      <div>
+        <label>출항경유지역:</label><br>
         <select name="q5_region">
           <option value="">선택</option>
           <option value="mada">마다가스카르</option>
@@ -99,15 +101,18 @@
           <option value="congo">콩고민주공화국</option>
           <option value="ethiopia">에티오피아</option>
         </select>
-      </p>
+      </div>
 
-      <p>
-        출항일:
+      <!-- 출항일 -->
+      <div>
+        <label>출항일:</label><br>
         <input type="date" name="q5_departure_date">
-      </p>
+      </div>
 
     </div>
-  </fieldset>
+  </div>
+</fieldset>
+
 
   <!-- Q6~Q7, 공통 조건 등 기존 내용 그대로 -->
   <fieldset>
