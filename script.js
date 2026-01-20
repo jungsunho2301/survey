@@ -107,7 +107,10 @@ if (!arrivalDate) {
 const depart = new Date(departureDate);
 const arrival = new Date(arrivalDate);
 const diffDays = (arrival - depart) / (1000 * 60 * 60 * 24);
-
+   if (depart > arrival) {
+  alert("출항일은 입항 예정일보다 늦을 수 없습니다.");
+  return;
+}
     if (diffDays > 14) {
       return showResult(
         "조사생략",
