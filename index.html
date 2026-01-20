@@ -36,13 +36,32 @@
   </fieldset>
 
   <!-- Q5 -->
-  <fieldset>
-    <legend>Ⅱ. 중점검역관리지역 관련</legend>
+<fieldset>
+  <legend>Ⅱ. 중점검역관리지역 관련</legend>
 
-    <p>Q5. 최근 14일 이내 중점검역관리지역에서 출항 또는 경유하였습니까?</p>
-    <label><input type="radio" name="q5" value="yes"> 예</label>
-    <label><input type="radio" name="q5" value="no"> 아니오</label>
-  </fieldset>
+  <p>Q5. 최근 14일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?</p>
+  <label>
+    <input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예
+  </label>
+  <label>
+    <input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오
+  </label>
+
+  <!-- 예 선택 시만 표시 -->
+  <div id="q5Detail" style="display:none; margin-top:15px;">
+
+    <p>출항·경유 지역</p>
+    <select name="q5_region">
+      <option value="">선택하세요</option>
+      <option value="korea">한국</option>
+      <option value="china_tianjin">중국(텐진시)</option>
+      <option value="china_shandong">중국(산둥성)</option>
+    </select>
+
+    <p style="margin-top:10px;">출항일</p>
+    <input type="date" name="q5_departure_date">
+  </div>
+</fieldset>
 
   <!-- Q6 -->
   <fieldset>
