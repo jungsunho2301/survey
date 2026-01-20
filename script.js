@@ -98,9 +98,15 @@ if (missing.length > 0) {
       return;
     }
 
-    const today = new Date();
-    const depart = new Date(departureDate);
-    const diffDays = (today - depart) / (1000 * 60 * 60 * 24);
+    const arrivalDate = f.get("q5_arrival_date");
+if (!arrivalDate) {
+  alert("입항 예정일을 입력해주세요.");
+  return;
+}
+
+const depart = new Date(departureDate);
+const arrival = new Date(arrivalDate);
+const diffDays = (arrival - depart) / (1000 * 60 * 60 * 24);
 
     if (diffDays > 14) {
       return showResult(
