@@ -50,21 +50,27 @@
   <!-- 예 선택 시만 표시 -->
   <div id="q5Detail" style="display:none; margin-top:15px;">
 
-    <p>출항·경유 지역</p>
-    <select name="q5_region">
-      <option value="">선택하세요</option>
-      <option value="korea">한국</option>
-      <option value="china_tianjin">중국(텐진시)</option>
-      <option value="china_shandong">중국(산둥성)</option>
-    </select>
+  <div class="q5-row">
+    <div class="q5-item">
+      <p>승선국가</p>
+      <select name="q5_region">
+        <option value="">선택하세요</option>
+        <option value="korea">한국</option>
+        <option value="china_tianjin">중국(텐진시)</option>
+        <option value="china_shandong">중국(산둥성)</option>
+      </select>
+    </div>
 
-    <p style="margin-top:10px;">출항일</p>
-    <input type="date" name="q5_departure_date">
-
-    <p style="margin-top:10px;">입항 예정일</p>
-    <input type="date" name="q5_arrival_date">
-
+    <div class="q5-item">
+      <p>승선일자</p>
+      <input type="date" name="q5_departure_date">
+    </div>
   </div>
+
+  <p style="margin-top:15px;">입항 예정일</p>
+  <input type="date" name="q5_arrival_date">
+
+</div>
 </fieldset>
 
 
