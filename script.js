@@ -111,23 +111,23 @@ const diffDays = (arrival - depart) / (1000 * 60 * 60 * 24);
   alert("출항일은 입항 예정일보다 늦을 수 없습니다.");
   return;
 }
-    if (diffDays > 14) {
+    if (diffDays > 21) {
       return showResult(
         "조사생략",
-        `중점검역관리지역(${regionLabel(region)}) 출항이나 14일 초과`
+        `중점검역관리지역(${regionLabel(region)}) 출항이나 21일 초과`
       );
     }
 
     if (depart48 && !boarding) {
       return showResult(
         "조사생략",
-        `중점검역관리지역(${regionLabel(region)}) 출항(14일 이내)이나 48시간 이내 출항 및 승선자 없음`
+        `중점검역관리지역(${regionLabel(region)}) 출항(21일 이내)이나 48시간 이내 출항 및 승선자 없음`
       );
     }
 
     return showResult(
       "승선검역",
-      `중점검역관리지역(${regionLabel(region)}) 출항 또는 경유 (14일 이내)`
+      `중점검역관리지역(${regionLabel(region)}) 출항 또는 경유 (21일 이내)`
     );
   }
 
