@@ -1,20 +1,49 @@
 body {
   font-family: Arial, sans-serif;
   margin: 40px;
+  line-height: 1.6;
+}
+
+h1 {
+  margin-bottom: 10px;
+}
+
+.notice {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 30px;
 }
 
 fieldset {
   margin-bottom: 25px;
-  padding: 15px;
+  padding: 20px;
+  border: 1px solid #ccc;
 }
 
 legend {
   font-weight: bold;
+  padding: 0 10px;
+}
+
+p {
+  margin: 10px 0;
+}
+
+label {
+  margin-right: 15px;
+}
+
+select,
+input[type="date"] {
+  padding: 6px;
+  font-size: 14px;
+  margin-top: 5px;
 }
 
 button {
-  padding: 12px 24px;
+  padding: 14px 30px;
   font-size: 16px;
+  cursor: pointer;
 }
 
 #result {
@@ -23,11 +52,24 @@ button {
   border: 2px solid #000;
 }
 
-.notice {
-  font-size: 14px;
-  color: #555;
+/* 결과 강조 */
+.result {
+  font-size: 22px;
+  margin: 10px 0;
 }
 
-.result {
-  font-size: 20px;
+.result.승선검역 {
+  color: #c62828;
+}
+
+.result.서류검역 {
+  color: #ef6c00;
+}
+
+.result.조사생략 {
+  color: #2e7d32;
+}
+
+.reason {
+  font-size: 15px;
 }
