@@ -39,80 +39,77 @@
 <fieldset>
   <legend>Ⅱ. 중점검역관리지역 관련</legend>
 
-<p>
-  Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?
-</p>
-<label>
-  <input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예
-</label>
-<label>
-  <input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오
-</label>
+  <p>
+    Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?
+  </p>
+  <label>
+    <input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예
+  </label>
+  <label>
+    <input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오
+  </label>
 
-<!-- 예 선택 시 상세 입력 -->
-<div id="q5Detail" style="display:none; margin-top:15px;">
-  
-<!-- 입항예정일 -->
-<div style="display:flex; gap:15px; align-items:center; margin-bottom:10px;">
-  <label>입항 예정일:</label>
-  <input type="date" name="q5_arrival_date">
-</div>
+  <!-- 예 선택 시 상세 입력 -->
+  <div id="q5Detail" style="display:none; margin-top:15px; padding:10px; border:1px dashed #888;">
 
-  <!-- 출항·경유지역 + 출항일 -->
-  <div style="display:flex; gap:40px; align-items:flex-start;">
-    <div>
+    <!-- 출항·경유지역 단독 -->
+    <div style="margin-bottom:10px;">
       <label>출항·경유지역:</label><br>
-      <select name="q5_region">
+      <select name="q5_region" style="width:200px; padding:5px;">
         <option value="">선택</option>
-          <option value="mada">마다가스카르</option>
-          <option value="mongolia">몽골</option>
-          <option value="nm_usa">미국(뉴멕시코주)</option>
-          <option value="wa_usa">미국(워싱턴주)</option>
-          <option value="ca_usa">미국(캘리포니아주)</option>
-          <option value="bangladesh">방글라데시</option>
-          <option value="vietnam_hcm">베트남(호찌민)</option>
-          <option value="vietnam_dn">베트남(동나이)</option>
-          <option value="vietnam_dninh">베트남(따이닌)</option>
-          <option value="india">인도</option>
-          <option value="china_gd">중국(광둥성)</option>
-          <option value="china_gx">중국(광시좡족자치구)</option>
-          <option value="china_gz">중국(구이저우성)</option>
-          <option value="china_sx">중국(산시성·Shaanxi)</option>
-          <option value="china_sc">중국(쓰촨성)</option>
-          <option value="china_cq">중국(충칭시)</option>
-          <option value="china_tj">중국(텐진시)</option>
-          <option value="china_hn">중국(허난성)</option>
-          <option value="china_hn2">중국(후난성)</option>
-          <option value="china_hb">중국(후베이성)</option>
-          <option value="cambodia">캄보디아</option>
-          <option value="saudi">사우디아라비아</option>
-          <option value="uae">아랍에미리트</option>
-          <option value="qatar">카타르</option>
-          <option value="kuwait">쿠웨이트</option>
-          <option value="iran">이란</option>
-          <option value="iraq">이라크</option>
-          <option value="lebanon">레바논</option>
-          <option value="bahrain">바레인</option>
-          <option value="syria">시리아</option>
-          <option value="yemen">예멘</option>
-          <option value="oman">오만</option>
-          <option value="jordan">요르단</option>
-          <option value="israel">이스라엘</option>
-          <option value="congo">콩고민주공화국</option>
-          <option value="ethiopia">에티오피아</option>
-        </select>
-      </div>
+        <option value="mada">마다가스카르</option>
+        <option value="mongolia">몽골</option>
+        <option value="nm_usa">미국(뉴멕시코주)</option>
+        <option value="wa_usa">미국(워싱턴주)</option>
+        <option value="ca_usa">미국(캘리포니아주)</option>
+        <option value="bangladesh">방글라데시</option>
+        <option value="vietnam_hcm">베트남(호찌민)</option>
+        <option value="vietnam_dn">베트남(동나이)</option>
+        <option value="vietnam_dninh">베트남(따이닌)</option>
+        <option value="india">인도</option>
+        <option value="china_gd">중국(광둥성)</option>
+        <option value="china_gx">중국(광시좡족자치구)</option>
+        <option value="china_gz">중국(구이저우성)</option>
+        <option value="china_sx">중국(산시성·Shaanxi)</option>
+        <option value="china_sc">중국(쓰촨성)</option>
+        <option value="china_cq">중국(충칭시)</option>
+        <option value="china_tj">중국(텐진시)</option>
+        <option value="china_hn">중국(허난성)</option>
+        <option value="china_hn2">중국(후난성)</option>
+        <option value="china_hb">중국(후베이성)</option>
+        <option value="cambodia">캄보디아</option>
+        <option value="saudi">사우디아라비아</option>
+        <option value="uae">아랍에미리트</option>
+        <option value="qatar">카타르</option>
+        <option value="kuwait">쿠웨이트</option>
+        <option value="iran">이란</option>
+        <option value="iraq">이라크</option>
+        <option value="lebanon">레바논</option>
+        <option value="bahrain">바레인</option>
+        <option value="syria">시리아</option>
+        <option value="yemen">예멘</option>
+        <option value="oman">오만</option>
+        <option value="jordan">요르단</option>
+        <option value="israel">이스라엘</option>
+        <option value="congo">콩고민주공화국</option>
+        <option value="ethiopia">에티오피아</option>
+      </select>
+    </div>
 
-      <!-- 출항일 -->
+    <!-- 출항일 + 입항예정일 나란히 -->
+    <div style="display:flex; gap:20px; align-items:flex-start;">
       <div>
         <label>출항일:</label><br>
-        <input type="date" name="q5_departure_date">
+        <input type="date" name="q5_departure_date" style="width:200px; padding:5px;">
       </div>
-
+      <div>
+        <label>입항 예정일:</label><br>
+        <input type="date" name="q5_arrival_date" style="width:200px; padding:5px;">
+      </div>
     </div>
+
   </div>
 </fieldset>
-
 
   <!-- Q6~Q7, 공통 조건 등 기존 내용 그대로 -->
   <fieldset>
