@@ -88,11 +88,9 @@ button {
   align-items: flex-start;
 }
 
-/* input과 select 동일 폭 */
 #q5Detail input[type="date"],
 #q5Detail select {
-  flex: 1; /* 동일한 비율로 폭 맞춤 */
-  min-width: 150px; /* 최소폭 지정 */
-  box-sizing: border-box;
+  width: 150px;        /* 동일 폭 */
+  box-sizing: border-box; /* padding 포함 */
 }
 
