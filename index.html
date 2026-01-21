@@ -122,8 +122,17 @@
     <label><input type="radio" name="q6" value="no"> 아니오</label>
   </fieldset>
 
+  <!-- IV. 선박위생관리 증명서 -->
   <fieldset>
-    <legend>Ⅳ. 공통 조건</legend>
+    <legend>Ⅳ. 선박위생관리 증명서</legend>
+    <p>선박위생관리(면제) 증명서를 소지하지 않았거나 유효기간이 만료되었습니까?</p>
+    <label><input type="radio" name="q7" value="yes"> 예</label>
+    <label><input type="radio" name="q7" value="no"> 아니오</label>
+  </fieldset>
+
+  <!-- V. 기타사항 -->
+  <fieldset>
+    <legend>Ⅴ. 기타사항</legend>
     <p>48시간 이내 출항 예정입니까?</p>
     <label><input type="radio" name="depart48" value="yes"> 예</label>
     <label><input type="radio" name="depart48" value="no"> 아니오</label>
@@ -137,12 +146,6 @@
     <label><input type="radio" name="dock" value="no"> 아니오</label>
   </fieldset>
 
-  <fieldset>
-    <legend>Ⅴ. 선박위생관리 증명서</legend>
-    <p>선박위생관리(면제) 증명서를 소지하지 않았거나 유효기간이 만료되었습니까?</p>
-    <label><input type="radio" name="q7" value="yes"> 예</label>
-    <label><input type="radio" name="q7" value="no"> 아니오</label>
-  </fieldset>
 
   <button type="button" onclick="calculateResult()">결과 확인</button>
 </form>
