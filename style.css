@@ -81,14 +81,18 @@ button {
   display: none; /* JS toggle 사용 */
 }
 
-#q5Detail label {
-  margin-right: 10px;
+/* Q5 내부 row 정렬 */
+#q5Detail > div {
+  display: flex;
+  gap: 40px; /* 기존 여백 유지 */
+  align-items: flex-start;
 }
 
-/* input과 select 폭 동일하게 */
-#q5Detail select,
-#q5Detail input[type="date"] {
-  width: 150px;          /* 원하는 동일 폭 지정 */
-  box-sizing: border-box; /* padding 포함해서 정확한 폭 적용 */
-  margin-right: 15px;
+/* input과 select 동일 폭 */
+#q5Detail input[type="date"],
+#q5Detail select {
+  flex: 1; /* 동일한 비율로 폭 맞춤 */
+  min-width: 150px; /* 최소폭 지정 */
+  box-sizing: border-box;
 }
+
