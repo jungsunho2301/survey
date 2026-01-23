@@ -114,66 +114,66 @@ const countryDisease = {
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
 
-  const q1 = f.get("q1");
-  const q2 = f.get("q2");
-  const q3 = f.get("q3");
-  const q4 = f.get("q4");
-  const q5 = f.get("q5");
-  const q6 = f.get("q6");
-  const q7 = f.get("q7");
-
+  const q = i => f.get(`q${i}`);
   const depart48 = f.get("depart48") === "yes";
   const boarding = f.get("boarding") === "yes";
   const dock = f.get("dock") === "yes";
 
-  /* ==================================================
-     1️⃣ 즉시 승선검역 (가장 강한 규칙)
-  ================================================== */
-  if ([q1, q2, q3, q4].includes("yes")) {
+  const country = f.get("region");
+  const departDate = f.get("departDate");
+  const arrivalDate = f.get("arrivalDate");
+
+  /* =====================
+     1️⃣ 즉시 승선검역
+  ===================== */
+  if ([1,2,3,4].some(i => q(i) === "yes")) {
     return showResult("승선검역", "Q1~Q4 중 하나 이상 해당");
   }
 
-  /* ==================================================
-     2️⃣ 조사생략 (모든 조건 충족 필요)
-  ================================================== */
-  const q1to4AllNo = [q1, q2, q3, q4].every(v => v === "no");
-  const q5to7AnyYes = [q5, q6, q7].some(v => v === "yes");
-
-  const isSurveySkip =
-    q1to4AllNo &&
-    q5to7AnyYes &&
+  /* =====================
+     2️⃣ 조사생략
+  ===================== */
+  const surveySkip =
+    [1,2,3,4].every(i => q(i) === "no") &&
+    [5,6,7].some(i => q(i) === "yes") &&
     depart48 &&
     !boarding &&
     !dock;
 
-  if (isSurveySkip) {
+  if (surveySkip) {
     return showResult("조사생략", "조사생략 요건 충족");
   }
 
-  /* ==================================================
-     3️⃣ 승선검역 (위험요소 잔존)
-  ================================================== */
-  if (q5 === "yes") {
-    return showResult("승선검역", "중점검역관리지역 출항·경유");
+  /* =====================
+     3️⃣ Q5 날짜 기반 판단
+  ===================== */
+  if (q(5) === "yes") {
+    const risky = isWithinRiskPeriod(country, departDate, arrivalDate);
+    if (risky) {
+      return showResult(
+        "승선검역",
+        `${regionLabel(country)} 출항 (기준일 이내)`
+      );
+    }
   }
 
-  if (q6 === "yes" && dock) {
+  /* =====================
+     4️⃣ 기타 승선검역
+  ===================== */
+  if (q(6) === "yes" && dock) {
     return showResult("승선검역", "선원 교대 + 접안");
   }
 
-  if (q7 === "yes") {
-    return showResult("승선검역", "선박위생관리(면제) 증명서 미소지 또는 만료");
+  if (q(7) === "yes") {
+    return showResult("승선검역", "위생관리(면제) 증명서 미소지/만료");
   }
 
-  /* ==================================================
-     4️⃣ 서류심사 (나머지 전부)
-  ================================================== */
-  if (q6 === "yes" && !dock) {
-    return showResult("서류심사", "선원 교대 있으나 비접안");
-  }
-
-  return showResult("서류심사", "기타 모든 경우");
+  /* =====================
+     5️⃣ 기본값
+  ===================== */
+  return showResult("서류심사", "추가 위험 요소 없음");
 }
+
 
 
 /* =========================
