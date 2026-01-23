@@ -1,5 +1,5 @@
 /* =========================
-   Q5 UI 제어
+   Q5 UI
 ========================= */
 function toggleQ5(show) {
   document.getElementById("q5Detail").style.display = show ? "block" : "none";
@@ -109,71 +109,136 @@ const countryDisease = {
 };
 
 /* =========================
-   결과 계산 (우선순위 기반)
+   기준일 계산
+========================= */
+function isWithinRiskPeriod(region, departDate, arrivalDate) {
+  if (!region || !departDate || !arrivalDate) return false;
+  if (!countryDays[region]) return false;
+
+  const depart = new Date(departDate);
+  const arrival = new Date(arrivalDate);
+  const diffDays = (arrival - depart) / (1000 * 60 * 60 * 24);
+
+  return diffDays <= countryDays[region];
+}
+function validateForm(f) {
+  // Q1~Q7 선택 여부
+  for (let i = 1; i <= 7; i++) {
+    if (!f.get(`q${i}`)) {
+      alert(`Q${i}번 문항을 선택해주세요.`);
+      return false;
+    }
+  }
+
+  // 기타 필수 선택
+  if (!f.get("depart48")) {
+    alert("48시간 이내 출항 여부를 선택해주세요.");
+    return false;
+  }
+
+  if (!f.get("boarding")) {
+    alert("승선자 여부를 선택해주세요.");
+    return false;
+  }
+
+  if (!f.get("dock")) {
+    alert("접안 여부를 선택해주세요.");
+    return false;
+  }
+
+  // Q5 선택 시 상세 입력
+  if (f.get("q5") === "yes") {
+    if (
+      !f.get("q5_region") ||
+      !f.get("q5_departure_date") ||
+      !f.get("q5_arrival_date")
+    ) {
+      alert("Q5 선택 시 출항지역과 출항일·입항일을 모두 입력해주세요.");
+      return false;
+    }
+
+    // 날짜 역전 방지
+    const depart = new Date(f.get("q5_departure_date"));
+    const arrival = new Date(f.get("q5_arrival_date"));
+
+    if (arrival < depart) {
+      alert("입항일은 출항일 이후여야 합니다.");
+      return false;
+    }
+  }
+
+  return true;
+}
+
+
+/* =========================
+   결과 계산
 ========================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
+   if (!validateForm(f)) return;
+  const q = n => f.get(`q${n}`);
 
-  const q = i => f.get(`q${i}`);
   const depart48 = f.get("depart48") === "yes";
   const boarding = f.get("boarding") === "yes";
   const dock = f.get("dock") === "yes";
 
-  const country = f.get("region");
-  const departDate = f.get("departDate");
-  const arrivalDate = f.get("arrivalDate");
+  const region = f.get("q5_region");
+  const departDate = f.get("q5_departure_date");
+  const arrivalDate = f.get("q5_arrival_date");
 
   /* =====================
-     1️⃣ 즉시 승선검역
+     1️⃣ Q1~Q4 → 승선검역
   ===================== */
   if ([1,2,3,4].some(i => q(i) === "yes")) {
-    return showResult("승선검역", "Q1~Q4 중 하나 이상 해당");
+    return showResult("승선검역", "Q1~Q4 중 위험요소 존재");
   }
 
   /* =====================
-     2️⃣ 조사생략
-  ===================== */
-  const surveySkip =
-    [1,2,3,4].every(i => q(i) === "no") &&
-    [5,6,7].some(i => q(i) === "yes") &&
-    depart48 &&
-    !boarding &&
-    !dock;
-
-  if (surveySkip) {
-    return showResult("조사생략", "조사생략 요건 충족");
-  }
-
-  /* =====================
-     3️⃣ Q5 날짜 기반 판단
+     2️⃣ Q5 기준일 판단
   ===================== */
   if (q(5) === "yes") {
-    const risky = isWithinRiskPeriod(country, departDate, arrivalDate);
-    if (risky) {
+    if (isWithinRiskPeriod(region, departDate, arrivalDate)) {
       return showResult(
-        "승선검역",
-        `${regionLabel(country)} 출항 (기준일 이내)`
-      );
+  "승선검역",
+  `${regionLabel(region)} 출항 / ${countryDisease[region]} 기준일 이내 (${countryDays[region]}일)`
+);
     }
   }
 
   /* =====================
-     4️⃣ 기타 승선검역
+     3️⃣ Q6 + 접안
   ===================== */
   if (q(6) === "yes" && dock) {
     return showResult("승선검역", "선원 교대 + 접안");
   }
 
+  /* =====================
+     4️⃣ Q7
+  ===================== */
   if (q(7) === "yes") {
-    return showResult("승선검역", "위생관리(면제) 증명서 미소지/만료");
+    return showResult("승선검역", "위생관리 증명서 미소지/만료");
   }
 
   /* =====================
-     5️⃣ 기본값
+     5️⃣ 조사생략
+  ===================== */
+  const hasQ567 = [5,6,7].some(i => q(i) === "yes");
+
+  if (
+    hasQ567 &&
+    depart48 &&
+    !boarding &&
+    !dock
+  ) {
+    return showResult("조사생략", "조사생략 요건 충족");
+  }
+
+  /* =====================
+     6️⃣ 기본값
   ===================== */
   return showResult("서류심사", "추가 위험 요소 없음");
 }
-
 
 
 /* =========================
