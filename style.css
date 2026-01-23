@@ -48,32 +48,45 @@ button {
 
 #result {
   margin-top: 30px;
-  padding: 20px;
+  padding: 25px;
   border: 2px solid #000;
 }
 
-/* 결과 강조 */
+/* =====================
+   결과 강조 영역
+   ===================== */
+
 .result {
-  font-size: 22px;
-  margin: 10px 0;
+  font-size: 28px;          /* 🔥 결과 글씨 크게 */
+  font-weight: bold;
+  margin: 15px 0;
+  text-align: center;
 }
 
+/* 승선검역 - 빨간색 */
 .result.승선검역 {
-  color: #c62828;
+  color: #d32f2f;
 }
 
+/* 서류검역 - 경고 노란색 */
 .result.서류검역 {
-  color: #ef6c00;
+  color: #f9a825;
 }
 
+/* 조사생략 - 초록색 */
 .result.조사생략 {
-  color: #2e7d32;
+  color: #388e3c;
 }
 
 .reason {
   font-size: 15px;
+  margin-top: 10px;
+}
 
-/* Q5 상세 영역 */
+/* =====================
+   Q5 상세 영역
+   ===================== */
+
 #q5Detail {
   margin-top: 15px;
   padding: 15px;
@@ -83,9 +96,7 @@ button {
 
 #q5Detail select,
 #q5Detail input[type="date"] {
-  width: 200px;       /* 모든 박스 동일 폭 */
+  width: 200px;
   padding: 5px;
-  margin-right: 15px; /* 필요하면 */
+  margin-right: 15px;
 }
-
-
