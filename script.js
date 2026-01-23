@@ -180,27 +180,39 @@ function calculateResult() {
 /* =========================
    결과 출력
 ========================= */
-function showResult(resultText) {
+function showResult(resultText, reasonText) {
   const resultBox = document.getElementById("result");
 
-  // 초기화
   resultBox.innerHTML = "";
-  resultBox.style.fontSize = "28px";
-  resultBox.style.fontWeight = "bold";
   resultBox.style.textAlign = "center";
   resultBox.style.marginTop = "20px";
 
-  // 결과별 색상
+  // 결과 텍스트
+  const title = document.createElement("div");
+  title.textContent = resultText;
+  title.style.fontSize = "28px";
+  title.style.fontWeight = "bold";
+
+  // 색상
   if (resultText === "승선검역") {
-    resultBox.style.color = "#c62828"; // 빨강
+    title.style.color = "#c62828";
   } else if (resultText === "서류심사") {
-    resultBox.style.color = "#f9a825"; // 노랑
+    title.style.color = "#f9a825";
   } else if (resultText === "조사생략") {
-    resultBox.style.color = "#2e7d32"; // 초록
-  } else {
-    resultBox.style.color = "#000";
+    title.style.color = "#2e7d32";
   }
 
-  resultBox.textContent = resultText;
+  resultBox.appendChild(title);
+
+  // 사유가 있을 때만 표시
+  if (reasonText) {
+    const reason = document.createElement("div");
+    reason.textContent = `사유: ${reasonText}`;
+    reason.style.fontSize = "15px";
+    reason.style.marginTop = "10px";
+    reason.style.color = "#555";
+
+    resultBox.appendChild(reason);
+  }
 }
 
