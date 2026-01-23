@@ -109,41 +109,72 @@ const countryDisease = {
 };
 
 /* =========================
-   결과 계산 로직 (네가 정의한 최종 로직)
+   결과 계산
 ========================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
 
-  const q1 = f.get("q1") === "yes";
-  const q2 = f.get("q2") === "yes";
-  const q3 = f.get("q3") === "yes";
-  const q4 = f.get("q4") === "yes";
-  const q5 = f.get("q5") === "yes";
-  const q6 = f.get("q6") === "yes";
-  const q7 = f.get("q7") === "yes";
+  const q1 = f.get("q1");
+  const q2 = f.get("q2");
+  const q3 = f.get("q3");
+  const q4 = f.get("q4");
+  const q5 = f.get("q5");
+  const q6 = f.get("q6");
+  const q7 = f.get("q7");
+
+  const depart48 = f.get("depart48") === "yes";
+  const boarding = f.get("boarding") === "yes";
   const dock = f.get("dock") === "yes";
 
-  // 🔴 승선검역
-  if (q1 || q2 || q3 || q4) {
+  /* =====================
+     1️⃣ 즉시 승선검역
+  ===================== */
+  if ([q1, q2, q3, q4].includes("yes")) {
     return showResult("승선검역", "Q1~Q4 중 하나 이상 해당");
   }
-  if (q5) {
-    return showResult("승선검역", "중점검역관리지역 출항 또는 경유(Q5)");
-  }
-  if (q6 && dock) {
-    return showResult("승선검역", "선원 교대 발생 및 선박 접안");
-  }
-  if (q7) {
-    return showResult("승선검역", "선박위생관리 증명서 관련(Q7)");
+
+  /* =====================
+     2️⃣ 조사생략 (최우선)
+  ===================== */
+  const q1to4AllNo =
+    q1 === "no" && q2 === "no" && q3 === "no" && q4 === "no";
+
+  const q5to7AnyYes =
+    q5 === "yes" || q6 === "yes" || q7 === "yes";
+
+  if (
+    q1to4AllNo &&
+    q5to7AnyYes &&
+    depart48 &&
+    !boarding &&
+    !dock
+  ) {
+    return showResult("조사생략", "조사생략 요건 충족");
   }
 
-  // 🟡 서류심사
-  if (q6 && !dock) {
-    return showResult("서류심사", "선원 교대 발생, 선박 비접안");
+  /* =====================
+     3️⃣ 승선검역
+  ===================== */
+  if (q5 === "yes") {
+    return showResult("승선검역", "중점검역관리지역 출항·경유");
   }
 
-  // 기본값
-  return showResult("서류심사", "승선검역 요건 미해당");
+  if (q6 === "yes" && dock) {
+    return showResult("승선검역", "선원 교대 + 접안");
+  }
+
+  if (q7 === "yes") {
+    return showResult("승선검역", "선박위생관리(면제) 증명서 미소지/만료");
+  }
+
+  /* =====================
+     4️⃣ 서류심사
+  ===================== */
+  if (q6 === "yes" && !dock) {
+    return showResult("서류심사", "선원 교대 있으나 비접안");
+  }
+
+  return showResult("서류심사", "기타 모든 경우");
 }
 
 /* =========================
@@ -152,7 +183,7 @@ function calculateResult() {
 function showResult(result, reason) {
   document.getElementById("result").innerHTML = `
     <h2>검역 분류 결과</h2>
-    <p class="result ${result}"><strong>${result}</strong></p>
-    <p class="reason">판단 근거: ${reason}</p>
+    <p><strong>${result}</strong></p>
+    <p>판단 근거: ${reason}</p>
   `;
 }
