@@ -187,58 +187,37 @@ function calculateResult() {
   const departDate = f.get("q5_departure_date");
   const arrivalDate = f.get("q5_arrival_date");
 
-  /* =====================
-     1️⃣ Q1~Q4 → 승선검역
-  ===================== */
-  if ([1,2,3,4].some(i => q(i) === "yes")) {
-    return showResult("승선검역", "Q1~Q4 중 위험요소 존재");
-  }
-
-  /* =====================
-     2️⃣ Q5 기준일 판단
-  ===================== */
-  if (q(5) === "yes") {
-    if (isWithinRiskPeriod(region, departDate, arrivalDate)) {
-      return showResult(
-  "승선검역",
-  `${regionLabel(region)} 출항 / ${countryDisease[region]} 기준일 이내 (${countryDays[region]}일)`
-);
-    }
-  }
-
-  /* =====================
-     3️⃣ Q6 + 접안
-  ===================== */
-  if (q(6) === "yes" && dock) {
-    return showResult("승선검역", "선원 교대 + 접안");
-  }
-
-  /* =====================
-     4️⃣ Q7
-  ===================== */
-  if (q(7) === "yes") {
-    return showResult("승선검역", "위생관리 증명서 미소지/만료");
-  }
-
-  /* =====================
-     5️⃣ 조사생략
-  ===================== */
-  const hasQ567 = [5,6,7].some(i => q(i) === "yes");
-
-  if (
-    hasQ567 &&
-    depart48 &&
-    !boarding &&
-    !dock
-  ) {
-    return showResult("조사생략", "조사생략 요건 충족");
-  }
-
-  /* =====================
-     6️⃣ 기본값
-  ===================== */
-  return showResult("서류심사", "추가 위험 요소 없음");
+ /* 1️⃣ Q1~Q4 → 승선검역 */
+if ([1,2,3,4].some(i => q(i) === "yes")) {
+  return showResult("승선검역", "Q1~Q4 중 위험요소 존재");
 }
+
+/* 2️⃣ 조사생략 */
+const hasQ567 = [5,6,7].some(i => q(i) === "yes");
+if (hasQ567 && depart48 && !boarding && !dock) {
+  return showResult("조사생략", "조사생략 요건 충족");
+}
+
+/* 3️⃣ Q5 기준일 판단 */
+if (q(5) === "yes" && isWithinRiskPeriod(region, departDate, arrivalDate)) {
+  return showResult(
+    "승선검역",
+    `${regionLabel(region)} 출항 / ${countryDisease[region]} 기준일 이내 (${countryDays[region]}일)`
+  );
+}
+
+/* 4️⃣ Q6 + 접안 */
+if (q(6) === "yes" && dock) {
+  return showResult("승선검역", "선원 교대 + 접안");
+}
+
+/* 5️⃣ Q7 */
+if (q(7) === "yes") {
+  return showResult("승선검역", "위생관리 증명서 미소지/만료");
+}
+
+/* 6️⃣ 기본값 */
+return showResult("서류심사", "추가 위험 요소 없음");
 
 
 /* =========================
