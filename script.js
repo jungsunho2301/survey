@@ -180,10 +180,27 @@ function calculateResult() {
 /* =========================
    결과 출력
 ========================= */
-function showResult(result, reason) {
-  document.getElementById("result").innerHTML = `
-    <h2>검역 분류 결과</h2>
-    <p><strong>${result}</strong></p>
-    <p>판단 근거: ${reason}</p>
-  `;
+function showResult(resultText) {
+  const resultBox = document.getElementById("result");
+
+  // 초기화
+  resultBox.innerHTML = "";
+  resultBox.style.fontSize = "28px";
+  resultBox.style.fontWeight = "bold";
+  resultBox.style.textAlign = "center";
+  resultBox.style.marginTop = "20px";
+
+  // 결과별 색상
+  if (resultText === "승선검역") {
+    resultBox.style.color = "#c62828"; // 빨강
+  } else if (resultText === "서류심사") {
+    resultBox.style.color = "#f9a825"; // 노랑
+  } else if (resultText === "조사생략") {
+    resultBox.style.color = "#2e7d32"; // 초록
+  } else {
+    resultBox.style.color = "#000";
+  }
+
+  resultBox.textContent = resultText;
 }
+
