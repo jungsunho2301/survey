@@ -5,10 +5,11 @@
 }
 
 :root {
-  --main-navy: #1e3a8a; /* 이미지의 진한 남색 */
+  --main-navy: #1e3a8a;
   --accent-blue: #3b82f6;
-  --bg-light-blue: #dbeafe; /* 이미지 배경색 */
+  --bg-light-blue: #dbeafe;
   --danger-red: #ef4444;
+  --point-orange: #ff9800; /* 영문용 주황색 */
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -17,7 +18,6 @@ body {
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
   background-color: var(--bg-light-blue);
-  /* 이미지 특유의 도트 무늬 배경 재현 */
   background-image: radial-gradient(#bfdbfe 1px, transparent 1px);
   background-size: 20px 20px;
   color: #1e293b;
@@ -49,7 +49,6 @@ h1 {
   font-weight: 300;
   opacity: 0.8;
   margin: 5px 0 20px;
-  letter-spacing: 0.5px;
 }
 
 .location-line {
@@ -67,18 +66,28 @@ h1 {
 }
 
 .location-text {
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
 }
 
-/* 메인 컨테이너 */
+/* 주황색 영문 텍스트 스타일 */
+.en-location {
+  font-size: 13px;
+  color: var(--point-orange);
+  font-weight: 600;
+  margin-top: 10px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* 컨테이너 */
 .content-wrapper {
   max-width: 500px;
   margin: 20px auto 60px;
   padding: 0 16px;
 }
 
-/* 카드 공통 스타일 */
+/* 카드 스타일 */
 .card {
   background: #ffffff;
   border-radius: 12px;
@@ -88,7 +97,6 @@ h1 {
   border: 1px solid #e2e8f0;
 }
 
-/* 카드 상단 배지 스타일 */
 .card-header {
   padding: 14px 18px;
   display: flex;
@@ -117,7 +125,7 @@ h1 {
 
 .header-icon-mini { font-size: 18px; }
 
-/* 질문 영역 */
+/* 질문 및 라디오 */
 .card-body { padding: 5px 0; }
 
 .question {
@@ -135,14 +143,9 @@ h1 {
 
 .question p strong {
   color: var(--main-navy);
-  margin-right: 4px;
 }
 
-/* 라디오 버튼 그룹 */
-.radio-group {
-  display: flex;
-  gap: 20px;
-}
+.radio-group { display: flex; gap: 20px; }
 
 .radio-group label {
   display: flex;
@@ -156,10 +159,9 @@ input[type="radio"] {
   width: 18px;
   height: 18px;
   accent-color: var(--main-navy);
-  margin: 0;
 }
 
-/* Q5 상세 입력박스 */
+/* 상세 입력 박스 */
 .detail-box {
   display: none;
   padding: 16px 18px;
@@ -190,7 +192,7 @@ input[type="radio"] {
   gap: 10px;
 }
 
-/* 결과 확인 버튼 */
+/* 버튼 */
 .btn-submit {
   width: 100%;
   padding: 18px;
@@ -202,11 +204,6 @@ input[type="radio"] {
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 6px 16px rgba(30, 58, 138, 0.3);
-  transition: background 0.2s, transform 0.1s;
-}
-
-.btn-submit:active {
-  transform: translateY(2px);
 }
 
 /* 결과창 */
@@ -216,5 +213,5 @@ input[type="radio"] {
   background: white;
   border-radius: 12px;
   box-shadow: var(--card-shadow);
-  display: none; /* JS 호출 시 block으로 변경 */
+  display: none;
 }
