@@ -1,6 +1,3 @@
-/* ===============================
-   기본 리셋 & 폰트
-================================ */
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
@@ -8,161 +5,124 @@
 
 body {
   margin: 0;
-  padding: 0;
-  font-family: 'Noto Sans KR', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  background: linear-gradient(180deg, #e9f1ff 0%, #f6f9ff 100%);
+  font-family: 'Noto Sans KR', system-ui, sans-serif;
+  background: #f1f4fa;
   color: #1f2a44;
 }
 
-/* ===============================
-   전체 컨테이너
-================================ */
+.top {
+  padding: 20px 16px 10px;
+}
+
+h1 {
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+
+.notice {
+  font-size: 13px;
+  color: #555;
+  line-height: 1.4;
+}
+
 form {
   max-width: 420px;
   margin: 0 auto;
-  padding: 16px 14px 40px;
+  padding: 8px 12px 40px;
 }
 
-/* ===============================
-   STEP 공통 카드
-================================ */
-section {
+.card {
   background: #fff;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0, 40, 120, 0.12);
+  border-radius: 14px;
   margin-bottom: 18px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
   overflow: hidden;
 }
 
-/* ===============================
-   STEP 헤더
-================================ */
-section > h2 {
+.card h2 {
   margin: 0;
   padding: 14px 16px;
   font-size: 15px;
   font-weight: 700;
-  letter-spacing: -0.3px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-/* STEP 색상 구분 */
-section:nth-of-type(1) > h2 {
-  background: linear-gradient(90deg, #e84848, #f25c5c);
   color: #fff;
 }
 
-section:nth-of-type(2) > h2,
-section:nth-of-type(3) > h2 {
+.card.danger h2 {
+  background: linear-gradient(90deg, #e54848, #f36b6b);
+}
+
+.card.primary h2 {
   background: linear-gradient(90deg, #2f63d8, #3d78f2);
-  color: #fff;
 }
 
-section:nth-of-type(4) > h2 {
-  background: linear-gradient(90deg, #5a6c8a, #6f82a3);
-  color: #fff;
+.card.gray h2 {
+  background: linear-gradient(90deg, #6b7a90, #8596b2);
 }
 
-/* ===============================
-   질문 영역
-================================ */
-section p,
-section .question {
-  margin: 0;
+.question {
   padding: 14px 16px;
-  font-size: 14px;
-  line-height: 1.5;
   border-bottom: 1px solid #e6ecf7;
 }
 
-section p:last-child {
+.question:last-child {
   border-bottom: none;
 }
 
-/* ===============================
-   라디오 / 체크박스 커스텀
-================================ */
+.question p {
+  margin: 0 0 10px;
+  font-size: 14px;
+}
+
 label {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 16px;
+  gap: 8px;
   font-size: 14px;
-  border-bottom: 1px solid #e6ecf7;
+  margin-bottom: 8px;
 }
 
-label:last-child {
-  border-bottom: none;
-}
-
-input[type="radio"],
-input[type="checkbox"] {
+input[type="radio"] {
   appearance: none;
   width: 18px;
   height: 18px;
   border-radius: 50%;
   border: 2px solid #b9c7e6;
   position: relative;
-  flex-shrink: 0;
 }
 
-input[type="checkbox"] {
-  border-radius: 4px;
-}
-
-input:checked {
+input[type="radio"]:checked {
   border-color: #2f63d8;
-  background: #2f63d8;
 }
 
 input[type="radio"]:checked::after {
   content: '';
   position: absolute;
   inset: 4px;
-  background: #fff;
+  background: #2f63d8;
   border-radius: 50%;
 }
 
-input[type="checkbox"]:checked::after {
-  content: '✔';
-  position: absolute;
-  top: -2px;
-  left: 2px;
-  font-size: 14px;
-  color: #fff;
+.detail {
+  padding: 14px 16px;
+  display: none;
 }
 
-/* ===============================
-   기타사항 영역
-================================ */
-section ul {
-  list-style: none;
-  margin: 0;
-  padding: 12px 16px;
-}
-
-section ul li {
-  font-size: 14px;
-  padding: 6px 0;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-section ul li::before {
-  content: '✔';
-  color: #2f63d8;
-  font-weight: 700;
-}
-
-/* ===============================
-   결과 버튼
-================================ */
-button {
+.detail select,
+.detail input[type="date"] {
   width: 100%;
-  margin-top: 20px;
+  padding: 10px;
+  font-size: 14px;
+  margin-top: 6px;
+}
+
+.date-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.submit {
+  width: 100%;
   padding: 16px;
   font-size: 16px;
   font-weight: 700;
@@ -170,11 +130,5 @@ button {
   border-radius: 14px;
   color: #fff;
   background: linear-gradient(90deg, #2f63d8, #3d78f2);
-  box-shadow: 0 10px 24px rgba(47, 99, 216, 0.35);
-  cursor: pointer;
-}
-
-button:active {
-  transform: translateY(1px);
-  box-shadow: 0 6px 16px rgba(47, 99, 216, 0.3);
+  box-shadow: 0 10px 24px rgba(47,99,216,0.35);
 }
