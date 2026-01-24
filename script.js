@@ -82,16 +82,18 @@ function calculateResult() {
   const departDate = f.get("q5_departure_date");
   const arrivalDate = f.get("q5_arrival_date");
 
-  // 로직 1: 즉시 승선검역 (Q1~Q4)
+  // 로직 1: 즉시 승선검역 (Q1~Q4) - 최우선 순위
   if ([1,2,3,4].some(i => q(i) === "yes")) {
-    renderResult("승선검역", "Q1~Q4 항목 중 위험요소 확인됨", "#ef4444");
+    renderResult("승선검역", "Q1~Q4 항목 중 즉시 승선검역 사유 확인됨", "#ef4444");
     return;
   }
 
-  // 로직 2: 조사생략 조건
+  // 로직 2: 조사생략 조건 (수정됨: 선원 교대(Q6)가 없을 때만 조사생략 가능)
   const hasQ567 = [5,6,7].some(i => q(i) === "yes");
-  if (hasQ567 && depart48 && !boarding && !dock) {
-    renderResult("조사생략", "조사생략 요건(48시간 이내 출항, 승선자 없음, 접안 없음)을 충족함", "#22c55e");
+  const noQ6 = (q(6) === "no"); // 선원 교대가 없어야 함
+
+  if (hasQ567 && noQ6 && depart48 && !boarding && !dock) {
+    renderResult("조사생략", "조사생략 요건(48시간 이내 출항, 선원교대/승선자/접안 없음)을 충족함", "#22c55e");
     return;
   }
 
@@ -114,11 +116,12 @@ function calculateResult() {
 
   // 로직 5: Q7 증명서 만료
   if (q(7) === "yes") {
-    renderResult("승선검역", "선박위생관리 증명서 미소지 또는 유효기간 만료", "#ef4444");
+    renderResult("승선검역", "선박위생관리 증명서 부적합(미소지 또는 만료)", "#ef4444");
     return;
   }
 
   // 로직 6: 기본값 (서류심사)
+  // Q6가 '예'이고 접안이 없거나, 기타 위험 요소가 발견되지 않은 경우 여기로 옵니다.
   renderResult("서류심사", "추가적인 승선검역 위험 요소가 발견되지 않음", "#f59e0b");
 }
 
@@ -128,7 +131,6 @@ function calculateResult() {
 function renderResult(title, reason, color) {
   const resultBox = document.getElementById("result");
   
-  // 결과창 활성화 및 스타일링
   resultBox.style.display = "block";
   resultBox.style.borderTop = `6px solid ${color}`;
   
@@ -146,7 +148,6 @@ function renderResult(title, reason, color) {
     </div>
   `;
 
-  // 결과창으로 화면 이동
   setTimeout(() => {
     resultBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 100);
