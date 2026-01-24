@@ -1,15 +1,17 @@
-/* 기본 초기화 */
+/* =========================================
+   기본 초기화 및 변수 설정
+   ========================================= */
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
 }
 
 :root {
-  --main-navy: #1e3a8a;
-  --accent-blue: #3b82f6;
-  --bg-light-blue: #dbeafe;
-  --danger-red: #ef4444;
-  --point-orange: #ff9800; /* 영문용 주황색 */
+  --main-navy: #1e3a8a;       /* 국립여수검역소 메인 테마색 */
+  --accent-blue: #3b82f6;      /* 포인트 블루 */
+  --bg-light-blue: #dbeafe;    /* 배경 연하늘색 */
+  --danger-red: #ef4444;       /* 경고/승선검역 색상 */
+  --point-orange: #ff9800;     /* 영문 명칭 포인트 주황색 */
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -18,12 +20,16 @@ body {
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
   background-color: var(--bg-light-blue);
+  /* 이미지 특유의 미세한 도트 패턴 재현 */
   background-image: radial-gradient(#bfdbfe 1px, transparent 1px);
   background-size: 20px 20px;
   color: #1e293b;
+  line-height: 1.6;
 }
 
-/* Header 디자인 */
+/* =========================================
+   Header 디자인 (기관명 및 로고 영역)
+   ========================================= */
 .main-header {
   background-color: var(--main-navy);
   color: #ffffff;
@@ -48,7 +54,7 @@ h1 {
   font-size: 14px;
   font-weight: 300;
   opacity: 0.8;
-  margin: 5px 0 20px;
+  margin: 5px 0 15px;
 }
 
 .location-line {
@@ -61,33 +67,36 @@ h1 {
 .location-line::before, .location-line::after {
   content: "";
   height: 1px;
-  width: 80px;
+  width: 60px;
   background-color: rgba(255, 255, 255, 0.3);
 }
 
 .location-text {
   font-size: 20px;
   font-weight: 700;
+  letter-spacing: -0.5px;
 }
 
-/* 주황색 영문 텍스트 스타일 */
+/* ★ 간격 조정: 국문 명칭과 영문 명칭 사이를 밀착 */
 .en-location {
-  font-size: 13px;
+  font-size: 12px;
   color: var(--point-orange);
   font-weight: 600;
-  margin-top: 10px;
-  letter-spacing: 0.5px;
+  margin-top: 2px; /* 간격을 아주 조금만 더 줄여 밀착됨 */
+  letter-spacing: 0.3px;
   text-transform: uppercase;
+  opacity: 0.95;
 }
 
-/* 컨테이너 */
+/* =========================================
+   레이아웃 및 카드 스타일
+   ========================================= */
 .content-wrapper {
   max-width: 500px;
   margin: 20px auto 60px;
   padding: 0 16px;
 }
 
-/* 카드 스타일 */
 .card {
   background: #ffffff;
   border-radius: 12px;
@@ -106,6 +115,7 @@ h1 {
   border-bottom: 1px solid #f1f5f9;
 }
 
+/* 카드 상단 테두리 포인트 */
 .card.danger { border-top: 5px solid var(--danger-red); }
 .card.primary { border-top: 5px solid var(--accent-blue); }
 .card.gray { border-top: 5px solid #64748b; }
@@ -123,29 +133,41 @@ h1 {
   color: #334155;
 }
 
-.header-icon-mini { font-size: 18px; }
+.header-icon-mini {
+  font-size: 18px;
+}
 
-/* 질문 및 라디오 */
-.card-body { padding: 5px 0; }
+/* =========================================
+   질문 및 라디오 버튼 스타일
+   ========================================= */
+.card-body {
+  padding: 5px 0;
+}
 
 .question {
   padding: 16px 18px;
   border-bottom: 1px solid #f1f5f9;
 }
 
-.question:last-child { border-bottom: none; }
+.question:last-child {
+  border-bottom: none;
+}
 
 .question p {
   margin: 0 0 12px;
   font-size: 15px;
-  line-height: 1.5;
+  color: #1e293b;
 }
 
 .question p strong {
   color: var(--main-navy);
+  font-weight: 700;
 }
 
-.radio-group { display: flex; gap: 20px; }
+.radio-group {
+  display: flex;
+  gap: 20px;
+}
 
 .radio-group label {
   display: flex;
@@ -153,18 +175,22 @@ h1 {
   gap: 6px;
   font-size: 15px;
   cursor: pointer;
+  color: #475569;
 }
 
 input[type="radio"] {
-  width: 18px;
-  height: 18px;
+  width: 19px;
+  height: 19px;
   accent-color: var(--main-navy);
+  margin: 0;
 }
 
-/* 상세 입력 박스 */
+/* =========================================
+   상세 입력 창 (Q5 활성화 시)
+   ========================================= */
 .detail-box {
   display: none;
-  padding: 16px 18px;
+  padding: 18px;
   background-color: #f1f5f9;
   border-top: 1px solid #e2e8f0;
 }
@@ -179,23 +205,26 @@ input[type="radio"] {
 
 .styled-input {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #cbd5e1;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 14px;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
+  background-color: #ffffff;
 }
 
 .date-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
-/* 버튼 */
+/* =========================================
+   버튼 및 결과 영역
+   ========================================= */
 .btn-submit {
   width: 100%;
-  padding: 18px;
+  padding: 20px;
   background-color: var(--main-navy);
   color: #ffffff;
   font-size: 18px;
@@ -204,14 +233,19 @@ input[type="radio"] {
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 6px 16px rgba(30, 58, 138, 0.3);
+  transition: all 0.2s;
 }
 
-/* 결과창 */
+.btn-submit:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
+}
+
 #result {
-  margin-top: 25px;
-  padding: 20px;
-  background: white;
-  border-radius: 12px;
+  margin-top: 30px;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 14px;
   box-shadow: var(--card-shadow);
-  display: none;
+  display: none; /* JS를 통해 제어됨 */
 }
