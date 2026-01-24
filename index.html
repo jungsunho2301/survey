@@ -3,59 +3,63 @@
 <head>
   <meta charset="UTF-8">
   <title>항만 검역분류 자동 설문</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<h1>항만 검역분류 설문</h1>
-<p class="notice">
-※ 본 설문은 검역 분류를 위한 참고용 자동 판별 도구이며, 최종 검역 조치는 검역관의 판단에 따릅니다.
-</p>
+<header class="top">
+  <h1>항만 검역분류 설문</h1>
+  <p class="notice">
+    ※ 본 설문은 검역 분류를 위한 참고용 자동 판별 도구이며,<br>
+    최종 검역 조치는 검역관의 판단에 따릅니다.
+  </p>
+</header>
 
 <form id="surveyForm">
 
-  <!-- Q1~Q4 : 즉시 승선검역 -->
-  <fieldset>
-    <legend>Ⅰ. 즉시 승선검역 판단 항목</legend>
+  <!-- STEP 1 -->
+  <section class="card danger">
+    <h2>Ⅰ. 즉시 승선검역 판단 항목</h2>
 
-    <p>Q1. 선박 내 검역감염병 환자 또는 의심환자가 있었습니까?</p>
-    <label><input type="radio" name="q1" value="yes"> 예</label>
-    <label><input type="radio" name="q1" value="no"> 아니오</label>
+    <div class="question">
+      <p>Q1. 선박 내 검역감염병 환자 또는 의심환자가 있었습니까?</p>
+      <label><input type="radio" name="q1" value="yes"> 예</label>
+      <label><input type="radio" name="q1" value="no"> 아니오</label>
+    </div>
 
-    <p>Q2. 선박 내 사망자가 발생한 사실이 있습니까?</p>
-    <label><input type="radio" name="q2" value="yes"> 예</label>
-    <label><input type="radio" name="q2" value="no"> 아니오</label>
+    <div class="question">
+      <p>Q2. 선박 내 사망자가 발생한 사실이 있습니까?</p>
+      <label><input type="radio" name="q2" value="yes"> 예</label>
+      <label><input type="radio" name="q2" value="no"> 아니오</label>
+    </div>
 
-    <p>Q3. 선원·승객 중 발열, 설사, 구토 등 증상자가 있었습니까?</p>
-    <label><input type="radio" name="q3" value="yes"> 예</label>
-    <label><input type="radio" name="q3" value="no"> 아니오</label>
+    <div class="question">
+      <p>Q3. 선원·승객 중 발열, 설사, 구토 등 증상자가 있었습니까?</p>
+      <label><input type="radio" name="q3" value="yes"> 예</label>
+      <label><input type="radio" name="q3" value="no"> 아니오</label>
+    </div>
 
-    <p>Q4. 선박 내 감염병 매개체가 서식하거나 흔적이 있었습니까?</p>
-    <label><input type="radio" name="q4" value="yes"> 예</label>
-    <label><input type="radio" name="q4" value="no"> 아니오</label>
-  </fieldset>
+    <div class="question">
+      <p>Q4. 선박 내 감염병 매개체가 서식하거나 흔적이 있었습니까?</p>
+      <label><input type="radio" name="q4" value="yes"> 예</label>
+      <label><input type="radio" name="q4" value="no"> 아니오</label>
+    </div>
+  </section>
 
-<!-- Q5 -->
-<fieldset>
-  <legend>Ⅱ. 중점검역관리지역 관련</legend>
+  <!-- STEP 2 -->
+  <section class="card primary">
+    <h2>Ⅱ. 중점검역관리지역 관련</h2>
 
-  <p>
-    Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?
-  </p>
-  <label>
-    <input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예
-  </label>
-  <label>
-    <input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오
-  </label>
+    <div class="question">
+      <p>Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?</p>
+      <label><input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예</label>
+      <label><input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오</label>
+    </div>
 
-  <!-- 예 선택 시 상세 입력 -->
-  <div id="q5Detail" style="display:none; margin-top:15px; padding:10px; border:1px dashed #888;">
-
-    <!-- 출항·경유지역 단독 -->
-    <div style="margin-bottom:10px;">
-      <label>출항·경유지역:</label><br>
-      <select name="q5_region" style="width:200px; padding:5px;">
+    <div id="q5Detail" class="detail">
+      <label>출항·경유지역</label>
+      <select name="q5_region">
         <option value="">선택</option>
         <option value="mada">마다가스카르</option>
         <option value="mongolia">몽골</option>
@@ -94,64 +98,63 @@
         <option value="congo">콩고민주공화국</option>
         <option value="ethiopia">에티오피아</option>
       </select>
-    </div>
-
-    <!-- 출항일 + 입항예정일 나란히 -->
-    <div style="display:flex; gap:20px; align-items:flex-start;">
-      <div>
-        <label>출항일:</label><br>
-        <input type="date" name="q5_departure_date" style="width:200px; padding:5px;">
-      </div>
-      <div>
-        <label>입항 예정일:</label><br>
-        <input type="date" name="q5_arrival_date" style="width:200px; padding:5px;">
+   <div class="date-row">
+        <div>
+          <label>출항일</label>
+          <input type="date" name="q5_departure_date">
+        </div>
+        <div>
+          <label>입항 예정일</label>
+          <input type="date" name="q5_arrival_date">
+        </div>
       </div>
     </div>
+  </section>
 
-  </div>
-</fieldset>
+  <!-- STEP 3 -->
+  <section class="card primary">
+    <h2>Ⅲ. 선원 교대 관련</h2>
+    <div class="question">
+      <p>Q6. 최근 21일 이내 검역관리지역에서 선원 교대가 있었습니까?</p>
+      <label><input type="radio" name="q6" value="yes"> 예</label>
+      <label><input type="radio" name="q6" value="no"> 아니오</label>
+    </div>
+  </section>
 
-  <!-- Q6~Q7, 공통 조건 등 기존 내용 그대로 -->
-  <fieldset>
-    <legend>Ⅲ. 선원 교대 관련</legend>
-    <p>Q6. 최근 21일 이내 검역관리지역에서 선원 교대가 있었습니까?</p>
-    <label><input type="radio" name="q6" value="yes"> 예</label>
-    <label><input type="radio" name="q6" value="no"> 아니오</label>
-  </fieldset>
+  <!-- STEP 4 -->
+  <section class="card gray">
+    <h2>Ⅳ. 선박위생관리 증명서</h2>
+    <div class="question">
+      <p>Q7. 선박위생관리(면제) 증명서를 소지하지 않았거나 유효기간이 만료되었습니까?</p>
+      <label><input type="radio" name="q7" value="yes"> 예</label>
+      <label><input type="radio" name="q7" value="no"> 아니오</label>
+    </div>
+  </section>
 
-  <!-- Q7 -->
-<fieldset>
-  <legend>Ⅳ. 선박위생관리 증명서</legend>
+  <!-- STEP 5 -->
+  <section class="card gray">
+    <h2>Ⅴ. 기타사항</h2>
 
-  <p>
-    Q7. 선박위생관리(면제) 증명서를 소지하지 않았거나 유효기간이 만료되었습니까?
-  </p>
+    <div class="question">
+      <p>48시간 이내 출항 예정입니까?</p>
+      <label><input type="radio" name="depart48" value="yes"> 예</label>
+      <label><input type="radio" name="depart48" value="no"> 아니오</label>
+    </div>
 
-  <label><input type="radio" name="q7" value="yes">예</label>
-  <label style="margin-left:15px;">
-    <input type="radio" name="q7" value="no">아니오</label>
+    <div class="question">
+      <p>승선자(방선자 포함)가 있습니까?</p>
+      <label><input type="radio" name="boarding" value="yes"> 예</label>
+      <label><input type="radio" name="boarding" value="no"> 아니오</label>
+    </div>
 
-</fieldset>
+    <div class="question">
+      <p>선박이 접안합니까?</p>
+      <label><input type="radio" name="dock" value="yes"> 예</label>
+      <label><input type="radio" name="dock" value="no"> 아니오</label>
+    </div>
+  </section>
 
-
-  <!-- V. 기타사항 -->
-  <fieldset>
-    <legend>Ⅴ. 기타사항</legend>
-    <p>48시간 이내 출항 예정입니까?</p>
-    <label><input type="radio" name="depart48" value="yes"> 예</label>
-    <label><input type="radio" name="depart48" value="no"> 아니오</label>
-
-    <p>승선자(방선자 포함)가 있습니까?</p>
-    <label><input type="radio" name="boarding" value="yes"> 예</label>
-    <label><input type="radio" name="boarding" value="no"> 아니오</label>
-
-    <p>선박이 접안합니까?</p>
-    <label><input type="radio" name="dock" value="yes"> 예</label>
-    <label><input type="radio" name="dock" value="no"> 아니오</label>
-  </fieldset>
-
-
-  <button type="button" onclick="calculateResult()">결과 확인</button>
+  <button type="button" class="submit" onclick="calculateResult()">결과 확인</button>
 </form>
 
 <div id="result"></div>
