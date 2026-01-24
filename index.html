@@ -2,162 +2,179 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>항만 검역분류 자동 설문</title>
+  <title>항만 검역분류 가이드</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<header class="top">
-  <h1>항만 검역분류 설문</h1>
-  <p class="notice">
-    ※ 본 설문은 검역 분류를 위한 참고용 자동 판별 도구이며,<br>
-    최종 검역 조치는 검역관의 판단에 따릅니다.
-  </p>
+<header class="main-header">
+  <div class="header-inner">
+    <div class="header-icon">⚓</div>
+    <h1>항만 검역 분류 가이드</h1>
+    <p class="sub-title">Port Quarantine Screening Guide</p>
+    <div class="location-line">
+      <span class="location-text">여수국립검역소</span>
+    </div>
+  </div>
 </header>
 
-<form id="surveyForm">
+<main class="content-wrapper">
+  <form id="surveyForm">
 
-  <!-- STEP 1 -->
-  <section class="card danger">
-    <h2>Ⅰ. 즉시 승선검역 판단 항목</h2>
-
-    <div class="question">
-      <p>Q1. 선박 내 검역감염병 환자 또는 의심환자가 있었습니까?</p>
-      <label><input type="radio" name="q1" value="yes"> 예</label>
-      <label><input type="radio" name="q1" value="no"> 아니오</label>
-    </div>
-
-    <div class="question">
-      <p>Q2. 선박 내 사망자가 발생한 사실이 있습니까?</p>
-      <label><input type="radio" name="q2" value="yes"> 예</label>
-      <label><input type="radio" name="q2" value="no"> 아니오</label>
-    </div>
-
-    <div class="question">
-      <p>Q3. 선원·승객 중 발열, 설사, 구토 등 증상자가 있었습니까?</p>
-      <label><input type="radio" name="q3" value="yes"> 예</label>
-      <label><input type="radio" name="q3" value="no"> 아니오</label>
-    </div>
-
-    <div class="question">
-      <p>Q4. 선박 내 감염병 매개체가 서식하거나 흔적이 있었습니까?</p>
-      <label><input type="radio" name="q4" value="yes"> 예</label>
-      <label><input type="radio" name="q4" value="no"> 아니오</label>
-    </div>
-  </section>
-
-  <!-- STEP 2 -->
-  <section class="card primary">
-    <h2>Ⅱ. 중점검역관리지역 관련</h2>
-
-    <div class="question">
-      <p>Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?</p>
-      <label><input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예</label>
-      <label><input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오</label>
-    </div>
-
-    <div id="q5Detail" class="detail">
-      <label>출항·경유지역</label>
-      <select name="q5_region">
-        <option value="">선택</option>
-        <option value="mada">마다가스카르</option>
-        <option value="mongolia">몽골</option>
-        <option value="nm_usa">미국(뉴멕시코주)</option>
-        <option value="wa_usa">미국(워싱턴주)</option>
-        <option value="ca_usa">미국(캘리포니아주)</option>
-        <option value="bangladesh">방글라데시</option>
-        <option value="vietnam_hcm">베트남(호찌민)</option>
-        <option value="vietnam_dn">베트남(동나이)</option>
-        <option value="vietnam_dninh">베트남(따이닌)</option>
-        <option value="india">인도</option>
-        <option value="china_gd">중국(광둥성)</option>
-        <option value="china_gx">중국(광시좡족자치구)</option>
-        <option value="china_gz">중국(구이저우성)</option>
-        <option value="china_sx">중국(산시성·Shaanxi)</option>
-        <option value="china_sc">중국(쓰촨성)</option>
-        <option value="china_cq">중국(충칭시)</option>
-        <option value="china_tj">중국(텐진시)</option>
-        <option value="china_hn">중국(허난성)</option>
-        <option value="china_hn2">중국(후난성)</option>
-        <option value="china_hb">중국(후베이성)</option>
-        <option value="cambodia">캄보디아</option>
-        <option value="saudi">사우디아라비아</option>
-        <option value="uae">아랍에미리트</option>
-        <option value="qatar">카타르</option>
-        <option value="kuwait">쿠웨이트</option>
-        <option value="iran">이란</option>
-        <option value="iraq">이라크</option>
-        <option value="lebanon">레바논</option>
-        <option value="bahrain">바레인</option>
-        <option value="syria">시리아</option>
-        <option value="yemen">예멘</option>
-        <option value="oman">오만</option>
-        <option value="jordan">요르단</option>
-        <option value="israel">이스라엘</option>
-        <option value="congo">콩고민주공화국</option>
-        <option value="ethiopia">에티오피아</option>
-      </select>
-   <div class="date-row">
-        <div>
-          <label>출항일</label>
-          <input type="date" name="q5_departure_date">
+    <section class="card danger">
+      <div class="card-header">
+        <span class="step-label">STEP 1.</span>
+        <span class="header-icon-mini">🚨</span>
+        <h2>즉시 승선검역 대상</h2>
+      </div>
+      <div class="card-body">
+        <div class="question">
+          <p><strong>Q1.</strong> 선박 내 검역감염병 환자 또는 의심환자가 있었습니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q1" value="yes"> 예</label>
+            <label><input type="radio" name="q1" value="no"> 아니오</label>
+          </div>
         </div>
-        <div>
-          <label>입항 예정일</label>
-          <input type="date" name="q5_arrival_date">
+        <div class="question">
+          <p><strong>Q2.</strong> 선박 내 사망자가 발생한 사실이 있습니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q2" value="yes"> 예</label>
+            <label><input type="radio" name="q2" value="no"> 아니오</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>Q3.</strong> 선원·승객 중 발열, 설사, 구토 등 증상자가 있었습니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q3" value="yes"> 예</label>
+            <label><input type="radio" name="q3" value="no"> 아니오</label>
+          </div>
+        </div>
+        <div class="question">
+          <p><strong>Q4.</strong> 선박 내 감염병 매개체가 서식하거나 흔적이 있었습니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q4" value="yes"> 예</label>
+            <label><input type="radio" name="q4" value="no"> 아니오</label>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- STEP 3 -->
-  <section class="card primary">
-    <h2>Ⅲ. 선원 교대 관련</h2>
-    <div class="question">
-      <p>Q6. 최근 21일 이내 검역관리지역에서 선원 교대가 있었습니까?</p>
-      <label><input type="radio" name="q6" value="yes"> 예</label>
-      <label><input type="radio" name="q6" value="no"> 아니오</label>
-    </div>
-  </section>
+    <section class="card primary">
+      <div class="card-header">
+        <span class="step-label">STEP 2.</span>
+        <span class="header-icon-mini">🌐</span>
+        <h2>중점검역관리지역 관련</h2>
+      </div>
+      <div class="card-body">
+        <div class="question">
+          <p><strong>Q5.</strong> 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예</label>
+            <label><input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오</label>
+          </div>
+        </div>
+        <div id="q5Detail" class="detail-box">
+          <label class="input-label">출항·경유지역</label>
+          <select name="q5_region" class="styled-input">
+            <option value="">지역을 선택해 주세요</option>
+            <option value="mada">마다가스카르</option>
+            <option value="mongolia">몽골</option>
+            <option value="nm_usa">미국(뉴멕시코주)</option>
+            <option value="wa_usa">미국(워싱턴주)</option>
+            <option value="ca_usa">미국(캘리포니아주)</option>
+            <option value="bangladesh">방글라데시</option>
+            <option value="vietnam_hcm">베트남(호찌민)</option>
+            <option value="india">인도</option>
+            <option value="china_gd">중국(광둥성)</option>
+            <option value="saudi">사우디아라비아</option>
+            <option value="uae">아랍에미리트</option>
+            <option value="ethiopia">에티오피아</option>
+          </select>
+          <div class="date-grid">
+            <div class="date-item">
+              <label>출항일</label>
+              <input type="date" name="q5_departure_date" class="styled-input">
+            </div>
+            <div class="date-item">
+              <label>입항 예정일</label>
+              <input type="date" name="q5_arrival_date" class="styled-input">
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- STEP 4 -->
-  <section class="card gray">
-    <h2>Ⅳ. 선박위생관리 증명서</h2>
-    <div class="question">
-      <p>Q7. 선박위생관리(면제) 증명서를 소지하지 않았거나 유효기간이 만료되었습니까?</p>
-      <label><input type="radio" name="q7" value="yes"> 예</label>
-      <label><input type="radio" name="q7" value="no"> 아니오</label>
-    </div>
-  </section>
+    <section class="card primary">
+      <div class="card-header">
+        <span class="step-label">STEP 3.</span>
+        <span class="header-icon-mini">👥</span>
+        <h2>선원 교대 관련</h2>
+      </div>
+      <div class="card-body">
+        <div class="question">
+          <p><strong>Q6.</strong> 최근 21일 이내 검역관리지역에서 선원 교대가 있었습니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q6" value="yes"> 예</label>
+            <label><input type="radio" name="q6" value="no"> 아니오</label>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  <!-- STEP 5 -->
-  <section class="card gray">
-    <h2>Ⅴ. 기타사항</h2>
+    <section class="card gray">
+      <div class="card-header">
+        <span class="step-label">STEP 4.</span>
+        <span class="header-icon-mini">📄</span>
+        <h2>선박위생관리 증명서</h2>
+      </div>
+      <div class="card-body">
+        <div class="question">
+          <p><strong>Q7.</strong> 선박위생관리(면제) 증명서를 소지하지 않았거나 유효기간이 만료되었습니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="q7" value="yes"> 예</label>
+            <label><input type="radio" name="q7" value="no"> 아니오</label>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="question">
-      <p>48시간 이내 출항 예정입니까?</p>
-      <label><input type="radio" name="depart48" value="yes"> 예</label>
-      <label><input type="radio" name="depart48" value="no"> 아니오</label>
-    </div>
+    <section class="card gray">
+      <div class="card-header">
+        <span class="header-icon-mini">📋</span>
+        <h2>기타사항</h2>
+      </div>
+      <div class="card-body">
+        <div class="question">
+          <p>48시간 이내 출항 예정입니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="depart48" value="yes"> 예</label>
+            <label><input type="radio" name="depart48" value="no"> 아니오</label>
+          </div>
+        </div>
+        <div class="question">
+          <p>승선자(방선자 포함)가 있습니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="boarding" value="yes"> 예</label>
+            <label><input type="radio" name="boarding" value="no"> 아니오</label>
+          </div>
+        </div>
+        <div class="question">
+          <p>선박이 접안합니까?</p>
+          <div class="radio-group">
+            <label><input type="radio" name="dock" value="yes"> 예</label>
+            <label><input type="radio" name="dock" value="no"> 아니오</label>
+          </div>
+        </div>
+      </div>
+    </section>
 
-    <div class="question">
-      <p>승선자(방선자 포함)가 있습니까?</p>
-      <label><input type="radio" name="boarding" value="yes"> 예</label>
-      <label><input type="radio" name="boarding" value="no"> 아니오</label>
-    </div>
+    <button type="button" class="btn-submit" onclick="calculateResult()">결과 확인</button>
+  </form>
 
-    <div class="question">
-      <p>선박이 접안합니까?</p>
-      <label><input type="radio" name="dock" value="yes"> 예</label>
-      <label><input type="radio" name="dock" value="no"> 아니오</label>
-    </div>
-  </section>
-
-  <button type="button" class="submit" onclick="calculateResult()">결과 확인</button>
-</form>
-
-<div id="result"></div>
+  <div id="result"></div>
+</main>
 
 <script src="script.js"></script>
 </body>
