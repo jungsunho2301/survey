@@ -7,11 +7,11 @@
 }
 
 :root {
-  --main-navy: #1e3a8a;       /* 국립여수검역소 메인 테마색 */
-  --accent-blue: #3b82f6;      /* 포인트 블루 */
-  --bg-light-blue: #dbeafe;    /* 배경 연하늘색 */
-  --danger-red: #ef4444;       /* 경고/승선검역 색상 */
-  --point-orange: #ff9800;     /* 영문 명칭 포인트 주황색 */
+  --main-navy: #1e3a8a;
+  --accent-blue: #3b82f6;
+  --bg-light-blue: #dbeafe;
+  --danger-red: #ef4444;
+  --point-orange: #ff9800;
   --card-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
@@ -20,7 +20,6 @@ body {
   padding: 0;
   font-family: 'Noto Sans KR', sans-serif;
   background-color: var(--bg-light-blue);
-  /* 이미지 특유의 미세한 도트 패턴 재현 */
   background-image: radial-gradient(#bfdbfe 1px, transparent 1px);
   background-size: 20px 20px;
   color: #1e293b;
@@ -28,7 +27,7 @@ body {
 }
 
 /* =========================================
-   Header 디자인 (기관명 및 로고 영역)
+   Header 디자인
    ========================================= */
 .main-header {
   background-color: var(--main-navy);
@@ -77,12 +76,11 @@ h1 {
   letter-spacing: -0.5px;
 }
 
-/* ★ 간격 조정: 국문 명칭과 영문 명칭 사이를 밀착 */
 .en-location {
   font-size: 12px;
   color: var(--point-orange);
   font-weight: 600;
-  margin-top: 2px; /* 간격을 아주 조금만 더 줄여 밀착됨 */
+  margin-top: 2px;
   letter-spacing: 0.3px;
   text-transform: uppercase;
   opacity: 0.95;
@@ -115,7 +113,6 @@ h1 {
   border-bottom: 1px solid #f1f5f9;
 }
 
-/* 카드 상단 테두리 포인트 */
 .card.danger { border-top: 5px solid var(--danger-red); }
 .card.primary { border-top: 5px solid var(--accent-blue); }
 .card.gray { border-top: 5px solid #64748b; }
@@ -138,7 +135,7 @@ h1 {
 }
 
 /* =========================================
-   질문 및 라디오 버튼 스타일
+   질문 및 라디오 버튼 스타일 (수정됨)
    ========================================= */
 .card-body {
   padding: 5px 0;
@@ -157,6 +154,9 @@ h1 {
   margin: 0 0 12px;
   font-size: 15px;
   color: #1e293b;
+  /* 줄바꿈 최적화 설정 */
+  word-break: keep-all; 
+  overflow-wrap: break-word;
 }
 
 .question p strong {
@@ -186,7 +186,7 @@ input[type="radio"] {
 }
 
 /* =========================================
-   상세 입력 창 (Q5 활성화 시)
+   상세 입력 창 및 버튼
    ========================================= */
 .detail-box {
   display: none;
@@ -219,9 +219,6 @@ input[type="radio"] {
   gap: 12px;
 }
 
-/* =========================================
-   버튼 및 결과 영역
-   ========================================= */
 .btn-submit {
   width: 100%;
   padding: 20px;
@@ -233,12 +230,6 @@ input[type="radio"] {
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 6px 16px rgba(30, 58, 138, 0.3);
-  transition: all 0.2s;
-}
-
-.btn-submit:active {
-  transform: translateY(2px);
-  box-shadow: 0 2px 8px rgba(30, 58, 138, 0.3);
 }
 
 #result {
@@ -247,5 +238,5 @@ input[type="radio"] {
   background: #ffffff;
   border-radius: 14px;
   box-shadow: var(--card-shadow);
-  display: none; /* JS를 통해 제어됨 */
+  display: none;
 }
