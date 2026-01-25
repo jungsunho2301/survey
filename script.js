@@ -12,7 +12,7 @@ function toggleQ6(show) {
 }
 
 /* =========================
-   2. 데이터 정의 (Q5용)
+   2. 데이터 정의 (Q5 중점검역지역용)
 ========================= */
 function regionLabel(value) {
   const labels = {
@@ -57,7 +57,7 @@ const countryDisease = {
 };
 
 /* =========================
-   3. 데이터 정의 (Q6용 - 추가 예정)
+   3. 데이터 정의 (Q6 선원교대용)
 ========================= */
 function regionLabelQ6(value) {
     const labels = {
@@ -77,7 +77,7 @@ const countryDiseaseQ6 = {
 };
 
 /* =========================
-   4. 폼 유효성 검사
+   4. 폼 유효성 검사 (날짜 선후관계 강화)
 ========================= */
 function validateForm(f) {
   for (let i = 1; i <= 7; i++) {
@@ -90,14 +90,28 @@ function validateForm(f) {
     alert("기타사항의 모든 항목을 선택해주세요.");
     return false;
   }
+  
+  // Q5 날짜 유효성 체크
   if (f.get("q5") === "yes") {
     if (!f.get("q5_region") || !f.get("q5_departure_date") || !f.get("q5_arrival_date")) {
       alert("Q5 상세 항목을 모두 입력해주세요."); return false;
     }
+    const d5 = new Date(f.get("q5_departure_date"));
+    const a5 = new Date(f.get("q5_arrival_date"));
+    if (a5 < d5) {
+      alert("Q5: 입항 예정일이 출항일보다 빠를 수 없습니다."); return false;
+    }
   }
+
+  // Q6 날짜 유효성 체크 (승선일 vs 입항일)
   if (f.get("q6") === "yes") {
     if (!f.get("q6_region") || !f.get("q6_onboard_date") || !f.get("q6_arrival_date")) {
       alert("Q6 상세 항목을 모두 입력해주세요."); return false;
+    }
+    const o6 = new Date(f.get("q6_onboard_date"));
+    const a6 = new Date(f.get("q6_arrival_date"));
+    if (a6 < o6) {
+      alert("Q6: 입항 예정일이 승선일보다 빠를 수 없습니다."); return false;
     }
   }
   return true;
@@ -114,59 +128,56 @@ function calculateResult() {
   const reasons = [];
   let isQuarantine = false;
 
-  // 로직 1: Q1~Q4
+  // 로직 1: Q1~Q4 (즉시 승선검역)
   if ([1,2,3,4].some(i => q(i) === "yes")) {
     isQuarantine = true;
     reasons.push("STEP 1: 즉시 승선검역 사유 확인됨");
   }
 
-  // 로직 2: Q5 잠복기 체크
+  // 로직 2: Q5 중점검역지역 잠복기 체크
   if (q(5) === "yes") {
     const region = f.get("q5_region");
     const diff = (new Date(f.get("q5_arrival_date")) - new Date(f.get("q5_departure_date"))) / (1000 * 60 * 60 * 24);
     if (diff <= countryDays[region]) {
       isQuarantine = true;
-      reasons.push(`Q5: ${regionLabel(region)} 출항 / ${countryDisease[region]} 잠복기 내 입항 (${countryDays[region]}일)`);
+      reasons.push(`Q5: ${regionLabel(region)} 출항 / ${countryDisease[region]} 잠복기 위험기간 내 입항 (${countryDays[region]}일)`);
     }
   }
 
-  // 로직 3: Q6 잠복기 체크
+  // 로직 3: Q6 선원교대 잠복기 체크 (요청 문구 반영)
   if (q(6) === "yes") {
     const region = f.get("q6_region");
     const diff = (new Date(f.get("q6_arrival_date")) - new Date(f.get("q6_onboard_date"))) / (1000 * 60 * 60 * 24);
     if (diff <= countryDaysQ6[region]) {
       isQuarantine = true;
-      reasons.push(`Q6: ${regionLabelQ6(region)} 승선 / ${countryDiseaseQ6[region]} 잠복기 내 입항 (${countryDaysQ6[region]}일)`);
+      reasons.push(`Q6: ${regionLabelQ6(region)} 승선 / ${countryDiseaseQ6[region]} 최대 잠복기간 이내 선원 교대 (${countryDaysQ6[region]}일)`);
     }
   }
 
-  // 로직 4: Q6 단순 발생 + 접안
+  // 로직 4: Q6 단순 교대 발생 + 접안 시 (잠복기 외)
   if (q(6) === "yes" && f.get("dock") === "yes") {
-    // 이미 승선검역 사유(잠복기 내 입항)가 들어있지 않은 경우에만 추가
     if (!reasons.some(r => r.includes("Q6:"))) {
         isQuarantine = true;
         reasons.push("Q6: 검역관리지역 선원 교대 발생 + 선박 접안");
     }
   }
 
-  // 로직 5: Q7 증명서
+  // 로직 5: Q7 증명서 부적합
   if (q(7) === "yes") {
     isQuarantine = true;
     reasons.push("Q7: 선박위생관리 증명서 부적합");
   }
 
-  // 최종 판정 및 출력
+  // 최종 결과 출력
   if (isQuarantine) {
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    // 조사생략 여부 판단
     const depart48 = f.get("depart48") === "yes";
     const boarding = f.get("boarding") === "yes";
     const dock = f.get("dock") === "yes";
     if (depart48 && !boarding && !dock && q(6) === "no") {
         renderResult("조사생략", "조사생략 요건 충족", "#22c55e");
     } else {
-        // 서류심사 사유 (잠복기를 벗어난 Q6 교대 등)
         let note = "추가 위험 요소 없음";
         if (q(6) === "yes") note = "선원 교대 발생 (잠복기 경과)";
         renderResult("서류심사", note, "#f59e0b");
@@ -175,7 +186,7 @@ function calculateResult() {
 }
 
 /* =========================
-   6. 디자인 출력
+   6. 디자인 출력 및 스크롤 제어
 ========================= */
 function renderResult(title, reason, color) {
   const resultBox = document.getElementById("result");
