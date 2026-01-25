@@ -14,299 +14,139 @@
     <div class="header-icon">⚓</div>
     <h1>항만 검역 분류 가이드</h1>
     <p class="sub-title">Port Quarantine Classification Guide</p>
-    <div class="location-line">
-      <span class="location-text">국립여수검역소</span>
-    </div>
+    <div class="location-line"><span class="location-text">국립여수검역소</span></div>
     <p class="en-location">Yeosu National Quarantine Station</p>
   </div>
 </header>
 
 <main class="content-wrapper">
   <form id="surveyForm">
-
     <section class="card danger">
-      <div class="card-header">
-        <span class="step-label">STEP 1.</span>
-        <span class="header-icon-mini">🚨</span>
-        <h2>즉시 승선검역 대상</h2>
-      </div>
+      <div class="card-header"><span class="step-label">STEP 1.</span><span class="header-icon-mini">🚨</span><h2>즉시 승선검역 대상</h2></div>
       <div class="card-body">
-        <div class="question">
-          <p>Q1. 선박 내 검역감염병 환자 또는 의심환자가 있습니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="q1" value="yes"> 예</label>
-            <label><input type="radio" name="q1" value="no"> 아니오</label>
-          </div>
+        <div class="question"><p>Q1. 선박 내 검역감염병 환자 또는 의심환자가 있습니까?</p>
+          <div class="radio-group"><label><input type="radio" name="q1" value="yes"> 예</label><label><input type="radio" name="q1" value="no"> 아니오</label></div>
         </div>
-        <div class="question">
-          <p>Q2. 선박 내 사망자가 발생한 사실이 있습니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="q2" value="yes"> 예</label>
-            <label><input type="radio" name="q2" value="no"> 아니오</label>
-          </div>
+        <div class="question"><p>Q2. 선박 내 사망자가 발생한 사실이 있습니까?</p>
+          <div class="radio-group"><label><input type="radio" name="q2" value="yes"> 예</label><label><input type="radio" name="q2" value="no"> 아니오</label></div>
         </div>
-        <div class="question">
-          <p>Q3. 선원·승객 중 발열, 설사, 구토 등 증상자가 있습니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="q3" value="yes"> 예</label>
-            <label><input type="radio" name="q3" value="no"> 아니오</label>
-          </div>
+        <div class="question"><p>Q3. 선원·승객 중 발열, 설사, 구토 등 증상자가 있습니까?</p>
+          <div class="radio-group"><label><input type="radio" name="q3" value="yes"> 예</label><label><input type="radio" name="q3" value="no"> 아니오</label></div>
         </div>
-        <div class="question">
-          <p>Q4. 선박 내 감염병 매개체가 서식하거나 흔적이 있습니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="q4" value="yes"> 예</label>
-            <label><input type="radio" name="q4" value="no"> 아니오</label>
-          </div>
+        <div class="question"><p>Q4. 선박 내 감염병 매개체가 서식하거나 흔적이 있습니까?</p>
+          <div class="radio-group"><label><input type="radio" name="q4" value="yes"> 예</label><label><input type="radio" name="q4" value="no"> 아니오</label></div>
         </div>
       </div>
     </section>
 
     <section class="card primary">
-      <div class="card-header">
-        <span class="step-label">STEP 2.</span>
-        <span class="header-icon-mini">🌐</span>
-        <h2>중점검역관리지역 관련</h2>
-      </div>
+      <div class="card-header"><span class="step-label">STEP 2.</span><span class="header-icon-mini">🌐</span><h2>중점검역관리지역 관련</h2></div>
       <div class="card-body">
-        <div class="question">
-          <p>Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예</label>
-            <label><input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오</label>
-          </div>
+        <div class="question"><p>Q5. 최근 21일 이내 중점검역관리지역에서 출항 또는 경유하셨습니까?</p>
+          <div class="radio-group"><label><input type="radio" name="q5" value="yes" onclick="toggleQ5(true)"> 예</label><label><input type="radio" name="q5" value="no" onclick="toggleQ5(false)"> 아니오</label></div>
         </div>
         <div id="q5Detail" class="detail-box">
           <label class="input-label">출항·경유지역</label>
           <select name="q5_region" class="styled-input">
             <option value="">지역을 선택해 주세요</option>
-            <option value="lebanon">레바논</option>
-            <option value="mada">마다가스카르</option>
-            <option value="mexico">멕시코</option>
-            <option value="mongolia">몽골</option>
-            <option value="nm_usa">미국(뉴멕시코주)</option>
-            <option value="wa_usa">미국(워싱턴주)</option>
-            <option value="ca_usa">미국(캘리포니아주)</option>
-            <option value="bahrain">바레인</option>
-            <option value="bangladesh">방글라데시</option>
-            <option value="vietnam_dn">베트남(동나이)</option>
-            <option value="vietnam_dninh">베트남(따이닌)</option>
-            <option value="vietnam_hcm">베트남(호찌민)</option>
-            <option value="saudi">사우디아라비아</option>
-            <option value="syria">시리아</option>
-            <option value="uae">아랍에미리트</option>
-            <option value="ethiopia">에티오피아</option>
-            <option value="yemen">예멘</option>
-            <option value="oman">오만</option>
-            <option value="jordan">요르단</option>
-            <option value="iraq">이라크</option>
-            <option value="iran">이란</option>
-            <option value="israel">이스라엘</option>
-            <option value="india">인도</option>
-            <option value="china_gd">중국(광둥성)</option>
-            <option value="china_gx">중국(광시좡족자치구)</option>
-            <option value="china_gz">중국(구이저우성)</option>
-            <option value="china_sx">중국(산시성·Shaanxi)</option>
-            <option value="china_sc">중국(쓰촨성)</option>
-            <option value="china_tj">중국(텐진시)</option>
-            <option value="china_cq">중국(충칭시)</option>
-            <option value="china_hn">중국(허난성)</option>
-            <option value="china_hn2">중국(후난성)</option>
-            <option value="china_hb">중국(후베이성)</option>
-            <option value="qatar">카타르</option>
-            <option value="cambodia">캄보디아</option>
-            <option value="congo">콩고민주공화국</option>
-            <option value="kuwait">쿠웨이트</option>
+            <option value="lebanon_q5">레바논</option><option value="mada_q5">마다가스카르</option><option value="mexico_q5">멕시코</option>
+            <option value="mongolia_q5">몽골</option><option value="nm_usa_q5">미국(뉴멕시코주)</option><option value="wa_usa_q5">미국(워싱턴주)</option>
+            <option value="ca_usa_q5">미국(캘리포니아주)</option><option value="bahrain_q5">바레인</option><option value="bangladesh_q5">방글라데시</option>
+            <option value="vietnam_dn_q5">베트남(동나이)</option><option value="vietnam_dninh_q5">베트남(따이닌)</option><option value="vietnam_hcm_q5">베트남(호찌민)</option>
+            <option value="saudi_q5">사우디아라비아</option><option value="syria_q5">시리아</option><option value="uae_q5">아랍에미리트</option>
+            <option value="ethiopia_q5">에티오피아</option><option value="yemen_q5">예멘</option><option value="oman_q5">오만</option>
+            <option value="jordan_q5">요르단</option><option value="iraq_q5">이라크</option><option value="iran_q5">이란</option>
+            <option value="israel_q5">이스라엘</option><option value="india_q5">인도</option><option value="china_gd_q5">중국(광둥성)</option>
+            <option value="china_gx_q5">중국(광시좡족자치구)</option><option value="china_gz_q5">중국(구이저우성)</option><option value="china_sx_q5">중국(산시성)</option>
+            <option value="china_sc_q5">중국(쓰촨성)</option><option value="china_tj_q5">중국(텐진시)</option><option value="china_cq_q5">중국(충칭시)</option>
+            <option value="china_hn_q5">중국(허난성)</option><option value="china_hn2_q5">중국(후난성)</option><option value="china_hb_q5">중국(후베이성)</option>
+            <option value="qatar_q5">카타르</option><option value="cambodia_q5">캄보디아</option><option value="congo_q5">콩고민주공화국</option><option value="kuwait_q5">쿠웨이트</option>
           </select>
           <div class="date-grid">
-            <div class="date-item">
-              <label>출항일</label>
-              <input type="date" name="q5_departure_date" class="styled-input">
-            </div>
-            <div class="date-item">
-              <label>입항 예정일</label>
-              <input type="date" name="q5_arrival_date" class="styled-input">
-            </div>
+            <div class="date-item"><label>출항일</label><input type="date" name="q5_departure_date" class="styled-input"></div>
+            <div class="date-item"><label>입항 예정일</label><input type="date" name="q5_arrival_date" class="styled-input"></div>
           </div>
         </div>
       </div>
     </section>
 
-<section class="card primary">
-  <div class="card-header">
-    <span class="step-label">STEP 3.</span>
-    <span class="header-icon-mini">👥</span>
-    <h2>선원 교대 관련</h2>
-  </div>
-  <div class="card-body">
-    <div class="question">
-      <p>Q6. 최근 21일 이내 검역관리지역에서 선원 교대가 있었습니까?</p>
-      <div class="radio-group">
-        <label><input type="radio" name="q6" value="yes" onclick="toggleQ6(true)"> 예</label>
-        <label><input type="radio" name="q6" value="no" onclick="toggleQ6(false)"> 아니오</label>
-      </div>
-    </div>
-    <div id="q6Detail" class="detail-box">
-      <label class="input-label">승선지역</label>
-      <select name="q6_region" class="styled-input">
-        <option value="">지역을 선택해 주세요</option>
-        <option value="ghana">가나</option>
-        <option value="gabon">가봉</option>
-        <option value="guyana">가이아나</option>
-        <option value="gambia">감비아</option>
-        <option value="guinea">기니</option>
-        <option value="guinea_bissau">기니비사우</option>
-        <option value="nigeria">나이지리아</option>
-        <option value="south_sudan">남수단</option>
-        <option value="nepal">네팔</option>
-        <option value="niger">니제르</option>
-        <option value="lebanon">레바논</option>
-        <option value="liberia">라이베리아</option>
-        <option value="rwanda">르완다</option>
-        <option value="mada">마다가스카르</option>
-        <option value="malawi">말라위</option>
-        <option value="mali">말리</option>
-        <option value="mexico">멕시코</option>
-        <option value="moritania">모리타니</option>
-        <option value="mozambique">모잠비크</option>
-        <option value="iowa_usa">미국(아이오와주)</option>
-        <option value="wa_usa">미국(워싱턴주)</option>
-        <option value="ca_usa">미국(캘리포니아주)</option>
-        <option value="myanmar">미얀마</option>
-        <option value="bahrain">바레인</option>
-        <option value="bangladesh">방글라데시</option>
-        <option value="venezuela">베네수엘라</option>
-        <option value="benin">베냉</option>
-        <option value="vietnam_se">베트남(남동부)</option>
-        <option value="bolivia">볼리비아</option>
-        <option value="burundi">부룬디</option>
-        <option value="burkina_faso">부르키나파소</option>
-        <option value="brazil">브라질</option>
-        <option value="saudi">사우디아라비아</option>
-        <option value="senegal">세네갈</option>
-        <option value="somalia">소말리아</option>
-        <option value="sudan">수단</option>
-        <option value="suriname">수리남</option>
-        <option value="syria">시리아</option>
-        <option value="sierra_leone">시에라리온</option>
-        <option value="uae">아랍에미리트</option>
-        <option value="argentina">아르헨티나</option>
-        <option value="haiti">아이티</option>
-        <option value="afghanistan">아프가니스탄</option>
-        <option value="angola">앙골라</option>
-        <option value="ecuador">에콰도르</option>
-        <option value="ethiopia">에티오피아</option>
-        <option value="yemen">예멘</option>
-        <option value="oman">오만</option>
-        <option value="jordan">요르단</option>
-        <option value="uganda">우간다</option>
-        <option value="iraq">이라크</option>
-        <option value="iran">이란</option>
-        <option value="israel">이스라엘</option>
-        <option value="india">인도</option>
-        <option value="zambia">잠비아</option>
-        <option value="equatorial_guinea">적도기니</option>
-        <option value="china_gd">중국(광둥성)</option>
-        <option value="china_gx">중국(광시좡족자치구)</option>
-        <option value="china_gz">중국(구이저우성)</option>
-        <option value="china_sx">중국(산시성)</option>
-        <option value="china_sc">중국(쓰촨성)</option>
-        <option value="china_yn">중국(운남성)</option>
-        <option value="china_cq">중국(충칭시)</option>
-        <option value="china_tj">중국(텐진시)</option>
-        <option value="china_hn">중국(허난성)</option>
-        <option value="china_hn2">중국(후난성)</option>
-        <option value="china_hb">중국(후베이성)</option>
-        <option value="car">중앙아프리카공화국</option>
-        <option value="zimbabwe">짐바브웨</option>
-        <option value="chad">차드</option>
-        <option value="qatar">카타르</option>
-        <option value="cameroon">카메룬</option>
-        <option value="cambodia">캄보디아</option>
-        <option value="kenya">케냐</option>
-        <option value="comoros">코모로</option>
-        <option value="ivory_coast">코트디부아르</option>
-        <option value="colombia">콜롬비아</option>
-        <option value="congo">콩고</option>
-        <option value="congo_dr">콩고민주공화국</option>
-        <option value="kuwait">쿠웨이트</option>
-        <option value="tanzania">탄자니아</option>
-        <option value="togo">토고</option>
-        <option value="trinidad">트리니다드토바고</option>
-        <option value="panama">파나마</option>
-        <option value="paraguay">파라과이</option>
-        <option value="pakistan">파키스탄</option>
-        <option value="peru">페루</option>
-        <option value="philippines">필리핀</option>
-        <option value="french_guiana">프랑스령 기아나</option>
-      </select>
-      <div class="date-grid">
-        <div class="date-item">
-          <label>승선일</label>
-          <input type="date" name="q6_onboard_date" class="styled-input">
+    <section class="card primary">
+      <div class="card-header"><span class="step-label">STEP 3.</span><span class="header-icon-mini">👥</span><h2>선원 교대 관련</h2></div>
+      <div class="card-body">
+        <div class="question"><p>Q6. 최근 21일 이내 검역관리지역에서 선원 교대가 있었습니까?</p>
+          <div class="radio-group"><label><input type="radio" name="q6" value="yes" onclick="toggleQ6(true)"> 예</label><label><input type="radio" name="q6" value="no" onclick="toggleQ6(false)"> 아니오</label></div>
         </div>
-        <div class="date-item">
-          <label>입항 예정일</label>
-          <input type="date" name="q6_arrival_date" class="styled-input">
+        <div id="q6Detail" class="detail-box">
+          <label class="input-label">승선지역</label>
+          <select name="q6_region" class="styled-input">
+            <option value="">지역을 선택해 주세요</option>
+            <option value="ghana_q6">가나</option><option value="gabon_q6">가봉</option><option value="guyana_q6">가이아나</option>
+            <option value="gambia_q6">감비아</option><option value="guinea_q6">기니</option><option value="guinea_bissau_q6">기니비사우</option>
+            <option value="nigeria_q6">나이지리아</option><option value="south_sudan_q6">남수단</option><option value="nepal_q6">네팔</option>
+            <option value="niger_q6">니제르</option><option value="lebanon_q6">레바논</option><option value="liberia_q6">라이베리아</option>
+            <option value="rwanda_q6">르완다</option><option value="mada_q6">마다가스카르</option><option value="malawi_q6">말라위</option>
+            <option value="mali_q6">말리</option><option value="mexico_q6">멕시코</option><option value="moritania_q6">모리타니</option>
+            <option value="mozambique_q6">모잠비크</option><option value="iowa_usa_q6">미국(아이오와주)</option><option value="wa_usa_q6">미국(워싱턴주)</option>
+            <option value="ca_usa_q6">미국(캘리포니아주)</option><option value="myanmar_q6">미얀마</option><option value="bahrain_q6">바레인</option>
+            <option value="bangladesh_q6">방글라데시</option><option value="venezuela_q6">베네수엘라</option><option value="benin_q6">베냉</option>
+            <option value="vietnam_se_q6">베트남(남동부)</option><option value="bolivia_q6">볼리비아</option><option value="burundi_q6">부룬디</option>
+            <option value="burkina_faso_q6">부르키나파소</option><option value="brazil_q6">브라질</option><option value="saudi_q6">사우디아라비아</option>
+            <option value="senegal_q6">세네갈</option><option value="somalia_q6">소말리아</option><option value="sudan_q6">수단</option>
+            <option value="suriname_q6">수리남</option><option value="syria_q6">시리아</option><option value="sierra_leone_q6">시에라리온</option>
+            <option value="uae_q6">아랍에미리트</option><option value="argentina_q6">아르헨티나</option><option value="haiti_q6">아이티</option>
+            <option value="afghanistan_q6">아프가니스탄</option><option value="angola_q6">앙골라</option><option value="ecuador_q6">에콰도르</option>
+            <option value="ethiopia_q6">에티오피아</option><option value="yemen_q6">예멘</option><option value="oman_q6">오만</option>
+            <option value="jordan_q6">요르단</option><option value="uganda_q6">우간다</option><option value="iraq_q6">이라크</option>
+            <option value="iran_q6">이란</option><option value="israel_q6">이스라엘</option><option value="india_q6">인도</option>
+            <option value="zambia_q6">잠비아</option><option value="equatorial_guinea_q6">적도기니</option>
+            <option value="china_gd_q6">중국(광둥성)</option><option value="china_gx_q6">중국(광시좡족자치구)</option><option value="china_gz_q6">중국(구이저우성)</option>
+            <option value="china_sx_q6">중국(산시성)</option><option value="china_sc_q6">중국(쓰촨성)</option><option value="china_yn_q6">중국(운남성)</option>
+            <option value="china_cq_q6">중국(충칭시)</option><option value="china_tj_q6">중국(텐진시)</option><option value="china_hn_q6">중국(허난성)</option>
+            <option value="china_hn2_q6">중국(후난성)</option><option value="china_hb_q6">중국(후베이성)</option>
+            <option value="car_q6">중앙아프리카공화국</option><option value="zimbabwe_q6">짐바브웨</option><option value="chad_q6">차드</option>
+            <option value="qatar_q6">카타르</option><option value="cameroon_q6">카메룬</option><option value="cambodia_q6">캄보디아</option>
+            <option value="kenya_q6">케냐</option><option value="comoros_q6">코모로</option><option value="ivory_coast_q6">코트디부아르</option>
+            <option value="colombia_q6">콜롬비아</option><option value="congo_q6">콩고</option><option value="congo_dr_q6">콩고민주공화국</option>
+            <option value="kuwait_q6">쿠웨이트</option><option value="tanzania_q6">탄자니아</option><option value="togo_q6">토고</option>
+            <option value="trinidad_q6">트리니다드토바고</option><option value="panama_q6">파나마</option><option value="paraguay_q6">파라과이</option>
+            <option value="pakistan_q6">파키스탄</option><option value="peru_q6">페루</option><option value="philippines_q6">필리핀</option>
+            <option value="french_guiana_q6">프랑스령 기아나</option>
+          </select>
+          <div class="date-grid">
+            <div class="date-item"><label>승선일</label><input type="date" name="q6_onboard_date" class="styled-input"></div>
+            <div class="date-item"><label>입항 예정일</label><input type="date" name="q6_arrival_date" class="styled-input"></div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
     <section class="card primary">
-      <div class="card-header">
-        <span class="step-label">STEP 4.</span>
-        <span class="header-icon-mini">📄</span>
-        <h2>선박위생관리 증명서</h2>
-      </div>
+      <div class="card-header"><span class="step-label">STEP 4.</span><span class="header-icon-mini">📄</span><h2>선박위생관리 증명서</h2></div>
       <div class="card-body">
-        <div class="question">
-          <p>Q7. 선박위생관리(면제) 증명서를 소지하지 않았거나 유효기간이 만료되었습니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="q7" value="yes"> 예</label>
-            <label><input type="radio" name="q7" value="no"> 아니오</label>
-          </div>
+        <div class="question"><p>Q7. 선박위생관리(면제) 증명서를 소지하지 않았거나 유효기간이 만료되었습니까?</p>
+          <div class="radio-group"><label><input type="radio" name="q7" value="yes"> 예</label><label><input type="radio" name="q7" value="no"> 아니오</label></div>
         </div>
       </div>
     </section>
 
     <section class="card gray">
-      <div class="card-header">
-        <span class="header-icon-mini">📋</span>
-        <h2>기타사항</h2>
-      </div>
+      <div class="card-header"><span class="header-icon-mini">📋</span><h2>기타사항</h2></div>
       <div class="card-body">
-        <div class="question">
-          <p>48시간 이내 출항 예정입니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="depart48" value="yes"> 예</label>
-            <label><input type="radio" name="depart48" value="no"> 아니오</label>
-          </div>
+        <div class="question"><p>48시간 이내 출항 예정입니까?</p>
+          <div class="radio-group"><label><input type="radio" name="depart48" value="yes"> 예</label><label><input type="radio" name="depart48" value="no"> 아니오</label></div>
         </div>
-        <div class="question">
-          <p>승선자(방선자 포함)가 있습니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="boarding" value="yes"> 예</label>
-            <label><input type="radio" name="boarding" value="no"> 아니오</label>
-          </div>
+        <div class="question"><p>승선자(방선자 포함)가 있습니까?</p>
+          <div class="radio-group"><label><input type="radio" name="boarding" value="yes"> 예</label><label><input type="radio" name="boarding" value="no"> 아니오</label></div>
         </div>
-        <div class="question">
-          <p>선박이 접안합니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="dock" value="yes"> 예</label>
-            <label><input type="radio" name="dock" value="no"> 아니오</label>
-          </div>
+        <div class="question"><p>선박이 접안합니까?</p>
+          <div class="radio-group"><label><input type="radio" name="dock" value="yes"> 예</label><label><input type="radio" name="dock" value="no"> 아니오</label></div>
         </div>
       </div>
     </section>
-
     <button type="button" class="btn-submit" onclick="calculateResult()">결과 확인</button>
   </form>
-
   <div id="result"></div>
 </main>
-
 <script src="script.js"></script>
 </body>
 </html>
