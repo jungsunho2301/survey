@@ -130,22 +130,27 @@ function calculateResult() {
     return;
   }
 
-  // 로직 2: 조사생략 조건 (수정됨: 선원 교대(Q6)가 없을 때만 조사생략 가능)
+  // 로직 2: 조사생략 조건 (선원 교대(Q6)가 없을 때만 조사생략 가능)
   const hasQ567 = [5,6,7].some(i => q(i) === "yes");
-  const noQ6 = (q(6) === "no"); // 선원 교대가 없어야 함
+  const noQ6 = (q(6) === "no"); 
 
   if (hasQ567 && noQ6 && depart48 && !boarding && !dock) {
     renderResult("조사생략", "조사생략 요건(48시간 이내 출항, 선원교대/승선자/접안 없음)을 충족함", "#22c55e");
     return;
   }
 
-  // 로직 3: Q5 지역별 기준일 판단
+  // 로직 3: Q5 지역별 기준일 판단 (날짜 표시 기능 추가됨)
   if (q(5) === "yes") {
     const d = new Date(departDate);
     const a = new Date(arrivalDate);
     const diff = (a - d) / (1000 * 60 * 60 * 24);
     if (diff <= countryDays[region]) {
-      renderResult("승선검역", `${regionLabel(region)} 출항 / ${countryDisease[region] || '감염병'} 잠복기 위험기간 내 입항`, "#ef4444");
+      const days = countryDays[region];
+      const disease = countryDisease[region] || '감염병';
+      const regionName = regionLabel(region);
+      
+      // 결과창에 잠복기 일수를 포함하여 출력
+      renderResult("승선검역", `${regionName} 출항 / ${disease} 잠복기 위험기간 내 입항 (${days}일)`, "#ef4444");
       return;
     }
   }
@@ -163,7 +168,6 @@ function calculateResult() {
   }
 
   // 로직 6: 기본값 (서류심사)
-  // Q6가 '예'이고 접안이 없거나, 기타 위험 요소가 발견되지 않은 경우 여기로 옵니다.
   renderResult("서류심사", "추가적인 승선검역 위험 요소가 발견되지 않음", "#f59e0b");
 }
 
