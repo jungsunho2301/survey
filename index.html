@@ -132,45 +132,127 @@
       </div>
     </section>
 
-    <section class="card primary">
-      <div class="card-header">
-        <span class="step-label">STEP 3.</span>
-        <span class="header-icon-mini">👥</span>
-        <h2>선원 교대 관련</h2>
+<section class="card primary">
+  <div class="card-header">
+    <span class="step-label">STEP 3.</span>
+    <span class="header-icon-mini">👥</span>
+    <h2>선원 교대 관련</h2>
+  </div>
+  <div class="card-body">
+    <div class="question">
+      <p>Q6. 최근 21일 이내 검역관리지역에서 선원 교대가 있었습니까?</p>
+      <div class="radio-group">
+        <label><input type="radio" name="q6" value="yes" onclick="toggleQ6(true)"> 예</label>
+        <label><input type="radio" name="q6" value="no" onclick="toggleQ6(false)"> 아니오</label>
       </div>
-      <div class="card-body">
-        <div class="question">
-          <p>Q6. 최근 21일 이내 검역관리지역에서 선원 교대가 있었습니까?</p>
-          <div class="radio-group">
-            <label><input type="radio" name="q6" value="yes" onclick="toggleQ6(true)"> 예</label>
-            <label><input type="radio" name="q6" value="no" onclick="toggleQ6(false)"> 아니오</label>
-          </div>
+    </div>
+    <div id="q6Detail" class="detail-box">
+      <label class="input-label">승선지역</label>
+      <select name="q6_region" class="styled-input">
+        <option value="">지역을 선택해 주세요</option>
+        <option value="ghana">가나</option>
+        <option value="gabon">가봉</option>
+        <option value="guyana">가이아나</option>
+        <option value="gambia">감비아</option>
+        <option value="guinea">기니</option>
+        <option value="guinea_bissau">기니비사우</option>
+        <option value="nigeria">나이지리아</option>
+        <option value="south_sudan">남수단</option>
+        <option value="nepal">네팔</option>
+        <option value="niger">니제르</option>
+        <option value="lebanon">레바논</option>
+        <option value="liberia">라이베리아</option>
+        <option value="rwanda">르완다</option>
+        <option value="mada">마다가스카르</option>
+        <option value="malawi">말라위</option>
+        <option value="mali">말리</option>
+        <option value="mexico">멕시코</option>
+        <option value="moritania">모리타니</option>
+        <option value="mozambique">모잠비크</option>
+        <option value="iowa_usa">미국(아이오와주)</option>
+        <option value="wa_usa">미국(워싱턴주)</option>
+        <option value="ca_usa">미국(캘리포니아주)</option>
+        <option value="myanmar">미얀마</option>
+        <option value="bahrain">바레인</option>
+        <option value="bangladesh">방글라데시</option>
+        <option value="venezuela">베네수엘라</option>
+        <option value="benin">베냉</option>
+        <option value="vietnam_se">베트남(남동부)</option>
+        <option value="bolivia">볼리비아</option>
+        <option value="burundi">부룬디</option>
+        <option value="burkina_faso">부르키나파소</option>
+        <option value="brazil">브라질</option>
+        <option value="saudi">사우디아라비아</option>
+        <option value="senegal">세네갈</option>
+        <option value="somalia">소말리아</option>
+        <option value="sudan">수단</option>
+        <option value="suriname">수리남</option>
+        <option value="syria">시리아</option>
+        <option value="sierra_leone">시에라리온</option>
+        <option value="uae">아랍에미리트</option>
+        <option value="argentina">아르헨티나</option>
+        <option value="haiti">아이티</option>
+        <option value="afghanistan">아프가니스탄</option>
+        <option value="angola">앙골라</option>
+        <option value="ecuador">에콰도르</option>
+        <option value="ethiopia">에티오피아</option>
+        <option value="yemen">예멘</option>
+        <option value="oman">오만</option>
+        <option value="jordan">요르단</option>
+        <option value="uganda">우간다</option>
+        <option value="iraq">이라크</option>
+        <option value="iran">이란</option>
+        <option value="israel">이스라엘</option>
+        <option value="india">인도</option>
+        <option value="zambia">잠비아</option>
+        <option value="equatorial_guinea">적도기니</option>
+        <option value="china_gd">중국(광둥성)</option>
+        <option value="china_gx">중국(광시좡족자치구)</option>
+        <option value="china_gz">중국(구이저우성)</option>
+        <option value="china_sx">중국(산시성)</option>
+        <option value="china_sc">중국(쓰촨성)</option>
+        <option value="china_yn">중국(운남성)</option>
+        <option value="china_cq">중국(충칭시)</option>
+        <option value="china_tj">중국(텐진시)</option>
+        <option value="china_hn">중국(허난성)</option>
+        <option value="china_hn2">중국(후난성)</option>
+        <option value="china_hb">중국(후베이성)</option>
+        <option value="car">중앙아프리카공화국</option>
+        <option value="zimbabwe">짐바브웨</option>
+        <option value="chad">차드</option>
+        <option value="qatar">카타르</option>
+        <option value="cameroon">카메룬</option>
+        <option value="cambodia">캄보디아</option>
+        <option value="kenya">케냐</option>
+        <option value="comoros">코모로</option>
+        <option value="ivory_coast">코트디부아르</option>
+        <option value="colombia">콜롬비아</option>
+        <option value="congo">콩고</option>
+        <option value="congo_dr">콩고민주공화국</option>
+        <option value="kuwait">쿠웨이트</option>
+        <option value="tanzania">탄자니아</option>
+        <option value="togo">토고</option>
+        <option value="trinidad">트리니다드토바고</option>
+        <option value="panama">파나마</option>
+        <option value="paraguay">파라과이</option>
+        <option value="pakistan">파키스탄</option>
+        <option value="peru">페루</option>
+        <option value="philippines">필리핀</option>
+        <option value="french_guiana">프랑스령 기아나</option>
+      </select>
+      <div class="date-grid">
+        <div class="date-item">
+          <label>승선일</label>
+          <input type="date" name="q6_onboard_date" class="styled-input">
         </div>
-        <div id="q6Detail" class="detail-box">
-          <label class="input-label">승선지역</label>
-          <select name="q6_region" class="styled-input">
-            <option value="">지역을 선택해 주세요</option>
-            <option value="south_sudan">남수단</option>
-            <option value="rwanda">르완다</option>
-            <option value="ethiopia">에티오피아</option>
-            <option value="uganda">우간다</option>
-            <option value="kenya">케냐</option>
-            <option value="congo">콩고민주공화국</option>
-            <option value="tanzania">탄자니아</option>
-          </select>
-          <div class="date-grid">
-            <div class="date-item">
-              <label>승선일</label>
-              <input type="date" name="q6_onboard_date" class="styled-input">
-            </div>
-            <div class="date-item">
-              <label>입항 예정일</label>
-              <input type="date" name="q6_arrival_date" class="styled-input">
-            </div>
-          </div>
+        <div class="date-item">
+          <label>입항 예정일</label>
+          <input type="date" name="q6_arrival_date" class="styled-input">
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
 
     <section class="card primary">
       <div class="card-header">
