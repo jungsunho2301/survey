@@ -61,19 +61,101 @@ const countryDisease = {
 ========================= */
 function regionLabelQ6(value) {
     const labels = {
-        south_sudan: "남수단", rwanda: "르완다", ethiopia: "에티오피아",
-        uganda: "우간다", kenya: "케냐", congo: "콩고민주공화국", tanzania: "탄자니아"
+        // 동물인플루엔자 (10일)
+        mexico: "멕시코", iowa_usa: "미국(아이오와주)", wa_usa_q6: "미국(워싱턴주)", ca_usa_q6: "미국(캘리포니아주)",
+        bangladesh_ai: "방글라데시", vietnam_se: "베트남(남동부)", india_ai: "인도",
+        china_gd_q6: "중국(광둥성)", china_gx_q6: "중국(광시좡족자치구)", china_gz_q6: "중국(구이저우성)",
+        china_sx_q6: "중국(산시성)", china_sc_q6: "중국(쓰촨성)", china_yn_q6: "중국(운남성)",
+        china_cq_q6: "중국(충칭시)", china_tj_q6: "중국(텐진시)", china_hn_q6: "중국(허난성)",
+        china_hn2_q6: "중국(후난성)", china_hb_q6: "중국(후베이성)", cambodia_ai: "캄보디아",
+
+        // MERS (14일)
+        lebanon_m: "레바논", bahrain_m: "바레인", saudi_m: "사우디아라비아", syria_m: "시리아",
+        uae_m: "아랍에미리트", yemen_m: "예멘", oman_m: "오만", jordan_m: "요르단",
+        iraq_m: "이라크", iran_m: "이란", israel_m: "이스라엘", qatar_m: "카타르", kuwait_m: "쿠웨이트",
+
+        // 콜레라 (5일)
+        ghana_c: "가나", nigeria_c: "나이지리아", south_sudan_c: "남수단", nepal_c: "네팔",
+        niger_c: "니제르", rwanda_c: "르완다", malawi_c: "말라위", mozambique_c: "모잠비크",
+        myanmar_c: "미얀마", bangladesh_c: "방글라데시", burundi_c: "부룬디", somalia_c: "소말리아",
+        sudan_c: "수단", syria_c: "시리아", afghanistan_c: "아프가니스탄", angola_c: "앙골라",
+        haiti_c: "아이티", ethiopia_c: "에티오피아", yemen_c: "예멘", uganda_c: "우간다",
+        iraq_c: "이라크", india_c: "인도", zambia_c: "잠비아", zimbabwe_c: "짐바브웨",
+        chad_c: "차드", kenya_c: "케냐", comoros_c: "코모로", ivory_coast_c: "코트디부아르",
+        congo_c: "콩고", congo_dr_c: "콩고민주공화국", tanzania_c: "탄자니아", togo_c: "토고",
+        pakistan_c: "파키스탄", philippines_c: "필리핀",
+
+        // 황열 (6일)
+        ghana_y: "가나", gabon_y: "가봉", guyana_y: "가이아나", gambia_y: "감비아",
+        guinea_y: "기니", guinea_bissau_y: "기니비사우", nigeria_y: "나이지리아", south_sudan_y: "남수단",
+        niger_y: "니제르", liberia_y: "라이베리아", mali_y: "말리", mauritania_y: "모리타니",
+        benin_y: "베냉", venezuela_y: "베네수엘라", bolivia_y: "볼리비아", burundi_y: "부룬디",
+        burkina_faso_y: "부르키나파소", brazil_y: "브라질", senegal_y: "세네갈", sudan_y: "수단",
+        suriname_y: "수리남", sierra_leone_y: "시에라리온", argentina_y: "아르헨티나", angola_y: "앙골라",
+        ecuador_y: "에콰도르", ethiopia_y: "에티오피아", uganda_y: "우간다", equatorial_guinea_y: "적도기니",
+        car_y: "중앙아프리카공화국", chad_y: "차드", cameroon_y: "카메룬", kenya_y: "케냐",
+        ivory_coast_y: "코트디부아르", colombia_y: "콜롬비아", congo_y: "콩고", congo_dr_y: "콩고민주공화국",
+        togo_y: "토고", trinidad_y: "트리니다드토바고", panama_y: "파나마", paraguay_y: "파라과이",
+        peru_y: "페루", french_guiana_y: "프랑스령 기아나"
     };
     return labels[value] || "미선택";
 }
 
 const countryDaysQ6 = {
-    south_sudan: 21, rwanda: 21, ethiopia: 21, uganda: 21, kenya: 21, congo: 21, tanzania: 21
+    // 5일 (콜레라)
+    ghana_c: 5, nigeria_c: 5, south_sudan_c: 5, nepal_c: 5, niger_c: 5, rwanda_c: 5, malawi_c: 5, 
+    mozambique_c: 5, myanmar_c: 5, bangladesh_c: 5, burundi_c: 5, somalia_c: 5, sudan_c: 5, 
+    syria_c: 5, afghanistan_c: 5, angola_c: 5, haiti_c: 5, ethiopia_c: 5, yemen_c: 5, uganda_c: 5, 
+    iraq_c: 5, india_c: 5, zambia_c: 5, zimbabwe_c: 5, chad_c: 5, kenya_c: 5, comoros_c: 5, 
+    ivory_coast_c: 5, congo_c: 5, congo_dr_c: 5, tanzania_c: 5, togo_c: 5, pakistan_c: 5, philippines_c: 5,
+    
+    // 6일 (황열)
+    ghana_y: 6, gabon_y: 6, guyana_y: 6, gambia_y: 6, guinea_y: 6, guinea_bissau_y: 6, nigeria_y: 6, 
+    south_sudan_y: 6, niger_y: 6, liberia_y: 6, mali_y: 6, mauritania_y: 6, benin_y: 6, venezuela_y: 6, 
+    bolivia_y: 6, burundi_y: 6, burkina_faso_y: 6, brazil_y: 6, senegal_y: 6, sudan_y: 6, suriname_y: 6, 
+    sierra_leone_y: 6, argentina_y: 6, angola_y: 6, ecuador_y: 6, ethiopia_y: 6, uganda_y: 6, 
+    equatorial_guinea_y: 6, car_y: 6, chad_y: 6, cameroon_y: 6, kenya_y: 6, ivory_coast_y: 6, 
+    colombia_y: 6, congo_y: 6, congo_dr_y: 6, togo_y: 6, trinidad_y: 6, panama_y: 6, paraguay_y: 6, 
+    peru_y: 6, french_guiana_y: 6,
+
+    // 10일 (동물인플루엔자)
+    mexico: 10, iowa_usa: 10, wa_usa_q6: 10, ca_usa_q6: 10, bangladesh_ai: 10, vietnam_se: 10, 
+    india_ai: 10, china_gd_q6: 10, china_gx_q6: 10, china_gz_q6: 10, china_sx_q6: 10, china_sc_q6: 10, 
+    china_yn_q6: 10, china_cq_q6: 10, china_tj_q6: 10, china_hn_q6: 10, china_hn2_q6: 10, china_hb_q6: 10, 
+    cambodia_ai: 10,
+
+    // 14일 (MERS)
+    lebanon_m: 14, bahrain_m: 14, saudi_m: 14, syria_m: 14, uae_m: 14, yemen_m: 14, 
+    oman_m: 14, jordan_m: 14, iraq_m: 14, iran_m: 14, israel_m: 14, qatar_m: 14, kuwait_m: 14
 };
 
 const countryDiseaseQ6 = {
-    south_sudan: "에볼라바이러스병", rwanda: "에볼라바이러스병", ethiopia: "에볼라바이러스병",
-    uganda: "에볼라바이러스병", kenya: "에볼라바이러스병", congo: "에볼라바이러스병", tanzania: "에볼라바이러스병"
+    ghana_c: "콜레라", nigeria_c: "콜레라", south_sudan_c: "콜레라", nepal_c: "콜레라", niger_c: "콜레라", 
+    rwanda_c: "콜레라", malawi_c: "콜레라", mozambique_c: "콜레라", myanmar_c: "콜레라", bangladesh_c: "콜레라", 
+    burundi_c: "콜레라", somalia_c: "콜레라", sudan_c: "콜레라", syria_c: "콜레라", afghanistan_c: "콜레라", 
+    angola_c: "콜레라", haiti_c: "콜레라", ethiopia_c: "콜레라", yemen_c: "콜레라", uganda_c: "콜레라", 
+    iraq_c: "콜레라", india_c: "콜레라", zambia_c: "콜레라", zimbabwe_c: "콜레라", chad_c: "콜레라", 
+    kenya_c: "콜레라", comoros_c: "콜레라", ivory_coast_c: "콜레라", congo_c: "콜레라", congo_dr_c: "콜레라", 
+    tanzania_c: "콜레라", togo_c: "콜레라", pakistan_c: "콜레라", philippines_c: "콜레라",
+    
+    ghana_y: "황열", gabon_y: "황열", guyana_y: "황열", gambia_y: "황열", guinea_y: "황열", 
+    guinea_bissau_y: "황열", nigeria_y: "황열", south_sudan_y: "황열", niger_y: "황열", liberia_y: "황열", 
+    mali_y: "황열", mauritania_y: "황열", benin_y: "황열", venezuela_y: "황열", bolivia_y: "황열", 
+    burundi_y: "황열", burkina_faso_y: "황열", brazil_y: "황열", senegal_y: "황열", sudan_y: "황열", 
+    suriname_y: "황열", sierra_leone_y: "황열", argentina_y: "황열", angola_y: "황열", ecuador_y: "황열", 
+    ethiopia_y: "황열", uganda_y: "황열", equatorial_guinea_y: "황열", car_y: "황열", chad_y: "황열", 
+    cameroon_y: "황열", kenya_y: "황열", ivory_coast_y: "황열", colombia_y: "황열", congo_y: "황열", 
+    congo_dr_y: "황열", togo_y: "황열", trinidad_y: "황열", panama_y: "황열", paraguay_y: "황열", 
+    peru_y: "황열", french_guiana_y: "황열",
+
+    mexico: "AI", iowa_usa: "AI", wa_usa_q6: "AI", ca_usa_q6: "AI", bangladesh_ai: "AI", 
+    vietnam_se: "AI", india_ai: "AI", china_gd_q6: "AI", china_gx_q6: "AI", china_gz_q6: "AI", 
+    china_sx_q6: "AI", china_sc_q6: "AI", china_yn_q6: "AI", china_cq_q6: "AI", china_tj_q6: "AI", 
+    china_hn_q6: "AI", china_hn2_q6: "AI", china_hb_q6: "AI", cambodia_ai: "AI",
+
+    lebanon_m: "MERS", bahrain_m: "MERS", saudi_m: "MERS", syria_m: "MERS", uae_m: "MERS", 
+    yemen_m: "MERS", oman_m: "MERS", jordan_m: "MERS", iraq_m: "MERS", iran_m: "MERS", 
+    israel_m: "MERS", qatar_m: "MERS", kuwait_m: "MERS"
 };
 
 /* =========================
