@@ -2,13 +2,13 @@
    1. 상세 입력창 토글 함수
    ========================================= */
 function toggleQ5(show) {
-  const detailBox = document.getElementById("q5Detail");
-  if (detailBox) detailBox.style.display = show ? "block" : "none";
+  const d = document.getElementById("q5Detail");
+  if (d) d.style.display = show ? "block" : "none";
 }
 
 function toggleQ6(show) {
-  const detailBox = document.getElementById("q6Detail");
-  if (detailBox) detailBox.style.display = show ? "block" : "none";
+  const d = document.getElementById("q6Detail");
+  if (d) d.style.display = show ? "block" : "none";
 }
 
 /* =========================================
@@ -234,105 +234,140 @@ function regionLabelQ6(v) {
 }
 
 /* =========================================
-   4. 폼 유효성 검사
+   4. 폼 유효성 검사 (Q1~Q7 전체 복구 및 번호 안내)
    ========================================= */
 function validateForm(f) {
-  for (let i = 1; i <= 7; i++) {
-    if (!f.get(`q${i}`)) { alert(`Q${i}번 문항을 선택해주세요.`); return false; }
-  }
-  if (!f.get("depart48") || !f.get("boarding") || !f.get("dock")) {
-    alert("기타사항의 모든 항목을 선택해주세요."); return false;
-  }
+  // Q1 ~ Q7 모든 문항이 선택되었는지 하나씩 체크합니다.
+  if (!f.get("q1")) { alert("Q1번 문항을 선택해주세요."); return false; }
+  if (!f.get("q2")) { alert("Q2번 문항을 선택해주세요."); return false; }
+  if (!f.get("q3")) { alert("Q3번 문항을 선택해주세요."); return false; }
+  if (!f.get("q4")) { alert("Q4번 문항을 선택해주세요."); return false; }
+  if (!f.get("q5")) { alert("Q5번 문항을 선택해주세요."); return false; }
+  if (!f.get("q6")) { alert("Q6번 문항을 선택해주세요."); return false; }
+  if (!f.get("q7")) { alert("Q7번 문항을 선택해주세요."); return false; }
+  
+  // 기타사항 체크
+  if (!f.get("depart48")) { alert("48시간 이내 출항 여부를 선택해주세요."); return false; }
+  if (!f.get("boarding")) { alert("승선자 여부를 선택해주세요."); return false; }
+  if (!f.get("dock")) { alert("선박 접안 여부를 선택해주세요."); return false; }
+  
+  // Q5 상세 입력값 체크 (예 선택 시)
   if (f.get("q5") === "yes") {
-    if (!f.get("q5_region") || !f.get("q5_departure_date") || !f.get("q5_arrival_date")) {
-      alert("Q5 상세 항목을 모두 입력해주세요."); return false;
+    if (!f.get("q5_region") || !f.get("q5_departure_date") || !f.get("q5_arrival_date")) { 
+      alert("Q5 상세 항목(지역, 날짜)을 모두 입력해주세요."); return false; 
     }
-    const d5 = new Date(f.get("q5_departure_date")), a5 = new Date(f.get("q5_arrival_date"));
-    if (a5 < d5) { alert("Q5: 입항 예정일이 출항일보다 빠를 수 없습니다."); return false; }
+    if (new Date(f.get("q5_arrival_date")) < new Date(f.get("q5_departure_date"))) { 
+      alert("Q5: 입항 예정일이 출항일보다 빠를 수 없습니다."); return false; 
+    }
   }
+
+  // Q6 상세 입력값 체크 (예 선택 시)
   if (f.get("q6") === "yes") {
-    if (!f.get("q6_region") || !f.get("q6_onboard_date") || !f.get("q6_arrival_date")) {
-      alert("Q6 상세 항목을 모두 입력해주세요."); return false;
+    if (!f.get("q6_region") || !f.get("q6_onboard_date") || !f.get("q6_arrival_date")) { 
+      alert("Q6 상세 항목(지역, 날짜)을 모두 입력해주세요."); return false; 
     }
-    const o6 = new Date(f.get("q6_onboard_date")), a6 = new Date(f.get("q6_arrival_date"));
-    if (a6 < o6) { alert("Q6: 입항 예정일이 승선일보다 빠를 수 없습니다."); return false; }
+    if (new Date(f.get("q6_arrival_date")) < new Date(f.get("q6_onboard_date"))) { 
+      alert("Q6: 입항 예정일이 승선일보다 빠를 수 없습니다."); return false; 
+    }
   }
   return true;
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수
+   5. 결과 계산 메인 함수 (최종 로직)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
   if (!validateForm(f)) return;
 
   const q = n => f.get(`q${n}`);
+  const isDock = f.get("dock") === "yes";
+  const isDepart48 = f.get("depart48") === "yes";
+  const isNoBoarding = f.get("boarding") === "no";
+  
   const reasons = [];
-  let isQuarantine = false;
+  let isQuarantine = false; 
+  let isExemption = false;  
 
-  // 로직 1: STEP 1 (즉시 승선검역)
+  /* --- [단계 1] 승선검역 판별 --- */
+  
+  // 1-1. Q1~Q4 즉시 사유 (Q2, Q3 복구 완료)
   if ([1,2,3,4].some(i => q(i) === "yes")) {
     isQuarantine = true;
     reasons.push("STEP 1: 즉시 승선검역 사유 확인됨");
   }
 
-  // 로직 2: Q5 중점검역지역 체크
+  // 1-2. Q5 잠복기 체크
   if (q(5) === "yes") {
     const reg = f.get("q5_region");
-    const diff = (new Date(f.get("q5_arrival_date")) - new Date(f.get("q5_departure_date"))) / 86400000;
     const data = q5Data[reg];
+    const diff = (new Date(f.get("q5_arrival_date")) - new Date(f.get("q5_departure_date"))) / 86400000;
     if (data && diff <= data.day) {
       isQuarantine = true;
       reasons.push(`Q5: ${data.l} 출항 / ${data.d} 잠복기 위험기간 내 입항 (${data.day}일)`);
     }
   }
 
-  // 로직 3: Q6 선원교대 중복 질병 체크
+  // 1-3. Q6 선원교대 로직 (잠복기 내 교대 OR 접안 시 승선검역)
   if (q(6) === "yes") {
     const reg = f.get("q6_region");
     const diff = (new Date(f.get("q6_arrival_date")) - new Date(f.get("q6_onboard_date"))) / 86400000;
     const diseaseList = q6Data[reg] || [];
+    
+    let inIncubation = false;
     diseaseList.forEach(item => {
       if (diff <= item.day) {
         isQuarantine = true;
+        inIncubation = true;
         reasons.push(`Q6: ${regionLabelQ6(reg)} 승선 / ${item.d} 최대 잠복기간 이내 선원 교대 (${item.day}일)`);
       }
     });
+
+    if (isDock && !inIncubation) {
+      isQuarantine = true;
+      reasons.push("Q6: 검역관리지역 선원 교대 발생 + 선박 접안");
+    }
   }
 
-  // 로직 4: Q6 발생 + 접안
-  if (q(6) === "yes" && f.get("dock") === "yes" && !reasons.some(r => r.includes("Q6:"))) {
+  // 1-4. Q7 부적합
+  if (q(7) === "yes") {
     isQuarantine = true;
-    reasons.push("Q6: 검역관리지역 선원 교대 발생 + 선박 접안");
+    reasons.push("Q7: 선박위생관리 증명서 부적합");
   }
 
-  // 로직 5: Q7 증명서
-  if (q(7) === "yes") { isQuarantine = true; reasons.push("Q7: 선박위생관리 증명서 부적합"); }
+  /* --- [단계 2] 조사생략 판별 (Q5, Q7 한정) --- */
+  if (!isQuarantine) {
+    const hasRiskQ5Q7 = (q(5) === "yes" || q(7) === "yes");
+    if (hasRiskQ5Q7 && isDepart48 && isNoBoarding && !isDock) {
+      isExemption = true;
+    }
+  }
 
-  // 최종 판정 및 출력
+  /* --- [단계 3] 결과 출력 --- */
   if (isQuarantine) {
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
-  } else {
-    const ok = f.get("depart48") === "yes" && f.get("boarding") === "no" && f.get("dock") === "no" && q(6) === "no";
-    if (ok) renderResult("조사생략", "조사생략 요건 충족", "#22c55e");
-    else renderResult("서류심사", "추가 위험 요소 없음", "#f59e0b");
+  } 
+  else if (isExemption) {
+    renderResult("조사생략", "조사생략 요건 충족", "#22c55e");
+  } 
+  else {
+    renderResult("서류심사", "추가 위험 요소 없음", "#f59e0b");
   }
 }
 
 /* =========================================
-   6. 디자인 출력 및 스크롤 제어
+   6. 디자인 출력 함수
    ========================================= */
-function renderResult(title, reason, color) {
+function renderResult(t, r, c) {
   const rb = document.getElementById("result");
   rb.style.display = "block";
-  rb.style.borderTop = `6px solid ${color}`;
+  rb.style.borderTop = `6px solid ${c}`;
   rb.innerHTML = `
     <div style="text-align:center; padding: 10px 0;">
       <p style="font-size:14px; color:#64748b; margin-bottom:5px; font-weight:500;">자동 판별 결과</p>
-      <h2 style="font-size:32px; color:${color}; margin:0 0 15px 0; font-weight:900; letter-spacing:-1px;">${title}</h2>
+      <h2 style="font-size:32px; color:${c}; margin:0 0 15px 0; font-weight:900; letter-spacing:-1px;">${t}</h2>
       <div style="background:#f1f5f9; padding:15px; border-radius:10px; font-size:15px; color:#334155; line-height:1.6; text-align:left; border:1px solid #e2e8f0;">
-        <strong style="color:${color}">● 사유:</strong><br>${reason}
+        <strong style="color:${c}">● 사유:</strong><br>${r}
       </div>
       <button onclick="window.scrollTo({top:0, behavior:'smooth'}); setTimeout(()=>location.reload(), 500);" 
               style="margin-top:20px; background:white; border:1px solid #cbd5e1; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:14px; color:#64748b; font-weight:500;">
