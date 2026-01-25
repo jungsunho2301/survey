@@ -237,7 +237,6 @@ function regionLabelQ6(v) {
    4. 폼 유효성 검사 (상세 항목 입력 강제)
    ========================================= */
 function validateForm(f) {
-  // 기본 문항 체크 (Q1~Q7)
   if (!f.get("q1")) { alert("Q1번 문항을 선택해주세요."); return false; }
   if (!f.get("q2")) { alert("Q2번 문항을 선택해주세요."); return false; }
   if (!f.get("q3")) { alert("Q3번 문항을 선택해주세요."); return false; }
@@ -246,23 +245,18 @@ function validateForm(f) {
   if (!f.get("q6")) { alert("Q6번 문항을 선택해주세요."); return false; }
   if (!f.get("q7")) { alert("Q7번 문항을 선택해주세요."); return false; }
 
-  // Q5 상세 입력 강제
   if (f.get("q5") === "yes") {
     if (!f.get("q5_region") || !f.get("q5_departure_date") || !f.get("q5_arrival_date")) {
       alert("Q5 상세 항목(지역, 출항일, 입항일)을 모두 입력해야 결과 확인이 가능합니다.");
       return false;
     }
   }
-
-  // Q6 상세 입력 강제
   if (f.get("q6") === "yes") {
     if (!f.get("q6_region") || !f.get("q6_onboard_date") || !f.get("q6_arrival_date")) {
       alert("Q6 상세 항목(지역, 승선일, 입항일)을 모두 입력해야 결과 확인이 가능합니다.");
       return false;
     }
   }
-
-  // 기타 사항 체크
   if (!f.get("depart48") || !f.get("boarding") || !f.get("dock")) {
     alert("기타사항(출항시간, 승선자, 접안여부)을 모두 선택해주세요.");
     return false;
@@ -271,7 +265,7 @@ function validateForm(f) {
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수 (문구 및 Q6 로직 수정)
+   5. 결과 계산 메인 함수 (Q6 접안 시 무조건 승선검역)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
@@ -285,13 +279,15 @@ function calculateResult() {
   const reasons = [];
   let isQuarantine = false; 
 
-  // --- [A] 승선검역 후보 사유 수집 ---
+  // --- [A] 승선검역 사유 수집 ---
   
+  // 1. Q1~Q4 즉시 사유
   if ([1,2,3,4].some(i => q(i) === "yes")) {
     isQuarantine = true;
     reasons.push("STEP 1: 즉시 승선검역 사유 확인됨");
   }
 
+  // 2. Q5 잠복기 체크
   if (q(5) === "yes") {
     const reg = f.get("q5_region");
     const data = q5Data[reg];
@@ -302,11 +298,14 @@ function calculateResult() {
     }
   }
 
+  // 3. Q6 선원교대 로직 (핵심 수정)
   let q6Incubation = false;
   if (q(6) === "yes") {
     const reg = f.get("q6_region");
     const diff = (new Date(f.get("q6_arrival_date")) - new Date(f.get("q6_onboard_date"))) / 86400000;
     const diseaseList = q6Data[reg] || [];
+    
+    // (1) 잠복기 체크
     diseaseList.forEach(item => {
       if (diff <= item.day) {
         isQuarantine = true;
@@ -314,31 +313,38 @@ function calculateResult() {
         reasons.push(`Q6: ${regionLabelQ6(reg)} 승선 / ${item.d} 잠복기 내 선원교대`);
       }
     });
-    if (isDock && !q6Incubation) {
+
+    // (2) 접안 시 무조건 승선검역 (잠복기 경과나 기타사항 상관없음)
+    if (isDock) {
       isQuarantine = true;
-      reasons.push("Q6: 검역관리지역 선원 교대 발생 + 선박 접안");
+      // 잠복기 사유가 이미 기록되지 않았다면 접안 사유 추가
+      if (!q6Incubation) {
+        reasons.push("Q6: 검역관리지역 선원 교대 발생 + 선박 접안");
+      }
     }
   }
 
-  if (q(7) === "yes") { reasons.push("Q7: 선박위생관리 증명서 부적합"); }
+  // 4. Q7 부적합
+  if (q(7) === "yes") {
+    reasons.push("Q7: 선박위생관리 증명서 부적합");
+  }
 
   // --- [B] 최종 판정 단계 ---
 
-  // 1. 조사생략 판정 (Q6가 'yes'면 원천 차단)
+  // 1. 조사생략 판정 (Q6가 'yes'면 아예 진입 불가)
   if (q(6) === "no" && ![1,2,3,4].some(i => q(i) === "yes")) {
     const hasRiskQ5Q7 = (q(5) === "yes" || q(7) === "yes");
-    // Q5/Q7 위험요인 발생 + 48시간 내 출항 + 승선자 없음 + 비접안
     if (hasRiskQ5Q7 && isDepart48 && isNoBoarding && !isDock) {
       renderResult("조사생략", "조사생략 요건 충족<br>(비대면 및 단기체류 확인)", "#22c55e");
       return; 
     }
   }
 
-  // 2. 승선검역 판정
-  if (isQuarantine || q(7) === "yes" || (q(6) === "yes" && isDock)) {
+  // 2. 승선검역 판정 (Q6+접안 시 무조건 여기로 옴)
+  if (isQuarantine || q(7) === "yes") {
     renderResult("승선검역", reasons.join("<br>") || "검역 규정에 따른 승선조사 대상", "#ef4444");
   } 
-  // 3. 서류심사 (나머지 모든 경우)
+  // 3. 서류심사 (그 외 모든 경우)
   else {
     renderResult("서류심사", "추가 위험 요소 없음", "#f59e0b");
   }
