@@ -250,6 +250,7 @@ function validateForm(f) {
     { id: "boarding", msg: "기타사항: 승선자(방선자 포함) 여부를 선택해주세요." }
   ];
 
+  // [1] 기본 라디오 버튼 체크 여부 확인
   for (let item of questions) {
     if (!f.get(item.id)) {
       alert(item.msg);
@@ -257,18 +258,41 @@ function validateForm(f) {
     }
   }
 
-  // Q5/Q6 상세 검사는 기존 로직 유지
+  // [2] Q5 상세 입력 및 날짜 논리 체크
   if (f.get("q5") === "yes") {
-    if (!f.get("q5_region") || !f.get("q5_departure_date") || !f.get("q5_arrival_date")) {
-      alert("Q5 상세 항목(지역, 날짜)을 모두 입력해주세요."); return false;
+    const depDate = f.get("q5_departure_date");
+    const arrDate = f.get("q5_arrival_date");
+
+    if (!f.get("q5_region") || !depDate || !arrDate) {
+      alert("Q5 상세 항목(지역, 날짜)을 모두 입력해주세요.");
+      return false;
+    }
+
+    // 날짜 비교: 입항일이 출항일보다 빠를 경우
+    if (new Date(arrDate) < new Date(depDate)) {
+      alert("오류: Q5 입항 예정일이 출항일보다 빠를 수 없습니다. 날짜를 확인해주세요.");
+      return false;
     }
   }
+
+  // [3] Q6 상세 입력 및 날짜 논리 체크
   if (f.get("q6") === "yes") {
-    if (!f.get("q6_region") || !f.get("q6_onboard_date") || !f.get("q6_arrival_date")) {
-      alert("Q6 상세 항목(지역, 날짜)을 모두 입력해주세요."); return false;
+    const onDate = f.get("q6_onboard_date");
+    const arrDate = f.get("q6_arrival_date");
+
+    if (!f.get("q6_region") || !onDate || !arrDate) {
+      alert("Q6 상세 항목(지역, 날짜)을 모두 입력해주세요.");
+      return false;
+    }
+
+    // 날짜 비교: 입항일이 승선일보다 빠를 경우
+    if (new Date(arrDate) < new Date(onDate)) {
+      alert("오류: Q6 입항 예정일이 승선일보다 빠를 수 없습니다. 날짜를 확인해주세요.");
+      return false;
     }
   }
-  return true;
+
+  return true; // 모든 검사를 통과하면 true 반환
 }
 
 /* =========================================
