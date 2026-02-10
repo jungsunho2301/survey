@@ -378,24 +378,39 @@ function renderResult(t, r, c) {
   rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 /* =========================================
-   6. 디자인 출력 함수
+   6. 디자인 출력 함수 (사유 박스 조건부 렌더링)
    ========================================= */
 function renderResult(t, r, c) {
   const rb = document.getElementById("result");
   rb.style.display = "block";
   rb.style.borderTop = `6px solid ${c}`;
-  rb.innerHTML = `
-    <div style="text-align:center; padding: 10px 0;">
-      <p style="font-size:14px; color:#64748b; margin-bottom:5px; font-weight:500;">자동 판별 결과</p>
-      <h2 style="font-size:32px; color:${c}; margin:0 0 15px 0; font-weight:900; letter-spacing:-1px;">${t}</h2>
-      <div style="background:#f1f5f9; padding:15px; border-radius:10px; font-size:15px; color:#334155; line-height:1.6; text-align:left; border:1px solid #e2e8f0;">
+  
+  // 사유(r)가 있을 때만 HTML 생성, 없으면 빈 문자열
+  let reasonHtml = "";
+  if (r && r.trim() !== "") {
+    reasonHtml = `
+      <div style="background:#f1f5f9; padding:15px; border-radius:10px; font-size:15px; color:#334155; line-height:1.6; text-align:left; border:1px solid #e2e8f0; margin-top:10px;">
         <strong style="color:${c}">● 사유:</strong><br>${r}
-      </div>
-      <button onclick="window.scrollTo({top:0, behavior:'smooth'}); setTimeout(()=>location.reload(), 500);" 
-              style="margin-top:20px; background:white; border:1px solid #cbd5e1; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:14px; color:#64748b; font-weight:500;">
+      </div>`;
+  }
+
+  // 사유가 없을 때는 타이틀 아래 여백을 더 주어 디자인 밸런스를 맞춤
+  const titleMargin = r ? "15px" : "30px";
+
+  rb.innerHTML = `
+    <div style="text-align:center; padding: 20px 0;">
+      <p style="font-size:14px; color:#64748b; margin-bottom:10px; font-weight:500;">자동 판별 결과</p>
+      <h2 style="font-size:40px; color:${c}; margin:0 0 ${titleMargin} 0; font-weight:900; letter-spacing:-1px;">${t}</h2>
+      ${reasonHtml}
+      <button onclick="location.reload()" 
+              style="margin-top:10px; background:white; border:1px solid #cbd5e1; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:14px; color:#64748b; font-weight:500;">
         처음부터 다시하기
       </button>
     </div>
   `;
-  setTimeout(() => { rb.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
+  
+  // 결과 화면으로 부드럽게 스크롤
+  setTimeout(() => {
+    rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
 }
