@@ -278,7 +278,7 @@ function validateForm(f) {
 
   // 기타사항 필수 체크
   if (!f.get("depart48") || !f.get("boarding") || !f.get("dock")) {
-    alert("기타사항(출항시간, 승선자, 접안여부)을 모두 선택해주세요.");
+    alert("기타사항(접안여부, 출항시간, 승선자)을 모두 선택해주세요.");
     return false;
   }
 
