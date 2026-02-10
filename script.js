@@ -410,4 +410,5 @@ function renderResult(t, r, c) {
   
   setTimeout(() => {
     rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 100
+  }, 100);
+}
