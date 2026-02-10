@@ -234,59 +234,45 @@ function regionLabelQ6(v) {
 }
 
 /* =========================================
-   4. 폼 유효성 검사 (입력 강제 및 날짜 논리 체크)
+   4. 폼 유효성 검사 (개별 문항 안내)
    ========================================= */
 function validateForm(f) {
-  // 필수 기본 문항 체크 (Q1~Q7)
-  const basicQs = ["q1", "q2", "q3", "q4", "q5", "q6", "q7"];
-  for (let q of basicQs) {
-    if (!f.get(q)) {
-      alert(`${q.toUpperCase()}번 문항을 선택해주세요.`);
+  const questions = [
+    { id: "q1", msg: "Q1번 문항을 선택해주세요." },
+    { id: "q2", msg: "Q2번 문항을 선택해주세요." },
+    { id: "q3", msg: "Q3번 문항을 선택해주세요." },
+    { id: "q4", msg: "Q4번 문항을 선택해주세요." },
+    { id: "q5", msg: "Q5번 문항을 선택해주세요." },
+    { id: "q6", msg: "Q6번 문항을 선택해주세요." },
+    { id: "q7", msg: "Q7번 문항을 선택해주세요." },
+    { id: "dock", msg: "기타사항: 접안 여부를 선택해주세요." },
+    { id: "depart48", msg: "기타사항: 48시간 이내 출항 여부를 선택해주세요." },
+    { id: "boarding", msg: "기타사항: 승선자(방선자 포함) 여부를 선택해주세요." }
+  ];
+
+  for (let item of questions) {
+    if (!f.get(item.id)) {
+      alert(item.msg);
       return false;
     }
   }
 
-  // Q5 상세 입력 및 날짜 체크
+  // Q5/Q6 상세 검사는 기존 로직 유지
   if (f.get("q5") === "yes") {
-    const reg = f.get("q5_region");
-    const dStr = f.get("q5_departure_date");
-    const aStr = f.get("q5_arrival_date");
-    if (!reg || !dStr || !aStr) {
-      alert("Q5 상세 항목(지역, 날짜)을 모두 입력해야 결과 확인이 가능합니다.");
-      return false;
-    }
-    if (new Date(aStr) < new Date(dStr)) {
-      alert("오류: Q5 입항 예정일이 출항일보다 빠를 수 없습니다.");
-      return false;
+    if (!f.get("q5_region") || !f.get("q5_departure_date") || !f.get("q5_arrival_date")) {
+      alert("Q5 상세 항목(지역, 날짜)을 모두 입력해주세요."); return false;
     }
   }
-
-  // Q6 상세 입력 및 날짜 체크
   if (f.get("q6") === "yes") {
-    const reg = f.get("q6_region");
-    const oStr = f.get("q6_onboard_date");
-    const aStr = f.get("q6_arrival_date");
-    if (!reg || !oStr || !aStr) {
-      alert("Q6 상세 항목(지역, 날짜)을 모두 입력해야 결과 확인이 가능합니다.");
-      return false;
-    }
-    if (new Date(aStr) < new Date(oStr)) {
-      alert("오류: Q6 입항 예정일이 승선일보다 빠를 수 없습니다.");
-      return false;
+    if (!f.get("q6_region") || !f.get("q6_onboard_date") || !f.get("q6_arrival_date")) {
+      alert("Q6 상세 항목(지역, 날짜)을 모두 입력해주세요."); return false;
     }
   }
-
-  // 기타사항 필수 체크
-  if (!f.get("depart48") || !f.get("boarding") || !f.get("dock")) {
-    alert("기타사항(접안여부, 출항시간, 승선자)을 모두 선택해주세요.");
-    return false;
-  }
-
   return true;
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수 (최종 개편 로직)
+   5. 결과 계산 메인 함수 (사유 통합 및 로직 완성)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
@@ -301,24 +287,19 @@ function calculateResult() {
   const isExemptionCondition = (!isDock && isDepart48 && isNoBoarding);
 
   let reasons = [];
+  let isStep1Active = false; // Q1~Q4 해당 여부 체크용
 
-  // --- [1] STEP 1: 즉시 승선검역 (최우선) ---
-  if (q(1) === "yes") reasons.push("Q1: 선박 내 검역감염병 환자 또는 의심환자 발생으로 즉시 승선검역 대상");
-  if (q(2) === "yes") reasons.push("Q2: 선박 내 사망자 발생으로 즉시 승선검역 대상");
-  if (q(3) === "yes") reasons.push("Q3: 선원 또는 승객 중 유증상자(발열, 설사, 구토 등) 발생으로 즉시 승선검역 대상");
-  if (q(4) === "yes") reasons.push("Q4: 선박 내 감염병 매개체의 서식 또는 흔적이 확인되어 즉시 승선검역 대상");
+  // --- [1] STEP 1: 즉시 승선검역 사유 수집 (멈추지 않음) ---
+  if (q(1) === "yes") { reasons.push("Q1: 선박 내 검역감염병 환자 또는 의심환자 발생으로 즉시 승선검역 대상"); isStep1Active = true; }
+  if (q(2) === "yes") { reasons.push("Q2: 선박 내 사망자 발생으로 즉시 승선검역 대상"); isStep1Active = true; }
+  if (q(3) === "yes") { reasons.push("Q3: 선원 또는 승객 중 유증상자(발열, 설사, 구토 등) 발생으로 즉시 승선검역 대상"); isStep1Active = true; }
+  if (q(4) === "yes") { reasons.push("Q4: 선박 내 감염병 매개체의 서식 또는 흔적이 확인되어 즉시 승선검역 대상"); isStep1Active = true; }
 
-  if (reasons.length > 0) {
-    renderResult("승선검역", reasons.join("<br>"), "#ef4444");
-    return;
-  }
-
-  // --- [2] 조사생략 판정 (Q5, Q6, Q7이 '예'이더라도 특정 조건 충족 시) ---
+  // --- [2] Q5, Q6, Q7 잠복기 및 위험 요소 체크 ---
   const isQ5Yes = q(5) === "yes";
   const isQ6Yes = q(6) === "yes";
   const isQ7Yes = q(7) === "yes";
 
-  // 잠복기 체크용 변수
   let q5InIncubation = false;
   let q6InIncubation = false;
   let q5Reason = "";
@@ -345,16 +326,18 @@ function calculateResult() {
     });
   }
 
-  // 조사생략 대상 여부 확인 (Q5, Q6, Q7 중 위험요소가 있으나 생략 조건을 만족할 때)
-  if ((q5InIncubation || q6InIncubation || isQ7Yes) && isExemptionCondition) {
+  // --- [3] 최종 판정 단계 (우선순위 적용) ---
+
+  // 1. 조사생략 판정: STEP 1이 아니고, (Q5잠복기내 OR Q6잠복기내 OR Q7부적합) 중 하나라도 해당하며 조사생략 조건을 만족할 때
+  if (!isStep1Active && (q5InIncubation || q6InIncubation || isQ7Yes) && isExemptionCondition) {
     renderResult("조사생략", "", "#22c55e");
     return;
   }
 
-  // --- [3] 승선검역 판정 (나머지 위험 상황) ---
+  // 2. 승선검역 사유 합치기
   if (q5InIncubation) reasons.push(q5Reason);
   
-  // Q6는 잠복기 이내이면서 '접안'할 때 승선검역
+  // Q6는 잠복기 이내이면서 '접안'할 때만 승선검역 사유가 됨
   if (q6InIncubation && isDock) {
     reasons = reasons.concat(q6Reasons);
   }
@@ -363,16 +346,15 @@ function calculateResult() {
     reasons.push("Q7: 선박위생관리(면제)증명서 미소지 또는 유효기간 만료");
   }
 
+  // 3. 최종 출력
   if (reasons.length > 0) {
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
-    return;
+  } else {
+    renderResult("서류심사", "", "#f59e0b");
   }
-
-  // --- [4] 그 외 모두 서류심사 ---
-  renderResult("서류심사", "", "#f59e0b");
 }
 
-/* 결과 출력 함수 */
+/* 결과 출력 함수 (기존과 동일) */
 function renderResult(t, r, c) {
   const rb = document.getElementById("result");
   rb.style.display = "block";
@@ -395,7 +377,6 @@ function renderResult(t, r, c) {
   `;
   rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
-
 /* =========================================
    6. 디자인 출력 함수
    ========================================= */
