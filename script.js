@@ -354,29 +354,6 @@ function calculateResult() {
   }
 }
 
-/* 결과 출력 함수 (기존과 동일) */
-function renderResult(t, r, c) {
-  const rb = document.getElementById("result");
-  rb.style.display = "block";
-  rb.style.borderTop = `6px solid ${c}`;
-  
-  let reasonHtml = "";
-  if (r) {
-    reasonHtml = `
-      <div style="background:#f1f5f9; padding:15px; border-radius:10px; font-size:15px; color:#334155; line-height:1.6; text-align:left; border:1px solid #e2e8f0;">
-        <strong style="color:${c}">● 사유:</strong><br>${r}
-      </div>`;
-  }
-
-  rb.innerHTML = `
-    <div style="text-align:center; padding: 10px 0;">
-      <h2 style="font-size:32px; color:${c}; margin:0 0 15px 0; font-weight:900;">${t}</h2>
-      ${reasonHtml}
-      <button onclick="location.reload()" style="margin-top:20px; background:white; border:1px solid #cbd5e1; padding:10px 20px; border-radius:8px; cursor:pointer;">처음부터 다시하기</button>
-    </div>
-  `;
-  rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
-}
 /* =========================================
    6. 디자인 출력 함수 (사유 박스 조건부 렌더링)
    ========================================= */
@@ -385,7 +362,6 @@ function renderResult(t, r, c) {
   rb.style.display = "block";
   rb.style.borderTop = `6px solid ${c}`;
   
-  // 사유(r)가 있을 때만 HTML 생성, 없으면 빈 문자열
   let reasonHtml = "";
   if (r && r.trim() !== "") {
     reasonHtml = `
@@ -394,7 +370,6 @@ function renderResult(t, r, c) {
       </div>`;
   }
 
-  // 사유가 없을 때는 타이틀 아래 여백을 더 주어 디자인 밸런스를 맞춤
   const titleMargin = r ? "15px" : "30px";
 
   rb.innerHTML = `
@@ -409,8 +384,6 @@ function renderResult(t, r, c) {
     </div>
   `;
   
-  // 결과 화면으로 부드럽게 스크롤
   setTimeout(() => {
     rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 100);
-}
+  }, 100
