@@ -290,85 +290,110 @@ function validateForm(f) {
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
-  
-  // 유효성 검사 실패 시 함수 즉시 종료 (결과창 안 뜸)
-  if (validateForm(f) === false) return;
+  if (!validateForm(f)) return;
 
   const q = n => f.get(`q${n}`);
   const isDock = f.get("dock") === "yes";
   const isDepart48 = f.get("depart48") === "yes";
   const isNoBoarding = f.get("boarding") === "no";
   
-  const reasons = [];
-  let isQuarantine = false; 
+  // 조사생략 공통 조건: 미접안 + 48시간 이내 출항 + 승선자 없음
+  const isExemptionCondition = (!isDock && isDepart48 && isNoBoarding);
 
-  // --- [A] 승선검역 후보 사유 수집 ---
-  
-  // 1. Q1~Q4 즉시 사유
-  if ([1,2,3,4].some(i => q(i) === "yes")) {
-    isQuarantine = true;
-    reasons.push("STEP 1: 즉시 승선검역 사유 확인됨");
+  let reasons = [];
+
+  // --- [1] STEP 1: 즉시 승선검역 (최우선) ---
+  if (q(1) === "yes") reasons.push("Q1: 선박 내 검역감염병 환자 또는 의심환자 발생으로 즉시 승선검역 대상");
+  if (q(2) === "yes") reasons.push("Q2: 선박 내 사망자 발생으로 즉시 승선검역 대상");
+  if (q(3) === "yes") reasons.push("Q3: 선원 또는 승객 중 유증상자(발열, 설사, 구토 등) 발생으로 즉시 승선검역 대상");
+  if (q(4) === "yes") reasons.push("Q4: 선박 내 감염병 매개체의 서식 또는 흔적이 확인되어 즉시 승선검역 대상");
+
+  if (reasons.length > 0) {
+    renderResult("승선검역", reasons.join("<br>"), "#ef4444");
+    return;
   }
 
-  // 2. Q5 잠복기 체크
-  if (q(5) === "yes") {
-    const reg = f.get("q5_region");
-    const data = q5Data[reg];
+  // --- [2] 조사생략 판정 (Q5, Q6, Q7이 '예'이더라도 특정 조건 충족 시) ---
+  const isQ5Yes = q(5) === "yes";
+  const isQ6Yes = q(6) === "yes";
+  const isQ7Yes = q(7) === "yes";
+
+  // 잠복기 체크용 변수
+  let q5InIncubation = false;
+  let q6InIncubation = false;
+  let q5Reason = "";
+  let q6Reasons = [];
+
+  if (isQ5Yes) {
+    const data = q5Data[f.get("q5_region")];
     const diff = (new Date(f.get("q5_arrival_date")) - new Date(f.get("q5_departure_date"))) / 86400000;
     if (data && diff <= data.day) {
-      isQuarantine = true;
-      reasons.push(`Q5: ${data.l} 잠복기 위험기간 내 입항 (${data.day}일)`);
+      q5InIncubation = true;
+      q5Reason = `Q5: ${data.l}. ${data.d} 중점검역관리지역 출항(경유) 후 최대 잠복기간 이내 입항 (${data.day}일)`;
     }
   }
 
-  // 3. Q6 선원교대 로직 (접안 시 무조건 승선)
-  let q6Incubation = false;
-  if (q(6) === "yes") {
+  if (isQ6Yes) {
     const reg = f.get("q6_region");
     const diff = (new Date(f.get("q6_arrival_date")) - new Date(f.get("q6_onboard_date"))) / 86400000;
-    const diseaseList = q6Data[reg] || [];
-    
-    // 잠복기 체크
-    diseaseList.forEach(item => {
-      if (diff <= item.day) {
-        isQuarantine = true;
-        q6Incubation = true;
-        reasons.push(`Q6: ${regionLabelQ6(reg)} 승선 / ${item.d} 잠복기 내 선원교대`);
+    const diseases = q6Data[reg] || [];
+    diseases.forEach(d => {
+      if (diff <= d.day) {
+        q6InIncubation = true;
+        q6Reasons.push(`Q6: ${regionLabelQ6(reg)} 승선 / ${d.d} 최대 잠복기간 내 선원교대 (${d.day}일)`);
       }
     });
-
-    // 접안 시 무조건 승선검역 (기타사항 무관)
-    if (isDock) {
-      isQuarantine = true;
-      if (!q6Incubation) reasons.push("Q6: 검역관리지역 선원 교대 발생 + 선박 접안");
-    }
   }
 
-  // 4. Q7 부적합
-  if (q(7) === "yes") {
-    reasons.push("Q7: 선박위생관리 증명서 부적합");
+  // 조사생략 대상 여부 확인 (Q5, Q6, Q7 중 위험요소가 있으나 생략 조건을 만족할 때)
+  if ((q5InIncubation || q6InIncubation || isQ7Yes) && isExemptionCondition) {
+    renderResult("조사생략", "", "#22c55e");
+    return;
   }
 
-  // --- [B] 최종 판정 단계 ---
-
-  // 1. 조사생략 필터 (Q6가 '예'면 절대 불가)
-  if (q(6) === "no" && ![1,2,3,4].some(i => q(i) === "yes")) {
-    const hasRiskQ5Q7 = (q(5) === "yes" || q(7) === "yes");
-    if (hasRiskQ5Q7 && isDepart48 && isNoBoarding && !isDock) {
-      renderResult("조사생략", "조사생략 요건 충족<br>(비대면 및 단기체류 확인)", "#22c55e");
-      return; 
-    }
+  // --- [3] 승선검역 판정 (나머지 위험 상황) ---
+  if (q5InIncubation) reasons.push(q5Reason);
+  
+  // Q6는 잠복기 이내이면서 '접안'할 때 승선검역
+  if (q6InIncubation && isDock) {
+    reasons = reasons.concat(q6Reasons);
   }
 
-  // 2. 승선검역 판정
-  // Q7이나 Q6(접안 시)도 여기서 최종 승선검역으로 판정됨
-  if (isQuarantine || q(7) === "yes") {
-    renderResult("승선검역", reasons.join("<br>") || "검역 규정에 따른 승선조사 대상", "#ef4444");
-  } 
-  // 3. 서류심사 (나머지 모든 경우)
-  else {
-    renderResult("서류심사", "추가 위험 요소 없음", "#f59e0b");
+  if (isQ7Yes) {
+    reasons.push("Q7: 선박위생관리(면제)증명서 미소지 또는 유효기간 만료");
   }
+
+  if (reasons.length > 0) {
+    renderResult("승선검역", reasons.join("<br>"), "#ef4444");
+    return;
+  }
+
+  // --- [4] 그 외 모두 서류심사 ---
+  renderResult("서류심사", "", "#f59e0b");
+}
+
+/* 결과 출력 함수 */
+function renderResult(t, r, c) {
+  const rb = document.getElementById("result");
+  rb.style.display = "block";
+  rb.style.borderTop = `6px solid ${c}`;
+  
+  let reasonHtml = "";
+  if (r) {
+    reasonHtml = `
+      <div style="background:#f1f5f9; padding:15px; border-radius:10px; font-size:15px; color:#334155; line-height:1.6; text-align:left; border:1px solid #e2e8f0;">
+        <strong style="color:${c}">● 사유:</strong><br>${r}
+      </div>`;
+  }
+
+  rb.innerHTML = `
+    <div style="text-align:center; padding: 10px 0;">
+      <h2 style="font-size:32px; color:${c}; margin:0 0 15px 0; font-weight:900;">${t}</h2>
+      ${reasonHtml}
+      <button onclick="location.reload()" style="margin-top:20px; background:white; border:1px solid #cbd5e1; padding:10px 20px; border-radius:8px; cursor:pointer;">처음부터 다시하기</button>
+    </div>
+  `;
+  rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 /* =========================================
