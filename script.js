@@ -14,6 +14,46 @@ function toggleQ6(show) {
 /* =========================================
    2. 데이터 정의 (Q5 중점검역관리지역 전용)
    ========================================= */
+const q5Data = {
+  lebanon_q5: {l:"레바논", d:"MERS", day:14}, 
+  mada_q5: {l:"마다가스카르", d:"페스트", day:6},
+  mexico_q5: {l:"멕시코", d:"AI", day:10}, 
+  mongolia_q5: {l:"몽골", d:"페스트", day:6},
+  nm_usa_q5: {l:"미국(뉴멕시코주)", d:"페스트", day:6}, 
+  wa_usa_q5: {l:"미국(워싱턴주)", d:"AI", day:10},
+  ca_usa_q5: {l:"미국(캘리포니아주)", d:"AI", day:10}, 
+  bahrain_q5: {l:"바레인", d:"MERS", day:14},
+  bangladesh_q5: {l:"방글라데시", d:"AI", day:10}, 
+  vietnam_dn_q5: {l:"베트남(동나이)", d:"AI", day:10},
+  vietnam_dninh_q5: {l:"베트남(따이닌)", d:"AI", day:10}, 
+  vietnam_hcm_q5: {l:"베트남(호찌민)", d:"AI", day:10},
+  saudi_q5: {l:"사우디아라비아", d:"MERS", day:14}, 
+  syria_q5: {l:"시리아", d:"MERS", day:14},
+  uae_q5: {l:"아랍에미리트", d:"MERS", day:14}, 
+  ethiopia_q5: {l:"에티오피아", d:"마버그열", day:21},
+  yemen_q5: {l:"예멘", d:"MERS", day:14}, 
+  oman_q5: {l:"오만", d:"MERS", day:14},
+  jordan_q5: {l:"요르단", d:"MERS", day:14}, 
+  iraq_q5: {l:"이라크", d:"MERS", day:14},
+  iran_q5: {l:"이란", d:"MERS", day:14}, 
+  israel_q5: {l:"이스라엘", d:"MERS", day:14},
+  india_q5: {l:"인도", d:"AI", day:10}, 
+  china_gd_q5: {l:"중국(광둥성)", d:"AI", day:10},
+  china_gx_q5: {l:"중국(광시좡족자치구)", d:"AI", day:10}, 
+  china_gz_q5: {l:"중국(구이저우성)", d:"AI", day:10}, 
+  china_sx_q5: {l:"중국(산시성)", d:"AI", day:10},
+  china_sc_q5: {l:"중국(쓰촨성)", d:"AI", day:10}, 
+  china_tj_q5: {l:"중국(텐진시)", d:"AI", day:10}, 
+  china_cq_q5: {l:"중국(충칭시)", d:"AI", day:10},
+  china_hn_q5: {l:"중국(허난성)", d:"AI", day:10}, 
+  china_hn2_q5: {l:"중국(후난성)", d:"AI", day:10}, 
+  china_hb_q5: {l:"중국(후베이성)", d:"AI", day:10}, 
+  qatar_q5: {l:"카타르", d:"MERS", day:14},
+  cambodia_q5: {l:"캄보디아", d:"AI", day:10}, 
+  congo_q5: {l:"콩고민주공화국", d:"페스트", day:6},
+  kuwait_q5: {l:"쿠웨이트", d:"MERS", day:14}
+};
+
 const q6Data = {
   mexico_q6: [{d:"AI", day:10}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   iowa_usa_q6: [{d:"AI", day:10}],
