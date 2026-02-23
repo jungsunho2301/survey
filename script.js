@@ -450,21 +450,21 @@ function calculateResult() {
     if (data) {
       // 1. 질병이 여러 개인 경우 (인도, 방글라데시 등)
       if (data.diseases) {
-        // 질병 이름 뒤에 (n일)을 붙여서 배열로 만듭니다.
         let active = data.diseases
           .filter(dis => diff <= dis.day)
-          .map(dis => `${dis.name} (${dis.day}일)`); // 이 부분이 질병별 일수를 표시합니다.
+          // 텍스트 순서를 Q6와 동일하게 (n일)이 맨 뒤로 가게 수정
+          .map(dis => `Q5: ${data.l} 출항(경유) / ${dis.name} 최대 잠복기간 이내 입항 (${dis.day}일)`);
           
         if (active.length > 0) {
           q5InIncubation = true;
-          // 각 질병 정보를 줄바꿈(<br>)으로 연결하여 Q6처럼 깔끔하게 보여줍니다.
-          q5Reason = active.map(info => `Q5: ${data.l}. ${info} 중점검역관리지역 출항(경유) 후 최대 잠복기간 이내 입항`).join("<br>");
+          q5Reason = active.join("<br>");
         }
       } 
       // 2. 단일 질병 국가인 경우
       else if (diff <= data.day) {
         q5InIncubation = true;
-        q5Reason = `Q5: ${data.l}. ${data.d} (${data.day}일) 중점검역관리지역 출항(경유) 후 최대 잠복기간 이내 입항`;
+        // 문장 마지막에 (n일)이 오도록 수정 완료
+        q5Reason = `Q5: ${data.l} 출항(경유) / ${data.d} 최대 잠복기간 이내 입항 (${data.day}일)`;
       }
     }
   }
