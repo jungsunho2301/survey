@@ -446,9 +446,22 @@ function calculateResult() {
   if (isQ5Yes) {
     const data = q5Data[f.get("q5_region")];
     const diff = (new Date(f.get("q5_arrival_date")) - new Date(f.get("q5_departure_date"))) / 86400000;
-    if (data && diff <= data.day) {
-      q5InIncubation = true;
-      q5Reason = `Q5: ${data.l}. ${data.d} 중점검역관리지역 출항(경유) 후 최대 잠복기간 이내 입항 (${data.day}일)`;
+    
+    if (data) {
+      // 1. 인도/방글라데시처럼 diseases 배열이 있는 경우 (필터링 로직)
+      if (data.diseases) {
+        let active = data.diseases.filter(dis => diff <= dis.day).map(dis => dis.name);
+        if (active.length > 0) {
+          q5InIncubation = true;
+          // 13일이면 10일짜리 AI는 여기서 자동으로 걸러집니다.
+          q5Reason = `Q5: ${data.l}. ${active.join(", ")} 중점검역관리지역 출항(경유) 후 최대 잠복기간 이내 입항`;
+        }
+      } 
+      // 2. 단일 질병 국가인 경우 (기존 로직 유지)
+      else if (diff <= data.day) {
+        q5InIncubation = true;
+        q5Reason = `Q5: ${data.l}. ${data.d} 중점검역관리지역 출항(경유) 후 최대 잠복기간 이내 입항 (${data.day}일)`;
+      }
     }
   }
 
