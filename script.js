@@ -23,7 +23,13 @@ const q5Data = {
   wa_usa_q5: {l:"미국(워싱턴주)", d:"AI", day:10},
   ca_usa_q5: {l:"미국(캘리포니아주)", d:"AI", day:10}, 
   bahrain_q5: {l:"바레인", d:"MERS", day:14},
-  bangladesh_q5: {l:"방글라데시", d:"AI(10일), 니파바이러스(14일)", day:14},
+  bangladesh_q5: {
+    l: "방글라데시",
+    diseases: [
+      { name: "AI", day: 10 },
+      { name: "니파바이러스", day: 14 }
+    ]
+  },
   vietnam_dn_q5: {l:"베트남(동나이)", d:"AI", day:10},
   vietnam_dninh_q5: {l:"베트남(따이닌)", d:"AI", day:10}, 
   vietnam_hcm_q5: {l:"베트남(호찌민)", d:"AI", day:10},
@@ -37,7 +43,13 @@ const q5Data = {
   iraq_q5: {l:"이라크", d:"MERS", day:14},
   iran_q5: {l:"이란", d:"MERS", day:14}, 
   israel_q5: {l:"이스라엘", d:"MERS", day:14},
-  india_q5: {l:"인도", d:"AI(10일), 니파바이러스(14일)", day:14},
+  india_q5: {
+    l: "인도",
+    diseases: [
+      { name: "AI", day: 10 },
+      { name: "니파바이러스", day: 14 }
+    ]
+  },
   china_gd_q5: {l:"중국(광둥성)", d:"AI", day:10},
   china_gx_q5: {l:"중국(광시좡족자치구)", d:"AI", day:10}, 
   china_gz_q5: {l:"중국(구이저우성)", d:"AI", day:10}, 
