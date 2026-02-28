@@ -566,7 +566,7 @@ function openTab(evt, tabName) {
   evt.currentTarget.classList.add("active");
 }
 
-// 2. 두 번째 탭(간편 판정) 전용 함수
+// 2. 핵심 간편 판정 전용 함수
 function calculateCoreResult() {
   // coreForm에서 데이터 가져오기 (첫 번째 탭과 독립적)
   const coreForm = document.getElementById("coreForm");
@@ -590,30 +590,30 @@ function calculateCoreResult() {
   const resultDiv = document.getElementById("coreResult");
   resultDiv.style.display = "block";
   
-  let activeDiseases = [];
-  
-  // Q5 데이터 형식에 따른 필터링 (기존 q5Data 활용)
+  let coreReasons = [];
+  let isCoreActive = false;
+
+  // Q5 데이터 형식에 따른 판정 및 문구 생성 (아이콘 제거 및 형식 통일)
   if (data.diseases) {
-    // 여러 질병일 경우
-    activeDiseases = data.diseases
+    // 여러 질병일 경우 (인도, 방글라데시 등)
+    coreReasons = data.diseases
       .filter(dis => diff <= dis.day)
-      .map(dis => `${dis.name} (${dis.day}일)`);
+      .map(dis => `Q5: ${data.l} 출항(경유) / ${dis.name} 최대 잠복기간 이내 입항 (${dis.day}일)`);
+    if (coreReasons.length > 0) isCoreActive = true;
   } else if (diff <= data.day) {
     // 단일 질병일 경우
-    activeDiseases.push(`${data.d} (${data.day}일)`);
+    coreReasons.push(`Q5: ${data.l} 출항(경유) / ${data.d} 최대 잠복기간 이내 입항 (${data.day}일)`);
+    isCoreActive = true;
   }
 
-  // 최종 화면 렌더링 (상사 지시 사항: 승선검역 vs 해당사항없음)
-  if (activeDiseases.length > 0) {
+  // 최종 화면 렌더링 
+  if (isCoreActive) {
     resultDiv.style.borderTop = "6px solid var(--danger-red)";
     resultDiv.innerHTML = `
       <div style="padding: 10px;">
-        <h2 style="font-size:32px; color:var(--danger-red); margin:0 0 10px 0; font-weight:900;">⚠️ 승선검역</h2>
-        <div style="background:#fef2f2; padding:15px; border-radius:10px; border:1px solid #fee2e2; text-align:left;">
-          <p style="margin:0; font-size:15px; color:#1e293b; line-height:1.5;">
-            <strong>${data.l}</strong> 출항 후 잠복기 내 입항 확인<br>
-            <span style="color:var(--danger-red); font-weight:700;">● 대상질병: ${activeDiseases.join(", ")}</span>
-          </p>
+        <h2 style="font-size:32px; color:var(--danger-red); margin:0 0 10px 0; font-weight:900;">승선검역</h2>
+        <div style="background:#fef2f2; padding:15px; border-radius:10px; border:1px solid #fee2e2; text-align:left; font-size:15px; color:#1e293b; line-height:1.6; word-break:keep-all;">
+          ${coreReasons.join("<br>")}
         </div>
         <button onclick="location.reload()" style="margin-top:15px; background:none; border:1px solid #cbd5e1; padding:8px 15px; border-radius:6px; cursor:pointer; color:#64748b; font-size:13px;">다시하기</button>
       </div>
@@ -622,7 +622,7 @@ function calculateCoreResult() {
     resultDiv.style.borderTop = "6px solid var(--accent-blue)";
     resultDiv.innerHTML = `
       <div style="padding: 10px;">
-        <h2 style="font-size:32px; color:var(--accent-blue); margin:0 0 10px 0; font-weight:900;">✅ 해당사항 없음</h2>
+        <h2 style="font-size:32px; color:var(--accent-blue); margin:0 0 10px 0; font-weight:900;">해당사항 없음</h2>
         <p style="font-size:15px; color:#1e293b; margin:0;">모든 중점관리 질병의 잠복기가 경과되었습니다.</p>
         <button onclick="location.reload()" style="margin-top:15px; background:none; border:1px solid #cbd5e1; padding:8px 15px; border-radius:6px; cursor:pointer; color:#64748b; font-size:13px;">다시하기</button>
       </div>
