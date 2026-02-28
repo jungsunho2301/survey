@@ -593,16 +593,16 @@ function calculateCoreResult() {
   let coreReasons = [];
   let isCoreActive = false;
 
-  // Q5 데이터 형식에 따른 판정 및 문구 생성 (아이콘 제거 및 형식 통일)
+  // 결과 메시지 생성 (요청하신 대로 'Q5:' 제거)
   if (data.diseases) {
-    // 여러 질병일 경우 (인도, 방글라데시 등)
+    // 여러 질병인 경우 (인도, 방글라데시 등)
     coreReasons = data.diseases
       .filter(dis => diff <= dis.day)
-      .map(dis => `Q5: ${data.l} 출항(경유) / ${dis.name} 최대 잠복기간 이내 입항 (${dis.day}일)`);
+      .map(dis => `${data.l} 출항(경유) / ${dis.name} 최대 잠복기간 이내 입항 (${dis.day}일)`);
     if (coreReasons.length > 0) isCoreActive = true;
   } else if (diff <= data.day) {
-    // 단일 질병일 경우
-    coreReasons.push(`Q5: ${data.l} 출항(경유) / ${data.d} 최대 잠복기간 이내 입항 (${data.day}일)`);
+    // 단일 질병 국가인 경우
+    coreReasons.push(`${data.l} 출항(경유) / ${data.d} 최대 잠복기간 이내 입항 (${data.day}일)`);
     isCoreActive = true;
   }
 
@@ -623,7 +623,7 @@ function calculateCoreResult() {
     resultDiv.innerHTML = `
       <div style="padding: 10px;">
         <h2 style="font-size:32px; color:var(--accent-blue); margin:0 0 10px 0; font-weight:900;">해당사항 없음</h2>
-        <p style="font-size:15px; color:#1e293b; margin:0;">모든 중점관리 질병의 잠복기가 경과되었습니다.</p>
+        <p style="font-size:15px; color:#1e293b; margin:0;">모든 중점검역관리지역의 검역감염병 최대잠복기간이 경과되었습니다.</p>
         <button onclick="location.reload()" style="margin-top:15px; background:none; border:1px solid #cbd5e1; padding:8px 15px; border-radius:6px; cursor:pointer; color:#64748b; font-size:13px;">다시하기</button>
       </div>
     `;
