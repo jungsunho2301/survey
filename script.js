@@ -543,3 +543,89 @@ function renderResult(t, r, c) {
     rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 100);
 }
+/* =========================================
+   [추가] 탭 전환 및 간편 판정 로직 (꼬임 방지)
+   ========================================= */
+
+// 1. 탭 전환 기능 함수
+function openTab(evt, tabName) {
+  // 모든 탭 콘텐츠 숨기기
+  const tabContents = document.getElementsByClassName("tab-content");
+  for (let i = 0; i < tabContents.length; i++) {
+    tabContents[i].style.display = "none";
+  }
+  
+  // 모든 탭 버튼에서 active 클래스 제거
+  const tabBtns = document.getElementsByClassName("tab-btn");
+  for (let i = 0; i < tabBtns.length; i++) {
+    tabBtns[i].classList.remove("active");
+  }
+  
+  // 선택된 탭 보여주기 및 버튼 활성화
+  document.getElementById(tabName).style.display = "block";
+  evt.currentTarget.classList.add("active");
+}
+
+// 2. 두 번째 탭(간편 판정) 전용 함수
+function calculateCoreResult() {
+  // coreForm에서 데이터 가져오기 (첫 번째 탭과 독립적)
+  const coreForm = document.getElementById("coreForm");
+  const f = new FormData(coreForm);
+  
+  const reg = f.get("core_region");
+  const depDate = f.get("core_departure_date");
+  const arrDate = f.get("core_arrival_date");
+
+  // 날짜 입력 체크
+  if (!reg || !depDate || !arrDate) {
+    alert("지역과 날짜를 모두 선택해주세요.");
+    return;
+  }
+
+  const data = q5Data[reg];
+  // 날짜 차이 계산 (diff)
+  const diff = (new Date(arrDate) - new Date(depDate)) / 86400000;
+  
+  // 결과창 보이기
+  const resultDiv = document.getElementById("coreResult");
+  resultDiv.style.display = "block";
+  
+  let activeDiseases = [];
+  
+  // Q5 데이터 형식에 따른 필터링 (기존 q5Data 활용)
+  if (data.diseases) {
+    // 여러 질병일 경우
+    activeDiseases = data.diseases
+      .filter(dis => diff <= dis.day)
+      .map(dis => `${dis.name} (${dis.day}일)`);
+  } else if (diff <= data.day) {
+    // 단일 질병일 경우
+    activeDiseases.push(`${data.d} (${data.day}일)`);
+  }
+
+  // 최종 화면 렌더링 (상사 지시 사항: 승선검역 vs 해당사항없음)
+  if (activeDiseases.length > 0) {
+    resultDiv.style.borderTop = "6px solid var(--danger-red)";
+    resultDiv.innerHTML = `
+      <div style="padding: 10px;">
+        <h2 style="font-size:32px; color:var(--danger-red); margin:0 0 10px 0; font-weight:900;">⚠️ 승선검역</h2>
+        <div style="background:#fef2f2; padding:15px; border-radius:10px; border:1px solid #fee2e2; text-align:left;">
+          <p style="margin:0; font-size:15px; color:#1e293b; line-height:1.5;">
+            <strong>${data.l}</strong> 출항 후 잠복기 내 입항 확인<br>
+            <span style="color:var(--danger-red); font-weight:700;">● 대상질병: ${activeDiseases.join(", ")}</span>
+          </p>
+        </div>
+        <button onclick="location.reload()" style="margin-top:15px; background:none; border:1px solid #cbd5e1; padding:8px 15px; border-radius:6px; cursor:pointer; color:#64748b; font-size:13px;">다시하기</button>
+      </div>
+    `;
+  } else {
+    resultDiv.style.borderTop = "6px solid var(--accent-blue)";
+    resultDiv.innerHTML = `
+      <div style="padding: 10px;">
+        <h2 style="font-size:32px; color:var(--accent-blue); margin:0 0 10px 0; font-weight:900;">✅ 해당사항 없음</h2>
+        <p style="font-size:15px; color:#1e293b; margin:0;">모든 중점관리 질병의 잠복기가 경과되었습니다.</p>
+        <button onclick="location.reload()" style="margin-top:15px; background:none; border:1px solid #cbd5e1; padding:8px 15px; border-radius:6px; cursor:pointer; color:#64748b; font-size:13px;">다시하기</button>
+      </div>
+    `;
+  }
+}
