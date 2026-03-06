@@ -358,47 +358,76 @@
     <div id="result"></div>
   </div>
 
-  <div id="core-tab" class="tab-content" style="display:none;">
-    <section class="card primary">
-      <div class="card-header">
-        <h2>중점·검역관리지역 출항·경유 여부 확인</h2>
-      </div>
-      <div class="card-body">
-        <div class="question">
-          <form id="coreForm">
-            <label class="input-label">대상 지역 선택</label>
-            <select name="core_region" class="styled-input">
-              <option value="">지역을 선택해 주세요</option>
-               <option value="lebanon_q5">레바논</option><option value="mada_q5">마다가스카르</option><option value="mexico_q5">멕시코</option>
-            <option value="mongolia_q5">몽골</option><option value="nm_usa_q5">미국(뉴멕시코주)</option><option value="wa_usa_q5">미국(워싱턴주)</option>
-            <option value="ca_usa_q5">미국(캘리포니아주)</option><option value="bahrain_q5">바레인</option><option value="bangladesh_q5">방글라데시</option>
-            <option value="vietnam_dn_q5">베트남(동나이)</option><option value="vietnam_dninh_q5">베트남(따이닌)</option><option value="vietnam_hcm_q5">베트남(호찌민)</option>
-            <option value="saudi_q5">사우디아라비아</option><option value="syria_q5">시리아</option><option value="uae_q5">아랍에미리트</option>
-            <option value="ethiopia_q5">에티오피아</option><option value="yemen_q5">예멘</option><option value="oman_q5">오만</option>
-            <option value="jordan_q5">요르단</option><option value="iraq_q5">이라크</option><option value="iran_q5">이란</option>
-            <option value="israel_q5">이스라엘</option><option value="india_q5">인도</option><option value="china_gd_q5">중국(광둥성)</option>
-            <option value="china_gx_q5">중국(광시좡족자치구)</option><option value="china_gz_q5">중국(구이저우성)</option><option value="china_sx_q5">중국(산시성)</option>
-            <option value="china_sc_q5">중국(쓰촨성)</option><option value="china_tj_q5">중국(텐진시)</option><option value="china_cq_q5">중국(충칭시)</option>
-            <option value="china_hn_q5">중국(허난성)</option><option value="china_hn2_q5">중국(후난성)</option><option value="china_hb_q5">중국(후베이성)</option>
-            <option value="qatar_q5">카타르</option><option value="cambodia_q5">캄보디아</option><option value="congo_q5">콩고민주공화국</option><option value="kuwait_q5">쿠웨이트</option>
-            </select>
-            <div class="date-grid">
-              <div>
-                <label class="input-label">현지 출항(경유)일</label>
-                <input type="date" name="core_departure_date" class="styled-input">
-              </div>
-              <div>
-                <label class="input-label">국내 입항일</label>
-                <input type="date" name="core_arrival_date" class="styled-input">
-              </div>
+<div id="core-tab" class="tab-content" style="display:none;">
+  <section class="card primary">
+    <div class="card-header">
+      <h2>중점·검역관리지역 출항·경유 여부 확인</h2>
+    </div>
+    <div class="card-body">
+      <div class="question">
+        <form id="coreForm">
+          <label class="input-label">대상 지역 선택</label>
+          <select name="core_region" class="styled-input">
+            <option value="">지역을 선택해 주세요</option>
+            <option value="ghana_q6">가나</option> <option value="gabon_q6">가봉</option>
+            <option value="guyana_q6">가이아나</option> <option value="gambia_q6">감비아</option>
+            <option value="guadeloupe_q6">과들루프</option> <option value="guatemala_q6">과테말라</option>
+            <option value="greece_q6">그리스</option> <option value="grenada_q6">그레나다</option>
+            <option value="guinea_q6">기니</option> <option value="guinea_bissau_q6">기니비사우</option>
+            <option value="namibia_q6">나미비아</option> <option value="nauru_q6">나우루</option>
+            <option value="nigeria_q6">나이지리아</option> <option value="south_sudan_q6">남수단</option>
+            <option value="south_africa_q6">남아프리카공화국</option> <option value="netherlands_q6">네덜란드</option>
+            <option value="nepal_q6">네팔</option> <option value="new_caledonia_q6">뉴칼레도니아</option>
+            <option value="nicaragua_q6">니카라과</option> <option value="niger_q6">니제르</option>
+            <option value="taiwan_q6">대만</option> <option value="germany_q6">독일</option>
+            <option value="timor_leste_q6">동티모르</option> <option value="dominica_q6">도미니카공화국</option>
+            <option value="laos_q6">라오스</option> <option value="liberia_q6">라이베리아</option>
+            <option value="russia_q6">러시아</option> <option value="lebanon_q5">레바논</option>
+            <option value="lesotho_q6">레소토</option> <option value="reunion_q6">레위니옹</option>
+            <option value="romania_q6">루마니아</option> <option value="rwanda_q6">르완다</option>
+            <option value="libya_q6">리비아</option> <option value="lithuania_q6">리투아니아</option>
+            <option value="mada_q5">마다가스카르</option> <option value="madeira_q6">마데이라</option>
+            <option value="malawi_q6">말라위</option> <option value="malaysia_q6">말레이시아</option>
+            <option value="mali_q6">말리</option> <option value="martinique_q6">마르티니크</option>
+            <option value="mayotte_q6">마요트</option> <option value="mexico_q5">멕시코</option>
+            <option value="morocco_q6">모로코</option> <option value="moritania_q6">모리타니</option>
+            <option value="mauritius_q6">모리셔스</option> <option value="mozambique_q6">모잠비크</option>
+            <option value="montenegro_q6">몬테네그로</option> <option value="moldova_q6">몰도바</option>
+            <option value="maldives_q6">몰디브</option> <option value="mongolia_q5">몽골</option>
+            <option value="micronesia_q6">마이크로네시아</option> <option value="nm_usa_q5">미국(뉴멕시코주)</option>
+            <option value="wa_usa_q5">미국(워싱턴주)</option> <option value="ca_usa_q5">미국(캘리포니아주)</option>
+            <option value="usa_q6">미국(기타)</option> <option value="myanmar_q6">미얀마</option>
+            <option value="vanuatu_q6">바누아투</option> <option value="bahrain_q5">바레인</option>
+            <option value="barbados_q6">바베이도스</option> <option value="bangladesh_q5">방글라데시</option>
+            <option value="benin_q6">베냉</option> <option value="venezuela_q6">베네수엘라</option>
+            <option value="vietnam_q6">베트남(전체/홍역)</option> <option value="vietnam_hcm_q5">베트남(호찌민/AI)</option>
+            <option value="saudi_q5">사우디아라비아</option> <option value="syria_q5">시리아</option>
+            <option value="uae_q5">아랍에미리트</option> <option value="ethiopia_q5">에티오피아</option>
+            <option value="yemen_q5">예멘</option> <option value="oman_q5">오만</option>
+            <option value="jordan_q5">요르단</option> <option value="iraq_q5">이라크</option>
+            <option value="iran_q5">이란</option> <option value="israel_q5">이스라엘</option>
+            <option value="india_q5">인도</option> <option value="china_gd_q5">중국(광둥성)</option>
+            <option value="cambodia_q5">캄보디아</option> <option value="congo_q5">콩고민주공화국</option>
+            <option value="kuwait_q5">쿠웨이트</option> <option value="philippines_q6">필리핀</option>
+            <option value="hoju_q6">호주</option>
+          </select>
+          <div class="date-grid">
+            <div>
+              <label class="input-label">현지 출항(경유)일</label>
+              <input type="date" name="core_departure_date" class="styled-input">
             </div>
-            <button type="button" onclick="calculateCoreResult()" class="btn-submit" style="margin-top:10px; background-color: var(--accent-blue);">결과 확인</button>
-          </form>
-        </div>
+            <div>
+              <label class="input-label">국내 입항일</label>
+              <input type="date" name="core_arrival_date" class="styled-input">
+            </div>
+          </div>
+          <button type="button" onclick="calculateCoreResult()" class="btn-submit" style="margin-top:10px; background-color: var(--accent-blue);">결과 확인</button>
+        </form>
       </div>
-    </section>
-    <div id="coreResult" class="card" style="display:none; padding:24px; text-align:center;"></div>
-  </div>
+    </div>
+  </section>
+  <div id="coreResult" class="card" style="display:none; padding:24px; text-align:center;"></div>
+</div>
 
 </main>
 
