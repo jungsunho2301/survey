@@ -35,7 +35,7 @@ const q5Data = {
   vietnam_hcm_q5: {l:"베트남(호찌민)", d:"AI", day:10},
   saudi_q5: {l:"사우디아라비아", d:"MERS", day:14}, 
   syria_q5: {l:"시리아", d:"MERS", day:14},
-  uae_q5: {l:"아랍에미리트", d:"MERS", day:14}, 
+  uae_q5: {l:"아랍에미레이트", d:"MERS", day:14}, 
   ethiopia_q5: {l:"에티오피아", d:"마버그열", day:21},
   yemen_q5: {l:"예멘", d:"MERS", day:14}, 
   oman_q5: {l:"오만", d:"MERS", day:14},
@@ -308,7 +308,7 @@ function regionLabelQ6(v) {
     suriname_q6: "수리남", syria_q6: "시리아", sierra_leone_q6: "시에라리온", sint_maarten_q6: "신트마르턴", 
     singapore_q6: "싱가포르", spain_q6: "스페인",
     // 아
-    aruba_q6: "아루바", uae_q6: "아랍에미리트", argentina_q6: "아르헨티나", armenia_q6: "아르메니아", 
+    aruba_q6: "아루바", uae_q6: "아랍에미레이트", argentina_q6: "아르헨티나", armenia_q6: "아르메니아", 
     haiti_q6: "아이티", ireland_q6: "아일랜드", afghanistan_q6: "아프가니스탄", antigua_q6: "앤티가 바부다", 
     albania_q6: "알바니아", algeria_q6: "알제리", angola_q6: "앙골라", anguilla_q6: "앵귈라", 
     eritrea_q6: "에리트레아", ecuador_q6: "에콰도르", ethiopia_q6: "에티오피아", el_salvador_q6: "엘살바도르", 
