@@ -305,19 +305,40 @@
       </section>
 
       <section class="card gray">
-        <div class="card-header"><span class="header-icon-mini">📋</span><h2>기타사항</h2></div>
-        <div class="card-body">
-          <div class="question"><p>선박이 접안합니까?</p>
-            <div class="radio-group"><label><input type="radio" name="dock" value="yes"> 예</label><label><input type="radio" name="dock" value="no"> 아니오</label></div>
-          </div>
-          <div class="question"><p>48시간 이내 출항 예정입니까?</p>
-            <div class="radio-group"><label><input type="radio" name="depart48" value="yes"> 예</label><label><input type="radio" name="depart48" value="no"> 아니오</label></div>
-          </div>
-          <div class="question"><p>승선자(방선자 포함)가 있습니까?</p>
-            <div class="radio-group"><label><input type="radio" name="boarding" value="yes"> 예</label><label><input type="radio" name="boarding" value="no"> 아니오</label></div>
-          </div>
-        </div>
-      </section>
+  <div class="card-header" style="display: flex; align-items: center; gap: 8px; padding: 12px 16px;">
+    <span class="step-label" style="white-space: nowrap; display: flex; align-items: center; font-size: 13px;">STEP 5.</span>
+    <span class="header-icon-mini">📋</span>
+    <h2 style="margin: 0; font-size: 15px; font-weight: 700; color: #334155; line-height: 1.4; word-break: keep-all; overflow-wrap: break-word;">
+      선박 접안 및 승선 정보 확인
+    </h2>
+  </div>
+
+  <div class="card-body">
+    <div class="question">
+      <p><strong>Q8.</strong> 선박이 접안합니까?</p>
+      <div class="radio-group">
+        <label><input type="radio" name="dock" value="yes"> 예</label>
+        <label><input type="radio" name="dock" value="no"> 아니오</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p><strong>Q9.</strong> 48시간 이내 출항 예정입니까?</p>
+      <div class="radio-group">
+        <label><input type="radio" name="depart48" value="yes"> 예</label>
+        <label><input type="radio" name="depart48" value="no"> 아니오</label>
+      </div>
+    </div>
+
+    <div class="question">
+      <p><strong>Q10.</strong> 승선자(방선자 포함)가 있습니까?</p>
+      <div class="radio-group">
+        <label><input type="radio" name="boarding" value="yes"> 예</label>
+        <label><input type="radio" name="boarding" value="no"> 아니오</label>
+      </div>
+    </div>
+  </div>
+</section>
       <button type="button" class="btn-submit" onclick="calculateResult()">결과 확인</button>
     </form>
     <div id="result"></div>
