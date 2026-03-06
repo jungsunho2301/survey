@@ -566,66 +566,95 @@ function openTab(evt, tabName) {
   evt.currentTarget.classList.add("active");
 }
 
-// 2. 핵심 간편 판정 전용 함수
+/* =========================================
+   [최종] 두 번째 탭: 중점·검역관리 통합 판정 로직
+   ========================================= */
 function calculateCoreResult() {
-  // coreForm에서 데이터 가져오기 (첫 번째 탭과 독립적)
   const coreForm = document.getElementById("coreForm");
   const f = new FormData(coreForm);
   
-  const reg = f.get("core_region");
+  const rawId = f.get("core_region"); 
   const depDate = f.get("core_departure_date");
   const arrDate = f.get("core_arrival_date");
 
-  // 날짜 입력 체크
-  if (!reg || !depDate || !arrDate) {
+  if (!rawId || !depDate || !arrDate) {
     alert("지역과 날짜를 모두 선택해주세요.");
     return;
   }
 
-  const data = q5Data[reg];
-  // 날짜 차이 계산 (diff)
   const diff = (new Date(arrDate) - new Date(depDate)) / 86400000;
   
-  // 결과창 보이기
-  const resultDiv = document.getElementById("coreResult");
-  resultDiv.style.display = "block";
+  // ID에서 핵심 이름만 추출 (예: "mongolia_q5" -> "mongolia")
+  // 이렇게 하면 어떤 ID가 들어와도 양쪽 데이터를 다 조회할 수 있습니다.
+  const baseId = rawId.replace("_q5", "").replace("_q6", ""); 
   
-  let coreReasons = [];
-  let isCoreActive = false;
+  let titles = [];
+  let details = [];
 
-  // 결과 메시지 생성 (요청하신 대로 'Q5:' 제거)
-  if (data.diseases) {
-    // 여러 질병인 경우 (인도, 방글라데시 등)
-    coreReasons = data.diseases
-      .filter(dis => diff <= dis.day)
-      .map(dis => `${data.l} 출항(경유) / ${dis.name} 최대 잠복기간 이내 입항 (${dis.day}일)`);
-    if (coreReasons.length > 0) isCoreActive = true;
-  } else if (diff <= data.day) {
-    // 단일 질병 국가인 경우
-    coreReasons.push(`${data.l} 출항(경유) / ${data.d} 최대 잠복기간 이내 입항 (${data.day}일)`);
-    isCoreActive = true;
+  // --- [1] 중점검역관리지역(Q5) 데이터 조회 ---
+  const q5Key = baseId + "_q5";
+  const d5 = q5Data[q5Key];
+  if (d5) {
+    let activeQ5 = [];
+    if (d5.diseases) {
+      activeQ5 = d5.diseases
+        .filter(d => diff <= d.day)
+        .map(d => `${d5.l} 출항(경유) / ${d.name} 최대 잠복기간 이내 입항 (${d.day}일)`);
+    } else if (diff <= d5.day) {
+      activeQ5.push(`${d5.l} 출항(경유) / ${d5.d} 최대 잠복기간 이내 입항 (${d5.day}일)`);
+    }
+    
+    if (activeQ5.length > 0) {
+      titles.push("중점검역관리지역 출항(경유)");
+      details = details.concat(activeQ5);
+    }
   }
 
-  // 최종 화면 렌더링 
-  if (isCoreActive) {
+  // --- [2] 일반 검역관리지역(Q6) 데이터 조회 ---
+  const q6Key = baseId + "_q6";
+  const d6 = q6Data[q6Key];
+  if (d6) {
+    const hangleName = regionLabelQ6(q6Key);
+    const activeQ6 = d6
+      .filter(d => diff <= d.day)
+      .map(d => `${hangleName} 출항(경유) / ${d.d} 최대 잠복기간 내 선원교대 (${d.day}일)`);
+    
+    if (activeQ6.length > 0) {
+      titles.push("검역관리지역 출항(경유)");
+      details = details.concat(activeQ6);
+    }
+  }
+
+  const resultDiv = document.getElementById("coreResult");
+  resultDiv.style.display = "block";
+
+  // --- [3] 화면 출력 (제목 나열 및 상세 내역 통합) ---
+  if (titles.length > 0) {
     resultDiv.style.borderTop = "6px solid var(--danger-red)";
     resultDiv.innerHTML = `
       <div style="padding: 10px;">
-        <h2 style="font-size:32px; color:var(--danger-red); margin:0 0 10px 0; font-weight:900;">승선검역</h2>
-        <div style="background:#fef2f2; padding:15px; border-radius:10px; border:1px solid #fee2e2; text-align:left; font-size:15px; color:#1e293b; line-height:1.6; word-break:keep-all;">
-          ${coreReasons.join("<br>")}
+        ${titles.map(t => `<h2 style="font-size:24px; color:var(--danger-red); margin:0 0 8px 0; font-weight:900; line-height:1.2;">${t}</h2>`).join("")}
+        
+        <div style="margin-top:15px; background:#fef2f2; padding:15px; border-radius:10px; border:1px solid #fee2e2; text-align:left; font-size:15px; color:#1e293b; line-height:1.6; word-break:keep-all;">
+          ${details.join("<br>")}
         </div>
         <button onclick="location.reload()" style="margin-top:15px; background:none; border:1px solid #cbd5e1; padding:8px 15px; border-radius:6px; cursor:pointer; color:#64748b; font-size:13px;">다시하기</button>
       </div>
     `;
   } else {
+    // 잠복기 경과 시 "해당사항 없음"
     resultDiv.style.borderTop = "6px solid var(--accent-blue)";
     resultDiv.innerHTML = `
       <div style="padding: 10px;">
         <h2 style="font-size:32px; color:var(--accent-blue); margin:0 0 10px 0; font-weight:900;">해당사항 없음</h2>
-        <p style="font-size:15px; color:#1e293b; margin:0;">모든 중점검역관리지역의 검역감염병 최대잠복기간이 경과되었습니다.</p>
+        <p style="font-size:15px; color:#1e293b; margin:0;">모든 중점 및 검역관리 질병의 잠복기가 경과되었습니다.</p>
         <button onclick="location.reload()" style="margin-top:15px; background:none; border:1px solid #cbd5e1; padding:8px 15px; border-radius:6px; cursor:pointer; color:#64748b; font-size:13px;">다시하기</button>
       </div>
     `;
   }
+  
+  // 스크롤 이동
+  setTimeout(() => {
+    resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }, 100);
 }
