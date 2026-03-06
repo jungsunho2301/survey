@@ -617,7 +617,7 @@ function calculateCoreResult() {
     const hangleName = regionLabelQ6(q6Key);
     const activeQ6 = d6
       .filter(d => diff <= d.day)
-      .map(d => `${hangleName} 출항(경유) / ${d.d} 최대 잠복기간 내 선원교대 (${d.day}일)`);
+      .map(d => `${hangleName} 출항(경유) / ${d.d} 최대 잠복기간 이내 입항 (${d.day}일)`);
     
     if (activeQ6.length > 0) {
       titles.push("검역관리지역 출항(경유)");
