@@ -320,7 +320,7 @@ function regionLabelQ6(v) {
     // 자
     jamaica_q6: "자메이카", zambia_q6: "잠비아", "equatorial guinea_q6": "적도기니", georgia_q6: "조지아", 
     china_q6: "중국", china_gd_q6: "중국(광둥성)", china_gx_q6: "중국(광시좡족자치구)", 
-    china_gz_q6: "중국(구이저우성)", china_sx_q6: "중국(산시성)", china_sc_q6: "중국(쓰좨성)", 
+    china_gz_q6: "중국(구이저우성)", china_sx_q6: "중국(산시성)", china_sc_q6: "중국(쓰촨성)", 
     china_yn_q6: "중국(원난성)", china_cq_q6: "중국(충칭시)", china_tj_q6: "중국(텐진시)", 
     china_hn_q6: "중국(허난성)", china_hn2_q6: "중국(후난성)", china_hb_q6: "중국(후베이성)", 
     중앙아프리카공화국_q6: "중앙아프리카공화국", 지부티_q6: "지부티", zimbabwe_q6: "짐바브웨",
