@@ -582,10 +582,15 @@ function calculateCoreResult() {
     return;
   }
 
+  const dDate = new Date(depDate);
+  const aDate = new Date(arrDate);
+
+  if (aDate < dDate) {
+    alert("입항일이 출항(경유)일보다 빠를 수 없습니다. 날짜를 다시 확인해 주세요.");
+    return; // 여기서 실행을 중단시킵니다.
+  }
+   
   const diff = (new Date(arrDate) - new Date(depDate)) / 86400000;
-  
-  // ID에서 핵심 이름만 추출 (예: "mongolia_q5" -> "mongolia")
-  // 이렇게 하면 어떤 ID가 들어와도 양쪽 데이터를 다 조회할 수 있습니다.
   const baseId = rawId.replace("_q5", "").replace("_q6", ""); 
   
   let titles = [];
