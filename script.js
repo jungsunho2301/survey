@@ -303,7 +303,7 @@ function regionLabelQ6(v) {
     // 사
     samoa_q6: "사모아", saudi_q6: "사우디아라비아", cyprus_q6: "사이프러스", st_barthelemy_q6: "생바르텔르미", 
     senegal_q6: "세네갈", serbia_q6: "세르비아", seychelles_q6: "세이셸", st_lucia_q6: "세인트루시아", 
-    st_martin_q6: "세인트마틴", st_vincent_q6: "세인트빈센트그레나딘", st_kitts_q6: "세인트키츠", 
+    st_martin_q6: "세인트마틴", st_vincent_q6: "세인트빈센트그레나딘", st_kitts_q6: "세인트키츠 네비스", 
     somalia_q6: "소말리아", solomon_islands_q6: "솔로몬제도", sudan_q6: "수단", sri_lanka_q6: "스리랑카", 
     suriname_q6: "수리남", syria_q6: "시리아", sierra_leone_q6: "시에라리온", sint_maarten_q6: "신트마르턴", 
     singapore_q6: "싱가포르", spain_q6: "스페인",
