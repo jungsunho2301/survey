@@ -228,14 +228,7 @@ input[type="radio"] {
   border-top: 1px solid #e2e8f0;
 }
 
-.input-label {
-  display: block;
-  font-size: 13px;
-  font-weight: 700;
-  margin-bottom: 6px;
-  color: #64748b;
-}
-
+/* 입출항 지역 선택창 (Select) 및 일반 입력창 */
 .styled-input {
   width: 100%;
   padding: 12px;
@@ -244,28 +237,47 @@ input[type="radio"] {
   font-size: 14px;
   margin-bottom: 15px;
   background-color: #ffffff;
+  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+  min-height: 44px; /* 모바일 터치 최적화 높이 */
 }
 
+/* 입력창 상단 라벨 (출항일, 입항일 등) */
+.input-label {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #64748b;
+  white-space: nowrap; /* 라벨 줄바꿈 방지 */
+}
+
+/* 날짜 입력창 그리드 - 실제 휴대폰 겹침 방지 핵심 로직 */
 .date-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr; /* PC처럼 가로로 2등분 */
-  gap: 12px;
-  width: 100%; /* 부모 너비에 맞춤 */
-}
-
-/* 추가: 날짜 박스 내부 요소들이 삐져나가지 않게 설정 */
-.date-grid > div {
-  min-width: 0; 
-}
-
-/* 추가: 입력창 자체의 스타일 점검 */
-.styled-input {
+  display: flex !important; /* 가로 배치를 위해 flex 사용 */
+  gap: 8px; /* 간격을 살짝 좁혀 공간 확보 */
   width: 100%;
-  padding: 10px;
-  font-size: 14px; /* 모바일에서 적당한 크기 */
-  box-sizing: border-box; /* 패딩 때문에 박스가 밀리는 것 방지 */
+  margin-bottom: 15px; /* 다음 요소와의 간격 */
+  box-sizing: border-box;
 }
 
+.date-grid > div {
+  flex: 1; /* 정확히 50%씩 배분 */
+  min-width: 0; /* 내부 요소가 박스를 뚫고 나오지 못하게 차단 */
+}
+
+/* 날짜 입력창 전용 스타일 (실제 기기 대응) */
+.date-grid .styled-input {
+  margin-bottom: 0; /* 그리드 내부에서는 마진 제거 */
+  padding: 10px 4px; /* 좌우 패딩을 줄여서 날짜 숫자가 들어갈 공간 확보 */
+  font-size: 13px; /* 모바일에서 겹치지 않도록 폰트 크기 미세 조정 */
+  
+  /* 아이폰/갤럭시 브라우저 고유 스타일 초기화 */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* 결과 확인 버튼 */
 .btn-submit {
   width: 100%;
   padding: 20px;
@@ -277,18 +289,25 @@ input[type="radio"] {
   border-radius: 12px;
   cursor: pointer;
   box-shadow: 0 6px 16px rgba(30, 58, 138, 0.3);
-  transition: transform 0.2s;
+  transition: transform 0.2s, background-color 0.2s;
+  margin-top: 10px;
+}
+
+.btn-submit:hover {
+  background-color: #162e70; /* 살짝 더 진한 네이비 */
 }
 
 .btn-submit:active {
   transform: scale(0.98);
 }
 
+/* 결과창 레이아웃 */
 #result, #coreResult {
   margin-top: 30px;
   padding: 24px;
   background: #ffffff;
   border-radius: 14px;
   box-shadow: var(--card-shadow);
-  display: none;
+  display: none; /* 초기 상태 숨김 */
+  word-break: keep-all; /* 한글 줄바꿈 최적화 */
 }
