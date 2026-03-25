@@ -248,8 +248,22 @@ input[type="radio"] {
 
 .date-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr; /* PC처럼 가로로 2등분 */
   gap: 12px;
+  width: 100%; /* 부모 너비에 맞춤 */
+}
+
+/* 추가: 날짜 박스 내부 요소들이 삐져나가지 않게 설정 */
+.date-grid > div {
+  min-width: 0; 
+}
+
+/* 추가: 입력창 자체의 스타일 점검 */
+.styled-input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px; /* 모바일에서 적당한 크기 */
+  box-sizing: border-box; /* 패딩 때문에 박스가 밀리는 것 방지 */
 }
 
 .btn-submit {
