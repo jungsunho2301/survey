@@ -17,11 +17,9 @@ function toggleQ6(show) {
 const q5Data = {
   lebanon_q5: {l:"레바논", d:"MERS", day:14}, 
   mada_q5: {l:"마다가스카르", d:"페스트", day:6},
-  mexico_q5: {l:"멕시코", d:"AI", day:10}, 
   mongolia_q5: {l:"몽골", d:"페스트", day:6},
   nm_usa_q5: {l:"미국(뉴멕시코주)", d:"페스트", day:6}, 
   wa_usa_q5: {l:"미국(워싱턴주)", d:"AI", day:10},
-  ca_usa_q5: {l:"미국(캘리포니아주)", d:"AI", day:10}, 
   bahrain_q5: {l:"바레인", d:"MERS", day:14},
   bangladesh_q5: {
     l: "방글라데시",
@@ -30,13 +28,9 @@ const q5Data = {
       { name: "니파바이러스", day: 14 }
     ]
   },
-  vietnam_dn_q5: {l:"베트남(동나이)", d:"AI", day:10},
-  vietnam_dninh_q5: {l:"베트남(따이닌)", d:"AI", day:10}, 
-  vietnam_hcm_q5: {l:"베트남(호찌민)", d:"AI", day:10},
   saudi_q5: {l:"사우디아라비아", d:"MERS", day:14}, 
   syria_q5: {l:"시리아", d:"MERS", day:14},
   uae_q5: {l:"아랍에미레이트", d:"MERS", day:14}, 
-  ethiopia_q5: {l:"에티오피아", d:"마버그열", day:21},
   yemen_q5: {l:"예멘", d:"MERS", day:14}, 
   oman_q5: {l:"오만", d:"MERS", day:14},
   jordan_q5: {l:"요르단", d:"MERS", day:14}, 
