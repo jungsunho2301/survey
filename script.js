@@ -162,6 +162,7 @@ const q6Data = {
   laos_q6: [{d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   algeria_q6: [{d:"폴리오", day:21}, {d:"홍역", day:21}],
   papua_new_guinea_q6: [{d:"폴리오", day:21}],
+  palestine_q6: [{d:"폴리오", day: 21}], 
 
   namibia_q6: [{d:"홍역", day:21}, {d:"콜레라", day:5}], 
   south_africa_q6: [{d:"홍역", day:21}],
@@ -324,7 +325,7 @@ function regionLabelQ6(v) {
     trinidad_q6: "트리니다드토바고",
     // 파
     panama_q6: "파나마", paraguay_q6: "파라과이", pakistan_q6: "파키스탄", papua_new_guinea_q6: "파푸아뉴기니", 
-    palau_q6: "팔라우", peru_q6: "페루", portugal_q6: "포르투갈", poland_q6: "폴란드", 
+    palau_q6: "팔라우", palestine_q6: "팔레스타인", peru_q6: "페루", portugal_q6: "포르투갈", poland_q6: "폴란드", 
     polynesia_q6: "폴리네시아", puerto_rico_q6: "푸에르토리코", france_q6: "프랑스", 
     french_guiana_q6: "프랑스령 기아나", fiji_q6: "피지", philippines_q6: "필리핀",
     // 하
