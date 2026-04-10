@@ -472,14 +472,15 @@ function calculateResult() {
 
   // 1. 조사생략 판정: STEP 1이 아니고, (Q5잠복기내 OR Q6잠복기내 OR Q7부적합) 중 하나라도 해당하며 조사생략 조건을 만족할 때
   if (!isStep1Active && (q5InIncubation || q6InIncubation || isQ7Yes) && isExemptionCondition) {
-     const subText = `
-    <div style="font-size:14px; color:#64748b; margin-top:12px; font-weight:500; line-height:1.5; word-break:keep-all;">
-      하선자 발생 시, 별도의 검역조치 필요
+  const combinedTitle = `
+    조사생략
+    <div style="font-size:16px; color:#64748b; margin-top:10px; font-weight:500; letter-spacing:0; line-height:1.4;">
+      ※ 하선자 발생 시, 별도의 검역조치 필요
     </div>
-    `;
-    renderResult("조사생략", subText, "#22c55e");
-    return;
-  }
+  `;
+  renderResult(combinedTitle, "", "#22c55e"); 
+  return;
+}
 
   // 2. 승선검역 사유 합치기
   if (q5InIncubation) reasons.push(q5Reason);
