@@ -477,7 +477,7 @@ function calculateResult() {
       하선자 발생 시, 별도의 검역조치 필요
     </div>
     `;
-    renderResult("조사생략", "", "#22c55e");
+    renderResult("조사생략", subText, "#22c55e");
     return;
   }
 
