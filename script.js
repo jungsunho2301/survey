@@ -498,7 +498,7 @@ function calculateResult() {
   if (reasons.length > 0) {
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    renderResult("서류심사", "", "#f59e0b");
+    renderResult("서류검역", "", "#f59e0b");
   }
 }
 
