@@ -408,100 +408,68 @@ function calculateResult() {
   const isDepart48 = f.get("depart48") === "yes";
   const isNoBoarding = f.get("boarding") === "no";
   
-  // 조사생략 공통 조건: 미접안 + 48시간 이내 출항 + 승선자 없음
-  const isExemptionCondition = (!isDock && isDepart48 && isNoBoarding);
+  // [1] 조사생략 유일 조건: Q7 부적합 + 미접안 + 48시간 내 출항 + 승선자 없음
+  const isExemptionCondition = (q(7) === "yes" && !isDock && isDepart48 && isNoBoarding);
 
   let reasons = [];
-  let isStep1Active = false; // Q1~Q4 해당 여부 체크용
 
-  // --- [1] STEP 1: 즉시 승선검역 사유 수집 (멈추지 않음) ---
-  if (q(1) === "yes") { reasons.push("Q1: 선박 내 검역감염병 환자 또는 의심환자 발생으로 즉시 승선검역 대상"); isStep1Active = true; }
-  if (q(2) === "yes") { reasons.push("Q2: 선박 내 사망자 발생으로 즉시 승선검역 대상"); isStep1Active = true; }
-  if (q(3) === "yes") { reasons.push("Q3: 선원 또는 승객 중 유증상자(발열, 설사, 구토 등) 발생으로 즉시 승선검역 대상"); isStep1Active = true; }
-  if (q(4) === "yes") { reasons.push("Q4: 선박 내 감염병 매개체의 서식 또는 흔적이 확인되어 즉시 승선검역 대상"); isStep1Active = true; }
+  // --- [STEP 1] 절대 승선검역 사유 (Q1 ~ Q4) ---
+  if (q(1) === "yes") reasons.push("Q1: 선박 내 환자 또는 의심환자 발생");
+  if (q(2) === "yes") reasons.push("Q2: 선박 내 사망자 발생");
+  if (q(3) === "yes") reasons.push("Q3: 선원 또는 승객 중 유증상자 발생");
+  if (q(4) === "yes") reasons.push("Q4: 선박 내 감염병 매개체 서식 또는 흔적 확인");
 
-  // --- [2] Q5, Q6, Q7 잠복기 및 위험 요소 체크 ---
-  const isQ5Yes = q(5) === "yes";
-  const isQ6Yes = q(6) === "yes";
-  const isQ7Yes = q(7) === "yes";
-
+  // --- [STEP 2] Q5 잠복기 및 접안 체크 ---
   let q5InIncubation = false;
-  let q6InIncubation = false;
   let q5Reason = "";
-  let q6Reasons = [];
-
-  if (isQ5Yes) {
+  if (q(5) === "yes") {
     const data = q5Data[f.get("q5_region")];
     const diff = (new Date(f.get("q5_arrival_date")) - new Date(f.get("q5_departure_date"))) / 86400000;
-    
     if (data) {
-      // 1. 질병이 여러 개인 경우 (인도, 방글라데시 등)
       if (data.diseases) {
-        let active = data.diseases
-          .filter(dis => diff <= dis.day)
-          // 텍스트 순서를 Q6와 동일하게 (n일)이 맨 뒤로 가게 수정
-          .map(dis => `Q5: ${data.l} 출항(경유) / ${dis.name} 최대 잠복기간 이내 입항 (${dis.day}일)`);
-          
-        if (active.length > 0) {
-          q5InIncubation = true;
-          q5Reason = active.join("<br>");
-        }
-      } 
-      // 2. 단일 질병 국가인 경우
-      else if (diff <= data.day) {
+        let active = data.diseases.filter(dis => diff <= dis.day).map(dis => `Q5: ${data.l} / ${dis.name} 잠복기 내 (${dis.day}일)`);
+        if (active.length > 0) { q5InIncubation = true; q5Reason = active.join("<br>"); }
+      } else if (diff <= data.day) {
         q5InIncubation = true;
-        // 문장 마지막에 (n일)이 오도록 수정 완료
-        q5Reason = `Q5: ${data.l} 출항(경유) / ${data.d} 최대 잠복기간 이내 입항 (${data.day}일)`;
+        q5Reason = `Q5: ${data.l} / ${data.d} 잠복기 내 (${data.day}일)`;
       }
     }
   }
 
-  if (isQ6Yes) {
-    const reg = f.get("q6_region");
-    const diff = (new Date(f.get("q6_arrival_date")) - new Date(f.get("q6_onboard_date"))) / 86400000;
-    const diseases = q6Data[reg] || [];
-    diseases.forEach(d => {
-      if (diff <= d.day) {
-        q6InIncubation = true;
-        q6Reasons.push(`Q6: ${regionLabelQ6(reg)} 승선 / ${d.d} 최대 잠복기간 내 선원교대 (${d.day}일)`);
-      }
-    });
+  // Q5는 잠복기 이내이면서 '접안'했을 때만 승선 사유 추가
+  if (q5InIncubation && isDock) {
+    reasons.push(q5Reason);
   }
 
-  // --- [3] 최종 판정 단계 (우선순위 적용) ---
+  // --- [STEP 3] Q7 부적합 및 승선/생략 판정 ---
+  const isQ7Yes = q(7) === "yes";
 
-  // 1. 조사생략 판정: STEP 1이 아니고, (Q5잠복기내 OR Q6잠복기내 OR Q7부적합) 중 하나라도 해당하며 조사생략 조건을 만족할 때
-  if (!isStep1Active && (q5InIncubation || q6InIncubation || isQ7Yes) && isExemptionCondition) {
-  const combinedTitle = `
-    조사생략
-    <div style="font-size:16px; color:#64748b; margin-top:10px; font-weight:500; letter-spacing:0; line-height:1.4;">
-      ※ 하선자 발생 시, 별도의 검역조치 필요
-    </div>
-  `;
-  renderResult(combinedTitle, "", "#22c55e"); 
-  return;
-}
-
-  // 2. 승선검역 사유 합치기
-  if (q5InIncubation) reasons.push(q5Reason);
-  
-  // Q6는 잠복기 이내이면서 '접안'할 때만 승선검역 사유가 됨
-  if (q6InIncubation && isDock) {
-    reasons = reasons.concat(q6Reasons);
+  // [최종 판정 1] 조사생략 (딱 1가지 경우)
+  if (isExemptionCondition && reasons.length === 0) {
+    const exemptionTitle = `
+      조사생략
+      <div style="font-size:16px; color:#64748b; margin-top:10px; font-weight:500; letter-spacing:0; line-height:1.4;">
+        ※ 하선자 발생 시, 별도의 검역조치 필요
+      </div>
+    `;
+    renderResult(exemptionTitle, "", "#22c55e");
+    return;
   }
 
-  if (isQ7Yes) {
+  // [최종 판정 2] Q7 승선검역 (조사생략 조건을 만족하지 못한 Q7 부적합 선박)
+  if (isQ7Yes && !isExemptionCondition) {
     reasons.push("Q7: 선박위생관리(면제)증명서 미소지 또는 유효기간 만료");
   }
 
-  // 3. 최종 출력
+  // --- [STEP 4] 최종 출력 ---
   if (reasons.length > 0) {
+    // 승선검역: 수집된 사유(박스)와 함께 출력
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
+    // 서류검역: 사유 박스 없이 출력 (Q6 잠복기 등 나머지는 모두 여기로 옴)
     renderResult("서류검역", "", "#f59e0b");
   }
 }
-
 /* =========================================
    6. 디자인 출력 함수 (사유 박스 조건부 렌더링)
    ========================================= */
