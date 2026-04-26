@@ -446,13 +446,7 @@ function calculateResult() {
 
   // [최종 판정 1] 조사생략 (딱 1가지 경우)
   if (isExemptionCondition && reasons.length === 0) {
-    const exemptionTitle = `
-      조사생략
-      <div style="font-size:16px; color:#64748b; margin-top:10px; font-weight:500; letter-spacing:0; line-height:1.4;">
-        ※ 하선자 발생 시, 별도의 검역조치 필요
-      </div>
-    `;
-    renderResult(exemptionTitle, "", "#22c55e");
+    renderResult("조사생략", "", "#22c55e");
     return;
   }
 
