@@ -440,7 +440,7 @@ function validateForm(f, formId) {
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수 (하선자 안내 텍스트 스타일링 적용)
+   5. 결과 계산 메인 함수 (주석 형태 안내 문구 적용)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
@@ -451,17 +451,18 @@ function calculateResult() {
   const isDepart48 = f.get("depart48") === "yes";
   const isNoBoarding = f.get("boarding") === "no";
   
-  const isExemptionCondition = (q(7) === "yes" && !isDock && isDepart48 && isNoBoarding);
+  // 원래 정의하셨던 그 4가지 상황을 위한 조건 변수
+  const isFourCase = (q(5) === "yes" && !isDock);
 
   let reasons = [];
 
-  // (기존 승선검역 사유 체크 로직 유지)
+  // 기본 승선검역 사유 체크
   if (q(1) === "yes") reasons.push("Q1: 선박 내 환자 또는 의심환자 발생");
   if (q(2) === "yes") reasons.push("Q2: 선박 내 사망자 발생");
   if (q(3) === "yes") reasons.push("Q3: 선원 또는 승객 중 유증상자 발생");
   if (q(4) === "yes") reasons.push("Q4: 선박 내 감염병 매개체 서식 또는 흔적 확인");
 
-  // (Q5 잠복기 및 중점지역 체크 로직 유지)
+  // Q5 잠복기 및 중점지역 체크
   let q5InIncubation = false;
   let q5Reason = "";
   if (q(5) === "yes") {
@@ -477,16 +478,20 @@ function calculateResult() {
       }
     }
   }
-  if (q5InIncubation && isDock) reasons.push(q5Reason);
-  
-  const isQ7Yes = q(7) === "yes";
-  const isTargetCondition = (q5InIncubation && !isDock); // 그 4가지 상황
 
-  // 🌟 하선자 안내용 작은 텍스트 스타일 (박스 없음)
-  const disembarkText = "<div style='font-size: 13px; color: #64748b; margin-top: 10px; font-weight: 500;'>※ 하선자가 있을 경우 하선자 검역 필요</div>";
+  if (q5InIncubation && isDock) {
+    reasons.push(q5Reason);
+  }
+
+  const isQ7Yes = q(7) === "yes";
+  const isExemptionCondition = (q(7) === "yes" && !isDock && isDepart48 && isNoBoarding);
+
+  // 🌟 주석 스타일의 안내 문구 (박스 없음, 작은 글씨, 사유와 구분됨)
+  const commentNote = "<div style='font-size: 13px; color: #718096; margin-top: 15px; text-align: center; font-style: italic;'>※ 하선자가 있을 경우 하선자 검역 필요</div>";
 
   if (isExemptionCondition && reasons.length === 0) {
-    renderResult("조사생략", "", "#22c55e");
+    // 조사생략 상황에서도 4가지 상황(잠복기내+미접안)에 해당하면 주석 노출
+    renderResult("조사생략", isFourCase ? commentNote : "", "#22c55e");
     return;
   }
 
@@ -495,14 +500,14 @@ function calculateResult() {
   }
 
   if (reasons.length > 0) {
+    // 승선검역인 경우 (주석 없음)
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    // 🌟 서류검역 상황(그 4가지 상황)일 때만 하단에 작은 텍스트 추가
-    let resultMessage = isTargetCondition ? disembarkText : "";
-    renderResult("서류검역", resultMessage, "#f59e0b");
+    // 서류검역인 경우: 그 4가지 상황일 때만 주석 노출
+    let displayComment = isFourCase ? commentNote : "";
+    renderResult("서류검역", displayComment, "#f59e0b");
   }
 }
-
 /* =========================================
    6. 디자인 출력 함수 (사유 박스 조건부 렌더링)
    ========================================= */
