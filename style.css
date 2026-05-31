@@ -138,8 +138,9 @@ h1 {
   border-radius: 12px;
   margin-bottom: 20px;
   box-shadow: var(--card-shadow);
-  overflow: hidden;
+  /* overflow: hidden; */ /* 🔄 드롭다운 잘림 현상 방지를 위해 해제 완료 */
   border: 1px solid #e2e8f0;
+  position: relative;     /* 🌟 드롭다운 팝업의 기준점 방어막 구축 */
 }
 
 .card-header {
@@ -226,6 +227,7 @@ input[type="radio"] {
   padding: 18px;
   background-color: #f1f5f9;
   border-top: 1px solid #e2e8f0;
+  position: relative; /* 🌟 드롭다운이 문항 밖으로 안전하게 튀어나오도록 상속 레이어 고정 */
 }
 
 /* 입출항 지역 선택창 (Select) 및 일반 입력창 */
@@ -356,13 +358,13 @@ input[type="radio"] {
   top: 100%;
   left: 0;
   width: 100%;
-  max-height: 230px; /* 너무 길어져서 화면 가리지 않게 최적화 */
-  overflow-y: auto;
+  max-height: 200px; /* 너무 길어져서 화면 가리지 않게 최적화 */
+  overflow-y: auto !important; /* 🌟 내부 영역 강제 스크롤 유도 */
   background: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-  z-index: 9999; /* 다른 카드나 레이아웃에 절대 가려지지 않게 방어 */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  z-index: 99999; /* 🌟 다른 어떤 요소보다 위에 둥둥 뜨도록 최상위 계층 부여 */
   margin-top: 5px;
   animation: fadeIn 0.2s ease-out; /* 주신 페이드인 효과 재활용 */
 }
