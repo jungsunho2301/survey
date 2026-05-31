@@ -65,46 +65,52 @@
           </div>
           <div id="q5Detail" class="detail-box">
             <label class="input-label">출항·경유지역</label>
-            <input type="text" id="q5_region_input" class="styled-input" placeholder="🔍 국가명을 입력하거나 선택하세요" list="q5_region_list">
-            <input type="hidden" name="q5_region" id="q5_region_hidden">
             
-            <datalist id="q5_region_list">
-              <option value="남수단" data-code="south_sudan_q5"></option>
-              <option value="레바논" data-code="lebanon_q5"></option>
-              <option value="르완다" data-code="rwanda_q5"></option>
-              <option value="마다가스카르" data-code="mada_q5"></option>
-              <option value="몽골" data-code="mongolia_q5"></option>
-              <option value="미국(뉴멕시코주)" data-code="nm_usa_q5"></option>
-              <option value="미국(워싱턴주)" data-code="wa_usa_q5"></option>
-              <option value="바레인" data-code="bahrain_q5"></option>
-              <option value="방글라데시" data-code="bangladesh_q5"></option>
-              <option value="사우디아라비아" data-code="saudi_q5"></option>
-              <option value="시리아" data-code="syria_q5"></option>
-              <option value="아랍에미레이트" data-code="uae_q5"></option>
-              <option value="에티오피아" data-code="ethiopia_q5"></option>
-              <option value="예멘" data-code="yemen_q5"></option>
-              <option value="오만" data-code="oman_q5"></option>
-              <option value="우간다" data-code="uganda_q5"></option>
-              <option value="요르단" data-code="jordan_q5"></option>
-              <option value="이라크" data-code="iraq_q5"></option>
-              <option value="이란" data-code="iran_q5"></option>
-              <option value="이스라엘" data-code="israel_q5"></option>
-              <option value="인도" data-code="india_q5"></option>
-              <option value="중국(광둥성)" data-code="china_gd_q5"></option>
-              <option value="중국(광시좡족자치구)" data-code="china_gx_q5"></option>
-              <option value="중국(구이저우성)" data-code="china_gz_q5"></option>
-              <option value="중국(산시성)" data-code="china_sx_q5"></option>
-              <option value="중국(쓰촨성)" data-code="china_sc_q5"></option>
-              <option value="중국(텐진시)" data-code="china_tj_q5"></option>
-              <option value="중국(충칭시)" data-code="china_cq_q5"></option>
-              <option value="중국(허난성)" data-code="china_hn_q5"></option>
-              <option value="중국(후난성)" data-code="china_hn2_q5"></option>
-              <option value="중국(후베이성)" data-code="china_hb_q5"></option>
-              <option value="카타르" data-code="qatar_q5"></option>
-              <option value="캄보디아" data-code="cambodia_q5"></option>
-              <option value="콩고민주공화국" data-code="congo_q5"></option>
-              <option value="쿠웨이트" data-code="kuwait_q5"></option>
-            </datalist>
+            <div class="search-select-container" id="q5_container">
+              <div class="search-select-wrapper">
+                <input type="text" id="q5_region_input" class="styled-input search-select-input" placeholder="🔍 국가명을 입력하거나 우측 단추를 누르세요" autocomplete="off">
+                <span class="search-select-arrow">▼</span>
+              </div>
+              <input type="hidden" name="q5_region" id="q5_region_hidden">
+              <div class="search-select-dropdown" id="q5_dropdown">
+                <div data-code="south_sudan_q5">남수단</div>
+                <div data-code="lebanon_q5">레바논</div>
+                <div data-code="rwanda_q5">르완다</div>
+                <div data-code="mada_q5">마다가스카르</div>
+                <div data-code="mongolia_q5">몽골</div>
+                <div data-code="nm_usa_q5">미국(뉴멕시코주)</div>
+                <div data-code="wa_usa_q5">미국(워싱턴주)</div>
+                <div data-code="bahrain_q5">바레인</div>
+                <div data-code="bangladesh_q5">방글라데시</div>
+                <div data-code="saudi_q5">사우디아라비아</div>
+                <div data-code="syria_q5">시리아</div>
+                <div data-code="uae_q5">아랍에미레이트</div>
+                <div data-code="ethiopia_q5">에티오피아</div>
+                <div data-code="yemen_q5">예멘</div>
+                <div data-code="oman_q5">오만</div>
+                <div data-code="uganda_q5">우간다</div>
+                <div data-code="jordan_q5">요르단</div>
+                <div data-code="iraq_q5">이라크</div>
+                <div data-code="iran_q5">이란</div>
+                <div data-code="israel_q5">이스라엘</div>
+                <div data-code="india_q5">인도</div>
+                <div data-code="china_gd_q5">중국(광둥성)</div>
+                <div data-code="china_gx_q5">중국(광시좡족자치구)</div>
+                <div data-code="china_gz_q5">중국(구이저우성)</div>
+                <div data-code="china_sx_q5">중국(산시성)</div>
+                <div data-code="china_sc_q5">중국(쓰촨성)</div>
+                <div data-code="china_tj_q5">중국(텐진시)</div>
+                <div data-code="china_cq_q5">중국(충칭시)</div>
+                <div data-code="china_hn_q5">중국(허난성)</div>
+                <div data-code="china_hn2_q5">중국(후난성)</div>
+                <div data-code="china_hb_q5">중국(후베이성)</div>
+                <div data-code="qatar_q5">카타르</div>
+                <div data-code="cambodia_q5">캄보디아</div>
+                <div data-code="congo_q5">콩고민주공화국</div>
+                <div data-code="kuwait_q5">쿠웨이트</div>
+              </div>
+            </div>
+
             <div class="date-grid">
               <div class="date-item"><label>출항일</label><input type="date" name="q5_departure_date" class="styled-input"></div>
               <div class="date-item"><label>입항 예정일</label><input type="date" name="q5_arrival_date" class="styled-input"></div>
@@ -172,196 +178,202 @@
         <div class="question">
           <form id="coreForm" onsubmit="return false;">
             <label class="input-label">대상 지역 선택</label>
-            <input type="text" id="core_region_input" class="styled-input" placeholder="🔍 국가명을 입력하거나 선택하세요" list="core_region_list">
-            <input type="hidden" name="core_region" id="core_region_hidden">
             
-            <datalist id="core_region_list">
-              <option value="가나" data-code="ghana_q6"></option>
-              <option value="가봉" data-code="gabon_q6"></option>
-              <option value="가이아나" data-code="guyana_q6"></option>
-              <option value="감비아" data-code="gambia_q6"></option>
-              <option value="과들루프" data-code="guadeloupe_q6"></option>
-              <option value="과테말라" data-code="guatemala_q6"></option>
-              <option value="그리스" data-code="greece_q6"></option>
-              <option value="그레나다" data-code="grenada_q6"></option>
-              <option value="기니" data-code="guinea_q6"></option>
-              <option value="기니비사우" data-code="guinea_bissau_q6"></option>
-              <option value="나미비아" data-code="namibia_q6"></option>
-              <option value="남수단" data-code="south_sudan_q5"></option>
-              <option value="나우루" data-code="nauru_q6"></option>
-              <option value="나이지리아" data-code="nigeria_q6"></option>
-              <option value="남아프리카공화국" data-code="south_africa_q6"></option>
-              <option value="네덜란드" data-code="netherlands_q6"></option>
-              <option value="네팔" data-code="nepal_q6"></option>
-              <option value="뉴칼레도니아" data-code="new_caledonia_q6"></option>
-              <option value="니카라과" data-code="nicaragua_q6"></option>
-              <option value="니제르" data-code="niger_q6"></option>
-              <option value="대만" data-code="taiwan_q6"></option>
-              <option value="독일" data-code="germany_q6"></option>
-              <option value="동티모르" data-code="timor_leste_q6"></option>
-              <option value="도미니카공화국" data-code="dominica_q6"></option>
-              <option value="라오스" data-code="laos_q6"></option>
-              <option value="라이베리아" data-code="liberia_q6"></option>
-              <option value="러시아" data-code="russia_q6"></option>
-              <option value="레바논" data-code="lebanon_q5"></option>
-              <option value="레소토" data-code="lesotho_q6"></option>
-              <option value="레위니옹" data-code="reunion_q6"></option>
-              <option value="루마니아" data-code="romania_q6"></option>
-              <option value="르완다" data-code="rwanda_q5"></option>
-              <option value="리비아" data-code="libya_q6"></option>
-              <option value="마다가스카르" data-code="mada_q5"></option>
-              <option value="마데이라" data-code="madeira_q6"></option>
-              <option value="말라위" data-code="malawi_q6"></option>
-              <option value="말레이시아" data-code="malaysia_q6"></option>
-              <option value="말리" data-code="mali_q6"></option>
-              <option value="마르티니크" data-code="martinique_q6"></option>
-              <option value="마요트" data-code="mayotte_q6"></option>
-              <option value="멕시코" data-code="mexico_q5"></option>
-              <option value="모로코" data-code="morocco_q6"></option>
-              <option value="모리타니" data-code="moritania_q6"></option>
-              <option value="모리셔스" data-code="mauritius_q6"></option>
-              <option value="모잠비크" data-code="mozambique_q6"></option>
-              <option value="몬테네그로" data-code="montenegro_q6"></option>
-              <option value="몰도바" data-code="moldova_q6"></option>
-              <option value="몰디브" data-code="maldives_q6"></option>
-              <option value="몽골" data-code="mongolia_q5"></option>
-              <option value="마이크로네시아" data-code="micronesia_q6"></option>
-              <option value="미국(뉴멕시코주)" data-code="nm_usa_q5"></option>
-              <option value="미국(워싱턴주)" data-code="wa_usa_q5"></option>
-              <option value="미국" data-code="usa_q6"></option>
-              <option value="미국령 버진아일랜드" data-code="virgin_islands_usa_q6"></option>
-              <option value="미얀마" data-code="myanmar_q6"></option>
-              <option value="바누아투" data-code="vanuatu_q6"></option>
-              <option value="바레인" data-code="bahrain_q5"></option>
-              <option value="바베이도스" data-code="barbados_q6"></option>
-              <option value="방글라데시" data-code="bangladesh_q5"></option>
-              <option value="베냉" data-code="benin_q6"></option>
-              <option value="베네수엘라" data-code="venezuela_q6"></option>
-              <option value="베트남" data-code="vietnam_q6"></option>
-              <option value="벨기에" data-code="belgium_q6"></option>
-              <option value="벨리즈" data-code="belize_q6"></option>
-              <option value="보스nia 헤르체고비나" data-code="bosnia_q6"></option>
-              <option value="보츠와나" data-code="botswana_q6"></option>
-              <option value="볼리비아" data-code="bolivia_q6"></option>
-              <option value="부룬디" data-code="burundi_q6"></option>
-              <option value="부르키나파소" data-code="burkina_faso_q6"></option>
-              <option value="브라질" data-code="brazil_q6"></option>
-              <option value="사모아" data-code="samoa_q6"></option>
-              <option value="사우디아라비아" data-code="saudi_q5"></option>
-              <option value="생바르텔르미" data-code="st_barthelemy_q6"></option>
-              <option value="세네갈" data-code="senegal_q6"></option>
-              <option value="세르비아" data-code="serbia_q6"></option>
-              <option value="세이셸" data-code="seychelles_q6"></option>
-              <option value="세인트루시아" data-code="st_lucia_q6"></option>
-              <option value="세인트마틴" data-code="st_martin_q6"></option>
-              <option value="세인트빈센트그레나딘" data-code="st_vincent_q6"></option>
-              <option value="세인트키츠 네비스" data-code="st_kitts_q6"></option>
-              <option value="소말리아" data-code="somalia_q6"></option>
-              <option value="솔로몬제도" data-code="solomon_islands_q6"></option>
-              <option value="수단" data-code="sudan_q6"></option>
-              <option value="스리랑카" data-code="sri_lanka_q6"></option>
-              <option value="수리남" data-code="suriname_q6"></option>
-              <option value="시리아" data-code="syria_q5"></option>
-              <option value="시에라리온" data-code="sierra_leone_q6"></option>
-              <option value="신트마르턴" data-code="sint_maarten_q6"></option>
-              <option value="싱가포르" data-code="singapore_q6"></option>
-              <option value="스페인" data-code="spain_q6"></option>
-              <option value="아루바" data-code="aruba_q6"></option>
-              <option value="아랍에미레이트" data-code="uae_q5"></option>
-              <option value="아르헨티나" data-code="argentina_q6"></option>
-              <option value="아르메니아" data-code="armenia_q6"></option>
-              <option value="에티오피아" data-code="ethiopia_q5"></option>
-              <option value="아이티" data-code="haiti_q6"></option>
-              <option value="아일랜드" data-code="ireland_q6"></option>
-              <option value="아프가니스탄" data-code="afghanistan_q6"></option>
-              <option value="앤티가 바부다" data-code="antigua_q6"></option>
-              <option value="알제리" data-code="algeria_q6"></option>
-              <option value="angola" data-code="angola_q6"></option>
-              <option value="앵귈라" data-code="anguilla_q6"></option>
-              <option value="에리트레아" data-code="eritrea_q6"></option>
-              <option value="에콰도르" data-code="ecuador_q6"></option>
-              <option value="엘살바도르" data-code="el_salvador_q6"></option>
-              <option value="영국" data-code="uk_q6"></option>
-              <option value="영국령 버진아일랜드" data-code="virgin_islands_uk_q6"></option>
-              <option value="예멘" data-code="yemen_q5"></option>
-              <option value="오만" data-code="oman_q5"></option>
-              <option value="오스트레일리아" data-code="australia_q6"></option>
-              <option value="오스트리아" data-code="austria_q6"></option>
-              <option value="온두라스" data-code="honduras_q6"></option>
-              <option value="요르단" data-code="jordan_q5"></option>
-              <option value="우간다" data-code="uganda_q5"></option>
-              <option value="우루과이" data-code="uruguay_q6"></option>
-              <option value="우즈베키스탄" data-code="uzbekistan_q6"></option>
-              <option value="우크라이나" data-code="ukraine_q6"></option>
-              <option value="왈리스푸투나" data-code="wallis_q6"></option>
-              <option value="이라크" data-code="iraq_q5"></option>
-              <option value="이란" data-code="iran_q5"></option>
-              <option value="이스라엘" data-code="israel_q5"></option>
-              <option value="이탈리아" data-code="italy_q6"></option>
-              <option value="인도" data-code="india_q5"></option>
-              <option value="인도네시아" data-code="indonesia_q6"></option>
-              <option value="자메이카" data-code="jamaica_q6"></option>
-              <option value="잠비아" data-code="zambia_q6"></option>
-              <option value="적도기니" data-code="equatorial_guinea_q6"></option>
-              <option value="조지아" data-code="georgia_q6"></option>
-              <option value="중국" data-code="china_q6"></option>
-              <option value="중국(광둥성)" data-code="china_gd_q5"></option>
-              <option value="중국(광시좡족자치구)" data-code="china_gx_q5"></option>
-              <option value="중국(구이저우성)" data-code="china_gz_q5"></option>
-              <option value="중국(산시성)" data-code="china_sx_q5"></option>
-              <option value="중국(쓰촨성)" data-code="china_sc_q5"></option>
-              <option value="중국(원난성)" data-code="china_yn_q6"></option>
-              <option value="중국(충칭시)" data-code="china_cq_q5"></option>
-              <option value="중국(텐진시)" data-code="china_tj_q5"></option>
-              <option value="중국(허난성)" data-code="china_hn_q5"></option>
-              <option value="중국(후난성)" data-code="china_hn2_q5"></option>
-              <option value="중국(후베이성)" data-code="china_hb_q5"></option>
-              <option value="중앙아프리카공화국" data-code="중앙아프리카공화국_q6"></option>
-              <option value="지부티" data-code="지부티_q6"></option>
-              <option value="짐바브웨" data-code="zimbabwe_q6"></option>
-              <option value="차드" data-code="chad_q6"></option>
-              <option value="카자흐스탄" data-code="kazakhstan_q6"></option>
-              <option value="카타르" data-code="qatar_q5"></option>
-              <option value="카보베르데" data-code="cape_verde_q6"></option>
-              <option value="카메룬" data-code="cameroon_q6"></option>
-              <option value="캄보디아" data-code="cambodia_q5"></option>
-              <option value="캐나다" data-code="canada_q6"></option>
-              <option value="케냐" data-code="kenya_q6"></option>
-              <option value="코모로" data-code="comoros_q6"></option>
-              <option value="코스타리카" data-code="costa_rica_q6"></option>
-              <option value="코트디부아르" data-code="ivory_coast_q6"></option>
-              <option value="콜롬비아" data-code="colombia_q6"></option>
-              <option value="콩고" data-code="congo_q6"></option>
-              <option value="콩고민주공화국" data-code="congo_q5"></option>
-              <option value="쿠바" data-code="cuba_q6"></option>
-              <option value="쿠웨이트" data-code="kuwait_q5"></option>
-              <option value="쿡제도" data-code="cook_islands_q6"></option>
-              <option value="키르기스스탄" data-code="kyrgyzstan_q6"></option>
-              <option value="키리바시" data-code="kiribati_q6"></option>
-              <option value="타지키스탄" data-code="tajikistan_q6"></option>
-              <option value="탄자니아" data-code="tanzania_q6"></option>
-              <option value="태국" data-code="thailand_q6"></option>
-              <option value="토고" data-code="togo_q6"></option>
-              <option value="통가" data-code="tonga_q6"></option>
-              <option value="튀니지" data-code="tunisia_q6"></option>
-              <option value="튀르키예" data-code="turkiye_q6"></option>
-              <option value="투발루" data-code="tuvalu_q6"></option>
-              <option value="트리니다드토바고" data-code="trinidad_q6"></option>
-              <option value="파나마" data-code="panama_q6"></option>
-              <option value="paraguay" data-code="paraguay_q6"></option>
-              <option value="파키스탄" data-code="pakistan_q6"></option>
-              <option value="파푸아뉴기니" data-code="papua_new_guinea_q6"></option>
-              <option value="팔라우" data-code="palau_q6"></option>
-              <option value="팔레스타인" data-code="palestine_q6"></option>
-              <option value="페루" data-code="peru_q6"></option>
-              <option value="폴란드" data-code="poland_q6"></option>
-              <option value="폴리네시아" data-code="polynesia_q6"></option>
-              <option value="푸에르토리코" data-code="puerto_rico_q6"></option>
-              <option value="프랑스" data-code="france_q6"></option>
-              <option value="프랑스령 기아나" data-code="french_guiana_q6"></option>
-              <option value="피지" data-code="fiji_q6"></option>
-              <option value="필리핀" data-code="philippines_q6"></option>
-            </datalist>
+            <div class="search-select-container" id="core_container">
+              <div class="search-select-wrapper">
+                <input type="text" id="core_region_input" class="styled-input search-select-input" placeholder="🔍 국가명을 입력하거나 우측 단추를 누르세요" autocomplete="off">
+                <span class="search-select-arrow">▼</span>
+              </div>
+              <input type="hidden" name="core_region" id="core_region_hidden">
+              <div class="search-select-dropdown" id="core_dropdown">
+                <div data-code="ghana_q6">가나</div>
+                <div data-code="gabon_q6">가봉</div>
+                <div data-code="guyana_q6">가이아나</div>
+                <div data-code="gambia_q6">감비아</div>
+                <div data-code="guadeloupe_q6">과들루프</div>
+                <div data-code="guatemala_q6">과테말라</div>
+                <div data-code="greece_q6">그리스</div>
+                <div data-code="grenada_q6">그레나다</div>
+                <div data-code="guinea_q6">기니</div>
+                <div data-code="guinea_bissau_q6">기니비사우</div>
+                <div data-code="namibia_q6">나미비아</div>
+                <div data-code="south_sudan_q5">남수단</div>
+                <div data-code="nauru_q6">나우루</div>
+                <div data-code="nigeria_q6">나이지리아</div>
+                <div data-code="south_africa_q6">남아프리카공화국</div>
+                <div data-code="netherlands_q6">네덜란드</div>
+                <div data-code="nepal_q6">네팔</div>
+                <div data-code="new_caledonia_q6">뉴칼레도니아</div>
+                <div data-code="nicaragua_q6">니카라과</div>
+                <div data-code="niger_q6">니제르</div>
+                <div data-code="taiwan_q6">대만</div>
+                <div data-code="germany_q6">독일</div>
+                <div data-code="timor_leste_q6">동티모르</div>
+                <div data-code="dominica_q6">도미니카공화국</div>
+                <div data-code="laos_q6">라오스</div>
+                <div data-code="liberia_q6">라이베리아</div>
+                <div data-code="russia_q6">러시아</div>
+                <div data-code="lebanon_q5">레바논</div>
+                <div data-code="lesotho_q6">레소토</div>
+                <div data-code="reunion_q6">레위니옹</div>
+                <div data-code="romania_q6">루마니아</div>
+                <div data-code="rwanda_q5">르완다</div>
+                <div data-code="libya_q6">리비아</div>
+                <div data-code="mada_q5">마다가스카르</div>
+                <div data-code="madeira_q6">마데이라</div>
+                <div data-code="malawi_q6">말라위</div>
+                <div data-code="malaysia_q6">말레이시아</div>
+                <div data-code="mali_q6">말리</div>
+                <div data-code="martinique_q6">마르티니크</div>
+                <div data-code="mayotte_q6">마요트</div>
+                <div data-code="mexico_q5">멕시코</div>
+                <div data-code="morocco_q6">모로코</div>
+                <div data-code="moritania_q6">모리타니</div>
+                <div data-code="mauritius_q6">모리셔스</div>
+                <div data-code="mozambique_q6">모잠비크</div>
+                <div data-code="montenegro_q6">몬테네그로</div>
+                <div data-code="moldova_q6">몰도바</div>
+                <div data-code="maldives_q6">몰디브</div>
+                <div data-code="mongolia_q5">몽골</div>
+                <div data-code="micronesia_q6">마이크로네시아</div>
+                <div data-code="nm_usa_q5">미국(뉴멕시코주)</div>
+                <div data-code="wa_usa_q5">미국(워싱턴주)</div>
+                <div data-code="usa_q6">미국</div>
+                <div data-code="virgin_islands_usa_q6">미국령 버진아일랜드</div>
+                <div data-code="myanmar_q6">미얀마</div>
+                <div data-code="vanuatu_q6">바누아투</div>
+                <div data-code="bahrain_q5">바레인</div>
+                <div data-code="barbados_q6">바베이도스</div>
+                <div data-code="bangladesh_q5">방글라데시</div>
+                <div data-code="benin_q6">베냉</div>
+                <div data-code="venezuela_q6">베네수엘라</div>
+                <div data-code="vietnam_q6">베트남</div>
+                <div data-code="belgium_q6">벨기에</div>
+                <div data-code="belize_q6">벨리즈</div>
+                <div data-code="bosnia_q6">보스nia 헤르체고비나</div>
+                <div data-code="botswana_q6">보츠와나</div>
+                <div data-code="bolivia_q6">볼리비아</div>
+                <div data-code="burundi_q6">부룬디</div>
+                <div data-code="burkina_faso_q6">부르키나파소</div>
+                <div data-code="brazil_q6">브라질</div>
+                <div data-code="samoa_q6">사모아</div>
+                <div data-code="saudi_q5">사우디아라비아</div>
+                <div data-code="st_barthelemy_q6">생바르텔르미</div>
+                <div data-code="senegal_q6">세네갈</div>
+                <div data-code="serbia_q6">세르비아</div>
+                <div data-code="seychelles_q6">세이셸</div>
+                <div data-code="st_lucia_q6">세인트루시아</div>
+                <div data-code="st_martin_q6">세인트마틴</div>
+                <div data-code="st_vincent_q6">세인트빈센트그레나딘</div>
+                <div data-code="st_kitts_q6">세인트키츠 네비스</div>
+                <div data-code="somalia_q6">소말리아</div>
+                <div data-code="solomon_islands_q6">솔로몬제도</div>
+                <div data-code="sudan_q6">수단</div>
+                <div data-code="sri_lanka_q6">스리랑카</div>
+                <div data-code="suriname_q6">수리남</div>
+                <div data-code="syria_q5">시리아</div>
+                <div data-code="sierra_leone_q6">시에라리온</div >
+                <div data-code="sint_maarten_q6">신트마르턴</div>
+                <div data-code="singapore_q6">싱가포르</div>
+                <div data-code="spain_q6">스페인</div>
+                <div data-code="aruba_q6">아루바</div>
+                <div data-code="uae_q5">아랍에미레이트</div>
+                <div data-code="argentina_q6">아르헨티나</div>
+                <div data-code="armenia_q6">아르메니아</div >
+                <div data-code="ethiopia_q5">에티오피아</div>
+                <div data-code="haiti_q6">아이티</div>
+                <div data-code="ireland_q6">아일랜드</div>
+                <div data-code="afghanistan_q6">아프가니스탄</div>
+                <div data-code="antigua_q6">앤티가 바부다</div>
+                <div data-code="algeria_q6">알제리</div>
+                <div data-code="angola_q6">앙골라</div>
+                <div data-code="anguilla_q6">앵귈라</div>
+                <div data-code="eritrea_q6">에리트레아</div>
+                <div data-code="ecuador_q6">에콰도르</div>
+                <div data-code="el_salvador_q6">엘살바도르</div>
+                <div data-code="uk_q6">영국</div>
+                <div data-code="virgin_islands_uk_q6">영국령 버진아일랜드</div>
+                <div data-code="yemen_q5">예멘</div>
+                <div data-code="oman_q5">오만</div>
+                <div data-code="australia_q6">오스트레일리아</div>
+                <div data-code="austria_q6">오스트리아</div>
+                <div data-code="honduras_q6">온두라스</div>
+                <div data-code="jordan_q5">요르단</div>
+                <div data-code="uganda_q5">우간다</div>
+                <div data-code="uruguay_q6">우루과이</div>
+                <div data-code="uzbekistan_q6">우즈베키스탄</div>
+                <div data-code="ukraine_q6">우크라이나</div>
+                <div data-code="wallis_q6">왈리스푸투나</div>
+                <div data-code="iraq_q5">이라크</div>
+                <div data-code="iran_q5">이란</div>
+                <div data-code="israel_q5">이스라엘</div>
+                <div data-code="italy_q6">이탈리아</div>
+                <div data-code="india_q5">인도</div>
+                <div data-code="indonesia_q6">인도네시아</div>
+                <div data-code="jamaica_q6">자메이카</div>
+                <div data-code="zambia_q6">잠비아</div>
+                <div data-code="equatorial_guinea_q6">적도기니</div>
+                <div data-code="georgia_q6">조지아</div>
+                <div data-code="china_q6">중국</div>
+                <div data-code="china_gd_q5">중국(광둥성)</div>
+                <div data-code="china_gx_q5">중국(광시좡족자치구)</div>
+                <div data-code="china_gz_q5">중국(구이저우성)</div>
+                <div data-code="china_sx_q5">중국(산시성)</div>
+                <div data-code="china_sc_q5">중국(쓰촨성)</div>
+                <div data-code="china_yn_q6">중국(원난성)</div>
+                <div data-code="china_cq_q5">중국(충칭시)</div>
+                <div data-code="china_tj_q5">중국(텐진시)</div>
+                <div data-code="china_hn_q5">중국(허난성)</div>
+                <div data-code="china_hn2_q5">중국(후난성)</div>
+                <div data-code="china_hb_q5">중국(후베이성)</div>
+                <div data-code="중앙아프리카공화국_q6">중앙아프리카공화국</div>
+                <div data-code="지부티_q6">지부티</div>
+                <div data-code="zimbabwe_q6">짐바브웨</div>
+                <div data-code="chad_q6">차드</div>
+                <div data-code="kazakhstan_q6">카자흐스탄</div>
+                <div data-code="qatar_q5">카타르</div>
+                <div data-code="cape_verde_q6">카보베르데</div>
+                <div data-code="cameroon_q6">카메룬</div>
+                <div data-code="cambodia_q5">캄보디아</div>
+                <div data-code="canada_q6">캐나다</div>
+                <div data-code="kenya_q6">케냐</div>
+                <div data-code="comoros_q6">코모로</div>
+                <div data-code="costa_rica_q6">코스타리카</div>
+                <div data-code="ivory_coast_q6">코트디부아르</div>
+                <div data-code="colombia_q6">콜롬비아</div>
+                <div data-code="congo_q6">콩고</div>
+                <div data-code="congo_q5">콩고민주공화국</div>
+                <div data-code="cuba_q6">쿠바</div>
+                <div data-code="kuwait_q5">쿠웨이트</div>
+                <div data-code="cook_islands_q6">쿡제도</div>
+                <div data-code="kyrgyzstan_q6">키르기스스탄</div>
+                <div data-code="kiribati_q6">키리바시</div>
+                <div data-code="tajikistan_q6">타지키스탄</div>
+                <div data-code="tanzania_q6">탄자니아</div>
+                <div data-code="thailand_q6">태국</div>
+                <div data-code="togo_q6">토고</div>
+                <div data-code="tonga_q6">통가</div>
+                <div data-code="tunisia_q6">튀니지</div>
+                <div data-code="turkiye_q6">튀르키예</div>
+                <div data-code="tuvalu_q6">투발루</div>
+                <div data-code="trinidad_q6">트리니다드토바고</div>
+                <div data-code="panama_q6">파나마</div>
+                <div data-code="paraguay_q6">파라과이</div>
+                <div data-code="pakistan_q6">파키스탄</div>
+                <div data-code="papua_new_guinea_q6">파푸아뉴기니</div>
+                <div data-code="palau_q6">팔라우</div>
+                <div data-code="palestine_q6">팔레스타인</div>
+                <div data-code="peru_q6">페루</div>
+                <div data-code="poland_q6">폴란드</div>
+                <div data-code="polynesia_q6">폴리네시아</div>
+                <div data-code="puerto_rico_q6">푸에르토리코</div >
+                <div data-code="france_q6">프랑스</div>
+                <div data-code="french_guiana_q6">프랑스령 기아나</div>
+                <div data-code="fiji_q6">피지</div>
+                <div data-code="philippines_q6">필리핀</div>
+              </div>
+            </div>
+
             <div class="date-grid">
               <div>
                 <label class="input-label">현지 출항(경유)일</label>
