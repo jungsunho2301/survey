@@ -440,7 +440,7 @@ function validateForm(f, formId) {
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수 (주석 형태 안내 문구 적용)
+   5. 결과 계산 메인 함수 (주석 형태 안내 적용)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
@@ -451,8 +451,8 @@ function calculateResult() {
   const isDepart48 = f.get("depart48") === "yes";
   const isNoBoarding = f.get("boarding") === "no";
   
-  // 원래 정의하셨던 그 4가지 상황을 위한 조건 변수
-  const isFourCase = (q(5) === "yes" && !isDock);
+  // 🌟 [핵심] 잠복기 이내(Q5=yes)이면서 접안하지 않은(dock=no) 경우를 판별
+  const isTargetCondition = (q(5) === "yes" && !isDock);
 
   let reasons = [];
 
@@ -486,12 +486,11 @@ function calculateResult() {
   const isQ7Yes = q(7) === "yes";
   const isExemptionCondition = (q(7) === "yes" && !isDock && isDepart48 && isNoBoarding);
 
-  // 🌟 주석 스타일의 안내 문구 (박스 없음, 작은 글씨, 사유와 구분됨)
-  const commentNote = "<div style='font-size: 13px; color: #718096; margin-top: 15px; text-align: center; font-style: italic;'>※ 하선자가 있을 경우 하선자 검역 필요</div>";
+  // 🌟 하선자 안내 텍스트 (박스 없음, 18px 노란색 글씨, 가운데 정렬)
+  const commentNote = "<div style='font-size: 18px; color: #f59e0b; margin-top: 15px; text-align: center; font-weight: bold;'>※ 하선자가 있을 경우 하선자 검역 필요</div>";
 
   if (isExemptionCondition && reasons.length === 0) {
-    // 조사생략 상황에서도 4가지 상황(잠복기내+미접안)에 해당하면 주석 노출
-    renderResult("조사생략", isFourCase ? commentNote : "", "#22c55e");
+    renderResult("조사생략", "", "#22c55e");
     return;
   }
 
@@ -500,11 +499,11 @@ function calculateResult() {
   }
 
   if (reasons.length > 0) {
-    // 승선검역인 경우 (주석 없음)
+    // 승선검역인 경우: 사유 출력
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    // 서류검역인 경우: 그 4가지 상황일 때만 주석 노출
-    let displayComment = isFourCase ? commentNote : "";
+    // 서류검역인 경우: 4가지 상황일 때만 아래에 주석 추가
+    let displayComment = isTargetCondition ? commentNote : "";
     renderResult("서류검역", displayComment, "#f59e0b");
   }
 }
