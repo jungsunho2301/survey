@@ -484,7 +484,7 @@ function calculateResult() {
   // 2. 조사생략인 경우
   else if (isExemptionCondition) {
     // 잠복기 이내(Q5=yes)이면서 접안하지 않은(isDock=false) 경우에만 안내 문구 출력
-    const isTargetCondition = (q(5) === "yes" && !isDock);
+    const isTargetCondition = ((q(5) === "yes" || q(5) === "no") && !isDock);
     const commentNote = isTargetCondition ? "※ 하선자가 있을 경우 하선자 검역 필요" : "";
     
     // 초록색(#22c55e)으로 출력하며, 박스 없이 텍스트만 표시
