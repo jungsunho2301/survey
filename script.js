@@ -483,8 +483,13 @@ function calculateResult() {
   } 
   // 2. 조사생략인 경우
   else if (isExemptionCondition) {
-    renderResult("조사생략", "", "#22c55e", false);
-  } 
+    // 잠복기 이내(Q5=yes)이면서 접안하지 않은(isDock=false) 경우에만 안내 문구 출력
+    const isTargetCondition = (q(5) === "yes" && !isDock);
+    const commentNote = isTargetCondition ? "※ 하선자가 있을 경우 하선자 검역 필요" : "";
+    
+    // 초록색(#22c55e)으로 출력하며, 박스 없이 텍스트만 표시
+    renderResult("조사생략", commentNote, "#22c55e", false);
+  }
   // 3. 서류검역인 경우 (4가지 상황일 때만 박스 없이 텍스트 출력)
   else {
     const isTargetCondition = (q(5) === "yes" && !isDock);
