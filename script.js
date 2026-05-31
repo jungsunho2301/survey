@@ -6,11 +6,6 @@ function toggleQ5(show) {
   if (d) d.style.display = show ? "block" : "none";
 }
 
-function toggleQ6(show) {
-  const d = document.getElementById("q6Detail");
-  if (d) d.style.display = show ? "block" : "none";
-}
-
 /* =========================================
    2. 데이터 정의 (Q5 중점검역관리지역 전용)
    ========================================= */
@@ -60,6 +55,7 @@ const q5Data = {
   kuwait_q5: {l:"쿠웨이트", d:"MERS", day:14}
 };
 
+/* 두 번째 탭 연동을 위해 q6Data 데이터셋은 안전하게 보존합니다 */
 const q6Data = {
   mexico_q6: [{d:"AI", day:10}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   wa_usa_q6: [{d:"AI", day:10}],
@@ -77,7 +73,6 @@ const q6Data = {
   china_hn2_q6: [{d:"AI", day:10}],
   china_hb_q6: [{d:"AI", day:10}],
   cambodia_q6: [{d:"AI", day:10}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
-
   south_sudan_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}],
   rwanda_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"마버그열", day:21}, {d:"홍역", day:21}],
   ethiopia_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"황열", day:6}, {d:"마버그열", day:21}, {d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
@@ -85,7 +80,6 @@ const q6Data = {
   kenya_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   congo_dr_q6: [{d:"에볼라", day:21}, {d:"페스트", day:6}, {d:"콜레라", day:5}, {d:"황열", day:6}, {d:"마버그열", day:21}, {d:"폴리오", day:21}, {d:"홍역", day:21}],
   tanzania_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"마버그열", day:21}, {d:"뎅기열", day:7}, {d:"홍역", day:21}],
-
   lebanon_q6: [{d:"MERS", day:14}, {d:"홍역", day:21}],
   bahrain_q6: [{d:"MERS", day:14}],
   saudi_q6: [{d:"MERS", day:14}, {d:"홍역", day:21}],
@@ -99,11 +93,9 @@ const q6Data = {
   israel_q6: [{d:"MERS", day:14}, {d:"홍역", day:21}],
   qatar_q6: [{d:"MERS", day:14}, {d:"홍역", day:21}],
   kuwait_q6: [{d:"MERS", day:14}],
-
   mada_q6: [{d:"페스트", day:6}, {d:"홍역", day:21}, {d:"치쿤구니야열", day:12}],
   mongolia_q6: [{d:"페스트", day:6}, {d:"홍역", day:21}],
   nm_usa_q6: [{d:"페스트", day:6}],
-
   ghana_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   nigeria_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"라싸열", day:21}, {d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   nepal_q6: [{d:"콜레라", day:5}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
@@ -126,7 +118,6 @@ const q6Data = {
   togo_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}],
   pakistan_q6: [{d:"콜레라", day:5}, {d:"크리미안콩고출혈열", day:14}, {d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   philippines_q6: [{d:"콜레라", day:5}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
-
   gabon_q6: [{d:"황열", day:6}, {d:"홍역", day:21}],
   guyana_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   gambia_q6: [{d:"황열", day:6}, {d:"홍역", day:21}],
@@ -154,16 +145,13 @@ const q6Data = {
   paraguay_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   peru_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   french_guiana_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
-
   greece_q6: [{d:"크리미안콩고출혈열", day:14}],
   spain_q6: [{d:"크리미안콩고출혈열", day:14}, {d:"홍역", day:21}],
   kazakhstan_q6: [{d:"크리미안콩고출혈열", day:14}, {d:"홍역", day:21}],
-
   laos_q6: [{d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   algeria_q6: [{d:"폴리오", day:21}, {d:"홍역", day:21}],
   papua_new_guinea_q6: [{d:"폴리오", day:21}],
   palestine_q6: [{d:"폴리오", day: 21}], 
-
   namibia_q6: [{d:"홍역", day:21}, {d:"콜레라", day:5}], 
   south_africa_q6: [{d:"홍역", day:21}],
   netherlands_q6: [{d:"홍역", day:21}],
@@ -172,6 +160,7 @@ const q6Data = {
   lesotho_q6: [{d:"홍역", day:21}],
   romania_q6: [{d:"홍역", day:21}],
   libya_q6: [{d:"홍역", day:21}],
+  margin_q6: [{d:"홍역", day:21}],
   malaysia_q6: [{d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   morocco_q6: [{d:"홍역", day:21}],
   montenegro_q6: [{d:"홍역", day:21}],
@@ -200,7 +189,6 @@ const q6Data = {
   turkiye_q6: [{d:"홍역", day:21}],
   poland_q6: [{d:"홍역", day:21}],
   france_q6: [{d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
-
   guadeloupe_q6: [{d:"뎅기열", day:7}],
   guatemala_q6: [{d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   grenada_q6: [{d:"뎅기열", day:7}],
@@ -260,21 +248,16 @@ const q6Data = {
 /* 한글 이름 라벨 매칭 (전체 수동 정렬) */
 function regionLabelQ6(v) {
   const l = {
-    // 가
     ghana_q6: "가나", gabon_q6: "가봉", guyana_q6: "가이아나", gambia_q6: "감비아", 
     guadeloupe_q6: "과들루프", guatemala_q6: "과테말라", greece_q6: "그리스", grenada_q6: "그레나다", 
     guinea_q6: "기니", guinea_bissau_q6: "기니비사우",
-    // 나
     namibia_q6: "나미비아", nauru_q6: "나우루", nigeria_q6: "나이지리아", south_sudan_q6: "남수단", 
     south_africa_q6: "남아프리카공화국", netherlands_q6: "네덜란드", nepal_q6: "네팔", 
     new_caledonia_q6: "뉴칼레도니아", nicaragua_q6: "니카라과", niger_q6: "니제르",
-    // 다
     taiwan_q6: "대만", germany_q6: "독일", timor_leste_q6: "동티모르", dominica_q6: "도미니카공화국",
-    // 라
     laos_q6: "라오스", liberia_q6: "라이베리아", russia_q6: "러시아", lebanon_q6: "레바논", 
     lesotho_q6: "레소토", reunion_q6: "레위니옹", romania_q6: "루마니아", rwanda_q6: "르완다", 
     libya_q6: "리비아", lithuania_q6: "리투아니아",
-    // 마
     mada_q6: "마다가스카르", madeira_q6: "마데이라", malawi_q6: "말라위", malaysia_q6: "말레이시아", 
     mali_q6: "말리", martinique_q6: "마르티니크", mayotte_q6: "마요트", mexico_q6: "멕시코", 
     morocco_q6: "모로코", moritania_q6: "모리타니", mauritius_q6: "모리셔스", mozambique_q6: "모잠비크", 
@@ -282,19 +265,16 @@ function regionLabelQ6(v) {
     micronesia_q6: "마이크로네시아", iowa_usa_q6: "미국(아이오와주)", nm_usa_q6: "미국(뉴멕시코주)", 
     wa_usa_q6: "미국(워싱턴주)", ca_usa_q6: "미국(캘리포니아주)", usa_q6: "미국", 
     virgin_islands_usa_q6: "미국령 버진아일랜드", myanmar_q6: "미얀마",
-    // 바
     vanuatu_q6: "바누아투", bahrain_q6: "바레인", barbados_q6: "바베이도스", bangladesh_q6: "방글라데시", 
     benin_q6: "베냉", venezuela_q6: "베네수엘라", vietnam_q6: "베트남", vietnam_se_q6: "베트남(남동부)", 
     belgium_q6: "벨기에", belize_q6: "벨리즈", bosnia_q6: "보스니아 헤르체고비나", botswana_q6: "보츠와나", 
     bolivia_q6: "볼리비아", burundi_q6: "부룬디", burkina_faso_q6: "부르키나파소", brazil_q6: "브라질",
-    // 사
     samoa_q6: "사모아", saudi_q6: "사우디아라비아", cyprus_q6: "사이프러스", st_barthelemy_q6: "생바르텔르미", 
     senegal_q6: "세네갈", serbia_q6: "세르비아", seychelles_q6: "세이셸", st_lucia_q6: "세인트루시아", 
     st_martin_q6: "세인트마틴", st_vincent_q6: "세인트빈센트그레나딘", st_kitts_q6: "세인트키츠 네비스", 
     somalia_q6: "소말리아", solomon_islands_q6: "솔로몬제도", sudan_q6: "수단", sri_lanka_q6: "스리랑카", 
     suriname_q6: "수리남", syria_q6: "시리아", sierra_leone_q6: "시에라리온", sint_maarten_q6: "신트마르턴", 
     singapore_q6: "싱가포르", spain_q6: "스페인",
-    // 아
     aruba_q6: "아루바", uae_q6: "아랍에미레이트", argentina_q6: "아르헨티나", armenia_q6: "아르메니아", 
     haiti_q6: "아이티", ireland_q6: "아일랜드", afghanistan_q6: "아프가니스탄", antigua_q6: "앤티가 바부다", 
     albania_q6: "알바니아", algeria_q6: "알제리", angola_q6: "앙골라", anguilla_q6: "앵귈라", 
@@ -304,31 +284,25 @@ function regionLabelQ6(v) {
     uganda_q6: "우간다", uruguay_q6: "우루과이", uzbekistan_q6: "우즈베키스탄", ukraine_q6: "우크라이나", 
     wallis_q6: "왈리스푸투나", iraq_q6: "이라크", iran_q6: "이란", israel_q6: "이스라엘", 
     italy_q6: "이탈리아", india_q6: "인도", indonesia_q6: "인도네시아",
-    // 자
     jamaica_q6: "자메이카", zambia_q6: "잠비아", "equatorial_guinea_q6": "적도기니", georgia_q6: "조지아", 
     china_q6: "중국", china_gd_q6: "중국(광둥성)", china_gx_q6: "중국(광시좡족자치구)", 
     china_gz_q6: "중국(구이저우성)", china_sx_q6: "중국(산시성)", china_sc_q6: "중국(쓰촨성)", 
     china_yn_q6: "중국(원난성)", china_cq_q6: "중국(충칭시)", china_tj_q6: "중국(텐진시)", 
     china_hn_q6: "중국(허난성)", china_hn2_q6: "중국(후난성)", china_hb_q6: "중국(후베이성)", 
     중앙아프리카공화국_q6: "중앙아프리카공화국", 지부티_q6: "지부티", zimbabwe_q6: "짐바브웨",
-    // 차
     chad_q6: "차드",
-    // 카
     kazakhstan_q6: "카자흐스탄", qatar_q6: "카타르", cape_verde_q6: "카보베르데", cameroon_q6: "카메룬", 
     cambodia_q6: "캄보디아", canada_q6: "캐나다", kenya_q6: "케냐", comoros_q6: "코모로", 
     costa_rica_q6: "코스타리카", ivory_coast_q6: "코트디부아르", colombia_q6: "콜롬비아", 
     congo_q6: "콩고", congo_dr_q6: "콩고민주공화국", cuba_q6: "쿠바", kuwait_q6: "쿠웨이트", 
     cook_islands_q6: "쿡제도", kyrgyzstan_q6: "키르기스스탄", kiribati_q6: "키리바시",
-    // 타
     tajikistan_q6: "타지키스탄", tanzania_q6: "탄자니아", thailand_q6: "태국", togo_q6: "토고", 
     tonga_q6: "통가", tunisia_q6: "튀니지", turkiye_q6: "튀르키예", tuvalu_q6: "투발루", 
     trinidad_q6: "트리니다드토바고",
-    // 파
     panama_q6: "파나마", paraguay_q6: "파라과이", pakistan_q6: "파키스탄", papua_new_guinea_q6: "파푸아뉴기니", 
     palau_q6: "팔라우", palestine_q6: "팔레스타인", peru_q6: "페루", portugal_q6: "포르투갈", poland_q6: "폴란드", 
     polynesia_q6: "폴리네시아", puerto_rico_q6: "푸에르토리코", france_q6: "프랑스", 
     french_guiana_q6: "프랑스령 기아나", fiji_q6: "피지", philippines_q6: "필리핀",
-    // 하
     hoju_q6: "호주"
   };
   return l[v] || v.replace("_q6","");
@@ -338,17 +312,17 @@ function regionLabelQ6(v) {
    4. 폼 유효성 검사 (개별 문항 안내)
    ========================================= */
 function validateForm(f) {
+  // ⚠️ 기존 q6 점검 삭제 및 화면 문항 매칭 정렬 완벽 수정
   const questions = [
     { id: "q1", msg: "Q1번 문항을 선택해주세요." },
     { id: "q2", msg: "Q2번 문항을 선택해주세요." },
     { id: "q3", msg: "Q3번 문항을 선택해주세요." },
     { id: "q4", msg: "Q4번 문항을 선택해주세요." },
     { id: "q5", msg: "Q5번 문항을 선택해주세요." },
-    { id: "q6", msg: "Q6번 문항을 선택해주세요." },
-    { id: "q7", msg: "Q7번 문항을 선택해주세요." },
-    { id: "dock", msg: "Q8번 문항(접안 여부)을 선택해주세요." }, 
-    { id: "depart48", msg: "Q9번 문항(출항 예정)을 선택해주세요." }, 
-    { id: "boarding", msg: "Q10번 문항(승선자 여부)을 선택해주세요." } 
+    { id: "q7", msg: "Q6번 문항을 선택해주세요." }, // 화면 기준 Q6
+    { id: "dock", msg: "Q7번 문항(접안 여부)을 선택해주세요." }, 
+    { id: "depart48", msg: "Q8번 문항(출항 예정)을 선택해주세요." }, 
+    { id: "boarding", msg: "Q9번 문항(승선자 여부)을 선택해주세요." } 
   ];
 
   // [1] 기본 라디오 버튼 체크 여부 확인
@@ -369,31 +343,15 @@ function validateForm(f) {
       return false;
     }
 
-    // 날짜 비교: 입항일이 출항일보다 빠를 경우
     if (new Date(arrDate) < new Date(depDate)) {
       alert("오류: Q5 입항 예정일이 출항일보다 빠를 수 없습니다. 날짜를 확인해주세요.");
       return false;
     }
   }
 
-  // [3] Q6 상세 입력 및 날짜 논리 체크
-  if (f.get("q6") === "yes") {
-    const onDate = f.get("q6_onboard_date");
-    const arrDate = f.get("q6_arrival_date");
+  // ⚠️ [3] 옛날 Q6 상세 데이터 및 날짜 검증 논리 블록 통째로 삭제 완료!
 
-    if (!f.get("q6_region") || !onDate || !arrDate) {
-      alert("Q6 상세 항목(지역, 날짜)을 모두 입력해주세요.");
-      return false;
-    }
-
-    // 날짜 비교: 입항일이 승선일보다 빠를 경우
-    if (new Date(arrDate) < new Date(onDate)) {
-      alert("오류: Q6 입항 예정일이 승선일보다 빠를 수 없습니다. 날짜를 확인해주세요.");
-      return false;
-    }
-  }
-
-  return true; // 모든 검사를 통과하면 true 반환
+  return true;
 }
 
 /* =========================================
@@ -441,7 +399,7 @@ function calculateResult() {
     reasons.push(q5Reason);
   }
 
-  // --- [STEP 3] Q7 부적합 및 승선/생략 판정 (주석 및 순서 정렬 완료) ---
+  // --- [STEP 3] Q7 부적합 및 승선/생략 판정 ---
   const isQ7Yes = q(7) === "yes";
 
   // [최종 판정 1] 조사생략 (딱 1가지 경우) - 문구 없이 깔끔하게 출력
@@ -457,13 +415,12 @@ function calculateResult() {
 
   // --- [STEP 4] 최종 출력 ---
   if (reasons.length > 0) {
-    // 승선검역: 수집된 사유(박스)와 함께 출력
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    // 서류검역: 사유 박스 없이 출력 (나머지 모든 예외 케이스는 여기로 옴)
     renderResult("서류검역", "", "#f59e0b");
   }
 }
+
 /* =========================================
    6. 디자인 출력 함수 (사유 박스 조건부 렌더링)
    ========================================= */
@@ -498,25 +455,21 @@ function renderResult(t, r, c) {
     rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 100);
 }
+
 /* =========================================
    [추가] 탭 전환 및 간편 판정 로직 (꼬임 방지)
    ========================================= */
-
-// 1. 탭 전환 기능 함수
 function openTab(evt, tabName) {
-  // 모든 탭 콘텐츠 숨기기
   const tabContents = document.getElementsByClassName("tab-content");
   for (let i = 0; i < tabContents.length; i++) {
     tabContents[i].style.display = "none";
   }
   
-  // 모든 탭 버튼에서 active 클래스 제거
   const tabBtns = document.getElementsByClassName("tab-btn");
   for (let i = 0; i < tabBtns.length; i++) {
     tabBtns[i].classList.remove("active");
   }
   
-  // 선택된 탭 보여주기 및 버튼 활성화
   document.getElementById(tabName).style.display = "block";
   evt.currentTarget.classList.add("active");
 }
@@ -542,7 +495,7 @@ function calculateCoreResult() {
 
   if (aDate < dDate) {
     alert("입항일이 출항(경유)일보다 빠를 수 없습니다. 날짜를 다시 확인해 주세요.");
-    return; // 여기서 실행을 중단시킵니다.
+    return;
   }
    
   const diff = (new Date(arrDate) - new Date(depDate)) / 86400000;
@@ -551,7 +504,6 @@ function calculateCoreResult() {
   let titles = [];
   let details = [];
 
-  // --- [1] 중점검역관리지역(Q5) 데이터 조회 ---
   const q5Key = baseId + "_q5";
   const d5 = q5Data[q5Key];
   if (d5) {
@@ -570,7 +522,6 @@ function calculateCoreResult() {
     }
   }
 
-  // --- [2] 일반 검역관리지역(Q6) 데이터 조회 ---
   const q6Key = baseId + "_q6";
   const d6 = q6Data[q6Key];
   if (d6) {
@@ -588,7 +539,6 @@ function calculateCoreResult() {
   const resultDiv = document.getElementById("coreResult");
   resultDiv.style.display = "block";
 
-  // --- [3] 화면 출력 (제목 나열 및 상세 내역 통합) ---
   if (titles.length > 0) {
     resultDiv.style.borderTop = "6px solid var(--danger-red)";
     resultDiv.innerHTML = `
@@ -602,7 +552,6 @@ function calculateCoreResult() {
       </div>
     `;
   } else {
-    // 잠복기 경과 시 "해당사항 없음"
     resultDiv.style.borderTop = "6px solid var(--accent-blue)";
     resultDiv.innerHTML = `
       <div style="padding: 10px;">
@@ -613,7 +562,6 @@ function calculateCoreResult() {
     `;
   }
   
-  // 스크롤 이동
   setTimeout(() => {
     resultDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }, 100);
