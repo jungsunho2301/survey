@@ -366,7 +366,7 @@ function calculateResult() {
   const isDepart48 = f.get("depart48") === "yes";
   const isNoBoarding = f.get("boarding") === "no";
   
-  // [1] 조사생략 유일 조건: Q7 부적합 + 미접안 + 48시간 내 출항 + 승선자 없음
+  // [1] 조사생략 유일 조건: Q6(증명서 부적합) + 미접안 + 48시간 내 출항 + 승선자 없음
   const isExemptionCondition = (q(7) === "yes" && !isDock && isDepart48 && isNoBoarding);
 
   let reasons = [];
@@ -410,7 +410,7 @@ function calculateResult() {
 
   // [최종 판정 2] Q7 승선검역 (조사생략 조건을 만족하지 못한 Q7 부적합 선박)
   if (isQ7Yes && !isExemptionCondition) {
-    reasons.push("Q7: 선박위생관리(면제)증명서 미소지 또는 유효기간 만료");
+    reasons.push("Q6: 선박위생관리(면제)증명서 미소지 또는 유효기간 만료");
   }
 
   // --- [STEP 4] 최종 출력 ---
