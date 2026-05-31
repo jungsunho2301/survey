@@ -81,10 +81,10 @@ h1 {
   opacity: 0.95;
 }
 
-/* [NEW] Tabs Navigation - 상단 앱 바 스타일 */
+/* Tabs Navigation */
 .tabs-container {
   max-width: 500px;
-  margin: -25px auto 10px; /* 헤더 흰색 선 아래에 배치 */
+  margin: -25px auto 10px;
   display: flex;
   background: #ffffff;
   padding: 6px;
@@ -108,7 +108,6 @@ h1 {
   letter-spacing: -0.5px;
 }
 
-/* 활성화된 탭 스타일 - 네이비 포인트 */
 .tab-btn.active {
   background: var(--main-navy);
   color: #ffffff;
@@ -117,7 +116,7 @@ h1 {
 }
 
 .tab-content {
-  display: none; /* JS에서 제어 */
+  display: none;
   animation: fadeIn 0.4s ease-out;
 }
 
@@ -138,9 +137,9 @@ h1 {
   border-radius: 12px;
   margin-bottom: 20px;
   box-shadow: var(--card-shadow);
-  /* overflow: hidden; */ /* 🔄 드롭다운 잘림 현상 방지를 위해 해제 완료 */
+  /* overflow: hidden; */ /* 🔄 드롭다운이 카드를 뚫고 나오도록 차단 해제 */
   border: 1px solid #e2e8f0;
-  position: relative;     /* 🌟 드롭다운 팝업의 기준점 방어막 구축 */
+  position: relative;     /* 팝업 위치 고정을 위한 기준점 활성화 */
 }
 
 .card-header {
@@ -227,10 +226,9 @@ input[type="radio"] {
   padding: 18px;
   background-color: #f1f5f9;
   border-top: 1px solid #e2e8f0;
-  position: relative; /* 🌟 드롭다운이 문항 밖으로 안전하게 튀어나오도록 상속 레이어 고정 */
+  position: relative; /* 자식 팝업 레이어 분출을 위한 유도선 지정 */
 }
 
-/* 입출항 지역 선택창 (Select) 및 일반 입력창 */
 .styled-input {
   width: 100%;
   padding: 12px;
@@ -239,47 +237,42 @@ input[type="radio"] {
   font-size: 14px;
   margin-bottom: 15px;
   background-color: #ffffff;
-  box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
-  min-height: 44px; /* 모바일 터치 최적화 높이 */
+  box-sizing: border-box;
+  min-height: 44px;
 }
 
-/* 입력창 상단 라벨 (출항일, 입항일 등) */
 .input-label {
   display: block;
   font-size: 13px;
   font-weight: 700;
   margin-bottom: 6px;
   color: #64748b;
-  white-space: nowrap; /* 라벨 줄바꿈 방지 */
+  white-space: nowrap;
 }
 
-/* 날짜 입력창 그리드 - 실제 휴대폰 겹침 방지 핵심 로직 */
+/* Date Grid */
 .date-grid {
-  display: flex !important; /* 가로 배치를 위해 flex 사용 */
-  gap: 8px; /* 간격을 살짝 좁혀 공간 확보 */
+  display: flex !important;
+  gap: 8px;
   width: 100%;
-  margin-bottom: 15px; /* 다음 요소와의 간격 */
+  margin-bottom: 15px;
   box-sizing: border-box;
 }
 
 .date-grid > div {
-  flex: 1; /* 정확히 50%씩 배분 */
-  min-width: 0; /* 내부 요소가 박스를 뚫고 나오지 못하게 차단 */
+  flex: 1;
+  min-width: 0;
 }
 
-/* 날짜 입력창 전용 스타일 (실제 기기 대응) */
 .date-grid .styled-input {
-  margin-bottom: 0; /* 그리드 내부에서는 마진 제거 */
-  padding: 10px 4px; /* 좌우 패딩을 줄여서 날짜 숫자가 들어갈 공간 확보 */
-  font-size: 13px; /* 모바일에서 겹치지 않도록 폰트 크기 미세 조정 */
-  
-  /* 아이폰/갤럭시 브라우저 고유 스타일 초기화 */
+  margin-bottom: 0;
+  padding: 10px 4px;
+  font-size: 13px;
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 }
 
-/* 결과 확인 버튼 */
 .btn-submit {
   width: 100%;
   padding: 20px;
@@ -295,27 +288,21 @@ input[type="radio"] {
   margin-top: 10px;
 }
 
-.btn-submit:hover {
-  background-color: #162e70; /* 살짝 더 진한 네이비 */
-}
+.btn-submit:hover { background-color: #162e70; }
+.btn-submit:active { transform: scale(0.98); }
 
-.btn-submit:active {
-  transform: scale(0.98);
-}
-
-/* 결과창 레이아웃 */
 #result, #coreResult {
   margin-top: 30px;
   padding: 24px;
   background: #ffffff;
   border-radius: 14px;
   box-shadow: var(--card-shadow);
-  display: none; /* 초기 상태 숨김 */
-  word-break: keep-all; /* 한글 줄바꿈 최적화 */
+  display: none;
+  word-break: keep-all;
 }
 
 /* =========================================
-   🚢 커스텀 검색 드롭다운 상시 노출 스타일
+   🚢 커스텀 검색 드롭다운 상시 노출 스타일 (모바일 긴 화면 스케일링 보완)
    ========================================= */
 .search-select-container {
   position: relative;
@@ -328,48 +315,47 @@ input[type="radio"] {
   align-items: center;
 }
 
-/* 입력창 우측에 화살표 단추가 고정될 공간 확보 */
 .search-select-input {
   width: 100%;
   padding-right: 40px !important; 
 }
 
-/* PC, 모바일 기기 가리지 않고 상시 고정 노출되는 우측 화살표 단추 */
 .search-select-arrow {
   position: absolute;
   right: 14px;
   font-size: 11px;
   color: #64748b;
   cursor: pointer;
-  pointer-events: none; /* 클릭 타겟터가 텍스트 input에 부드럽게 걸리도록 제어 */
+  pointer-events: none;
   transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* 드롭다운 목록이 열렸을 때 화살표를 부드럽게 180도 뒤집는 모션 효과 */
 .search-select-container.open .search-select-arrow {
   transform: rotate(180deg);
-  color: var(--main-navy); /* 활성화 시 포인트 색상으로 변경 */
+  color: var(--main-navy);
 }
 
-/* 아래로 툭 떨어지는 국가 목록 팝업 레이어 */
 .search-select-dropdown {
   display: none;
   position: absolute;
   top: 100%;
   left: 0;
   width: 100%;
-  max-height: 200px; /* 너무 길어져서 화면 가리지 않게 최적화 */
-  overflow-y: auto !important; /* 🌟 내부 영역 강제 스크롤 유도 */
+  
+  /* 🌟 모바일 및 PC 좁은 영역에서 잘림 현상 방지를 위해 높이 규격을 320px로 확장 패치 */
+  max-height: 320px; 
+  
+  overflow-y: auto !important; /* 내부 스크롤 상시 동기화 */
   background: #ffffff;
   border: 1px solid #cbd5e1;
   border-radius: 8px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-  z-index: 99999; /* 🌟 다른 어떤 요소보다 위에 둥둥 뜨도록 최상위 계층 부여 */
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18); /* 레이어가 위에 뜬 느낌을 주어 밑줄 문항 차폐 */
+  z-index: 999999 !important; /* 최상위 레이어 계층 배치로 차단 현상 원천 봉쇄 */
   margin-top: 5px;
-  animation: fadeIn 0.2s ease-out; /* 주신 페이드인 효과 재활용 */
+  animation: fadeIn 0.2s ease-out;
 }
 
-/* 스크롤바 디자인 커스텀 (모바일/PC 깔끔하게 정돈) */
+/* 커스텀 스크롤 디자인 */
 .search-select-dropdown::-webkit-scrollbar {
   width: 6px;
 }
@@ -378,9 +364,9 @@ input[type="radio"] {
   border-radius: 4px;
 }
 
-/* 드롭다운 내부 국가 목록 개별 아이템 */
+/* 드롭다운 내부 국가 목록 아이템 */
 .search-select-dropdown div {
-  padding: 11px 14px;
+  padding: 12px 14px; /* 손가락 터치 반경 대응 콤팩트 규격화 */
   cursor: pointer;
   font-size: 14px;
   color: #334155;
@@ -393,19 +379,16 @@ input[type="radio"] {
   border-bottom: none;
 }
 
-/* 마우스 호버 및 모바일 터치(클릭) 피드백 */
 .search-select-dropdown div:hover {
   background-color: #f1f5f9;
   color: var(--main-navy);
   font-weight: 500;
 }
 
-/* 검색 필터링 결과가 아예 없을 때 예외 팝업 안내 */
 .search-select-dropdown div.no-result {
   color: #94a3b8;
   text-align: center;
   padding: 20px 14px;
   cursor: default;
   background: none !important;
-  font-weight: normal;
 }
