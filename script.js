@@ -318,85 +318,71 @@ function regionLabelQ6(v) {
 }
 
 /* =========================================
-   3. 실시간 한글명 ➔ 영문 코드 동기화 리스너 정의 (🌟 신규 추가)
+   3. 폼 유효성 검사 (개별 문항 안내)
    ========================================= */
-document.addEventListener("DOMContentLoaded", () => {
-  const syncCode = (inputId, listId, hiddenId) => {
-    const input = document.getElementById(inputId);
-    const list = document.getElementById(listId);
-    const hidden = document.getElementById(hiddenId);
-    
-    if (!input || !list || !hidden) return;
+function validateForm(f, formId) {
+  // [🌟 필터 변환 장치] 검사 및 계산 시작 직전에 한글명을 영문 코드로 가로챕니다.
+  if (formId === "surveyForm") {
+    const q5Input = document.getElementById("q5_region_input");
+    const q5List = document.getElementById("q5_region_list");
+    if (q5Input && q5List) {
+      const matched = Array.from(q5List.options).find(opt => opt.value === q5Input.value.trim());
+      if (matched) f.set("q5_region", matched.getAttribute("data-code"));
+    }
+  } else if (formId === "coreForm") {
+    const coreInput = document.getElementById("core_region_input");
+    const coreList = document.getElementById("core_region_list");
+    if (coreInput && coreList) {
+      const matched = Array.from(coreList.options).find(opt => opt.value === coreInput.value.trim());
+      if (matched) f.set("core_region", matched.getAttribute("data-code"));
+    }
+  }
 
-    const handleSync = () => {
-      const val = input.value.trim();
-      const matchedOption = Array.from(list.options).find(opt => opt.value === val);
-      if (matchedOption) {
-        hidden.value = matchedOption.getAttribute("data-code");
-      } else {
-        hidden.value = ""; // 목록에 없는 값을 손으로 직접 쳤을 때 오염 차단
+  // 1번 탭 검사 시에만 수행
+  if (formId === "surveyForm") {
+    const questions = [
+      { id: "q1", msg: "Q1번 문항(환자/의심환자 여부)을 선택해주세요." },
+      { id: "q2", msg: "Q2번 문항(사망자 발생 여부)을 선택해주세요." },
+      { id: "q3", msg: "Q3번 문항(선원/승객 유증상자 여부)을 선택해주세요." },
+      { id: "q4", msg: "Q4번 문항(감염병 매개체 서식 여부)을 선택해주세요." },
+      { id: "q5", msg: "Q5번 문항(중점검역관리지역 출항/경유 여부)을 선택해주세요." },
+      { id: "q7", msg: "Q6번 문항(선박위생관리 증명서 부적합 여부)을 선택해주세요." },
+      { id: "dock", msg: "Q7번 문항(선박 접안 여부)을 선택해주세요." }, 
+      { id: "depart48", msg: "Q8번 문항(48시간 이내 출항 여부)을 선택해주세요." }, 
+      { id: "boarding", msg: "Q9번 문항(승선자/방선자 유무)을 선택해주세요." } 
+    ];
+
+    for (let item of questions) {
+      if (!f.get(item.id)) {
+        alert(item.msg);
+        return false;
       }
-    };
+    }
 
-    input.addEventListener("input", handleSync);
-    input.addEventListener("change", handleSync);
-  };
+    if (f.get("q5") === "yes") {
+      const depDate = f.get("q5_departure_date");
+      const arrDate = f.get("q5_arrival_date");
 
-  syncCode("q5_region_input", "q5_region_list", "q5_region_hidden");
-  syncCode("core_region_input", "core_region_list", "core_region_hidden");
-});
+      if (!f.get("q5_region") || !depDate || !arrDate) {
+        alert("Q5 상세 항목(출항·경유지역, 날짜)을 모두 입력해주세요.");
+        return false;
+      }
 
-/* =========================================
-   4. 폼 유효성 검사 (개별 문항 안내)
-   ========================================= */
-function validateForm(f) {
-  // 🌟 [안내] 이제 한글명 매칭 필터링은 위쪽 실시간 이벤트 리스너(3번)가 hidden에 다이렉트로 안전하게 주입해줍니다!
-  const questions = [
-    { id: "q1", msg: "Q1번 문항(환자/의심환자 여부)을 선택해주세요." },
-    { id: "q2", msg: "Q2번 문항(사망자 발생 여부)을 선택해주세요." },
-    { id: "q3", msg: "Q3번 문항(선원/승객 유증상자 여부)을 선택해주세요." },
-    { id: "q4", msg: "Q4번 문항(감염병 매개체 서식 여부)을 선택해주세요." },
-    { id: "q5", msg: "Q5번 문항(중점검역관리지역 출항/경유 여부)을 선택해주세요." },
-    { id: "q7", msg: "Q6번 문항(선박위생관리 증명서 부적합 여부)을 선택해주세요." },
-    { id: "dock", msg: "Q7번 문항(선박 접안 여부)을 선택해주세요." }, 
-    { id: "depart48", msg: "Q8번 문항(48시간 이내 출항 여부)을 선택해주세요." }, 
-    { id: "boarding", msg: "Q9번 문항(승선자/방선자 유무)을 선택해주세요." } 
-  ];
-
-  // [1] 기본 라디오 버튼 체크 여부 확인
-  for (let item of questions) {
-    if (!f.get(item.id)) {
-      alert(item.msg);
-      return false;
+      if (new Date(arrDate) < new Date(depDate)) {
+        alert("오류: Q5 입항 예정일이 출항일보다 빠를 수 없습니다. 날짜를 확인해주세요.");
+        return false;
+      }
     }
   }
-
-  // [2] Q5 상세 입력 및 날짜 논리 체크
-  if (f.get("q5") === "yes") {
-    const depDate = f.get("q5_departure_date");
-    const arrDate = f.get("q5_arrival_date");
-
-    // 🌟 텍스트 상자 디자인이 찢어지지 않았는지 확인
-    if (!f.get("q5_region") || !depDate || !arrDate) {
-      alert("Q5 상세 항목(출항·경유지역, 날짜)을 모두 입력해주세요.");
-      return false;
-    }
-
-    if (new Date(arrDate) < new Date(depDate)) {
-      alert("오류: Q5 입항 예정일이 출항일보다 빠를 수 없습니다. 날짜를 확인해주세요.");
-      return false;
-    }
-  }
-
   return true;
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수 (사유 통합 및 로직 완성)
+   4. 결과 계산 메인 함수 (첫 번째 탭)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
-  if (!validateForm(f)) return;
+  if (!validateForm(f, "surveyForm")) return;
 
   const q = n => f.get(`q${n}`);
   const isDock = f.get("dock") === "yes";
@@ -451,7 +437,7 @@ function calculateResult() {
 }
 
 /* =========================================
-   6. 디자인 출력 함수 (사유 박스 조건부 렌더링)
+   5. 디자인 출력 함수 (사유 박스 조건부 렌더링)
    ========================================= */
 function renderResult(t, r, c) {
   const rb = document.getElementById("result");
@@ -486,7 +472,7 @@ function renderResult(t, r, c) {
 }
 
 /* =========================================
-   [추가] 탭 전환 및 간편 판정 로직 (꼬임 방지)
+   6. 탭 전환 기능 함수
    ========================================= */
 function openTab(evt, tabName) {
   const tabContents = document.getElementsByClassName("tab-content");
@@ -504,11 +490,13 @@ function openTab(evt, tabName) {
 }
 
 /* =========================================
-   [최종] 두 번째 탭: 중점·검역관리 통합 판정 로직
+   7. 두 번째 탭: 중점·검역관리 통합 판정 로직
    ========================================= */
 function calculateCoreResult() {
   const coreForm = document.getElementById("coreForm");
   const f = new FormData(coreForm);
+  
+  if (!validateForm(f, "coreForm")) return;
   
   const rawId = f.get("core_region"); 
   const depDate = f.get("core_departure_date");
