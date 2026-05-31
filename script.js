@@ -440,7 +440,7 @@ function validateForm(f, formId) {
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수 (사유 박스 없이 하선자 안내만 출력)
+   5. 결과 계산 메인 함수 (서류검역 박스 제거)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
@@ -449,14 +449,12 @@ function calculateResult() {
   const q = n => f.get(`q${n}`);
   const isDock = f.get("dock") === "yes";
   
-  // 1. 승선검역 사유 배열
   let reasons = [];
   if (q(1) === "yes") reasons.push("Q1: 선박 내 환자 또는 의심환자 발생");
   if (q(2) === "yes") reasons.push("Q2: 선박 내 사망자 발생");
   if (q(3) === "yes") reasons.push("Q3: 선원 또는 승객 중 유증상자 발생");
   if (q(4) === "yes") reasons.push("Q4: 선박 내 감염병 매개체 서식 또는 흔적 확인");
 
-  // Q5 잠복기 및 중점지역 체크 (기존 로직 유지)
   let q5InIncubation = false;
   let q5Reason = "";
   if (q(5) === "yes") {
@@ -474,65 +472,62 @@ function calculateResult() {
   }
   if (q5InIncubation && isDock) reasons.push(q5Reason);
 
-  const isQ7Yes = q(7) === "yes";
   const isExemptionCondition = (q(7) === "yes" && !isDock && f.get("depart48") === "yes" && f.get("boarding") === "no");
-
-  if (isQ7Yes && !isExemptionCondition) {
+  if (q(7) === "yes" && !isExemptionCondition) {
     reasons.push("Q6: 선박위생관리(면제)증명서 미소지 또는 유효기간 만료");
   }
 
-  // 2. 판정 및 렌더링
-  if (isExemptionCondition && reasons.length === 0) {
-    renderResult("조사생략", "", "#22c55e");
-    return;
-  }
-
+  // 1. 승선검역인 경우 (박스 O)
   if (reasons.length > 0) {
-    // 승선검역: 사유 출력
-    renderResult("승선검역", reasons.join("<br>"), "#ef4444");
-  } else {
-    // 서류검역: 4가지 상황이면 안내 문구만 출력 (reasons가 비어있으므로 사유 박스 안 나옴)
+    renderResult("승선검역", reasons.join("<br>"), "#ef4444", true);
+  } 
+  // 2. 조사생략인 경우
+  else if (isExemptionCondition) {
+    renderResult("조사생략", "", "#22c55e", false);
+  } 
+  // 3. 서류검역인 경우 (4가지 상황일 때만 박스 없이 텍스트 출력)
+  else {
     const isTargetCondition = (q(5) === "yes" && !isDock);
-    const commentNote = isTargetCondition ? "<div style='font-size: 18px; color: #f59e0b; margin-top: 15px; text-align: center; font-weight: bold;'>※ 하선자가 있을 경우 하선자 검역 필요</div>" : "";
-    
-    renderResult("서류검역", commentNote, "#f59e0b");
+    const commentNote = isTargetCondition ? "※ 하선자가 있을 경우 하선자 검역 필요" : "";
+    renderResult("서류검역", commentNote, "#f59e0b", false);
   }
 }
+
 /* =========================================
-   6. 디자인 출력 함수 (사유 박스 조건부 렌더링)
+   6. 디자인 출력 함수 (박스 출력 여부 옵션 추가)
    ========================================= */
-function renderResult(t, r, c) {
+function renderResult(t, r, c, hasBox = true) {
   const rb = document.getElementById("result");
   rb.style.display = "block";
   rb.style.borderTop = `6px solid ${c}`;
   
   let reasonHtml = "";
   if (r && r.trim() !== "") {
-    reasonHtml = `
-      <div style="background:#f1f5f9; padding:15px; border-radius:10px; font-size:15px; color:#334155; line-height:1.6; text-align:left; border:1px solid #e2e8f0; margin-top:10px;">
-        <strong style="color:${c}">● 사유:</strong><br>${r}
-      </div>`;
+    if (hasBox) {
+      reasonHtml = `
+        <div style="background:#f1f5f9; padding:15px; border-radius:10px; font-size:15px; color:#334155; line-height:1.6; text-align:left; border:1px solid #e2e8f0; margin-top:10px;">
+          <strong style="color:${c}">● 사유:</strong><br>${r}
+        </div>`;
+    } else {
+      // 박스 없이 큰 글씨로 강조만 (서류검역용)
+      reasonHtml = `<div style="margin-top:20px; font-size:20px; color:${c}; font-weight:bold; text-align:center; padding: 10px;">${r}</div>`;
+    }
   }
-
-  const titleMargin = r ? "15px" : "30px";
 
   rb.innerHTML = `
     <div style="text-align:center; padding: 20px 0;">
       <p style="font-size:14px; color:#64748b; margin-bottom:10px; font-weight:500;">자동 판별 결과</p>
-      <h2 style="font-size:40px; color:${c}; margin:0 0 ${titleMargin} 0; font-weight:900; letter-spacing:-1px;">${t}</h2>
+      <h2 style="font-size:40px; color:${c}; margin:0; font-weight:900; letter-spacing:-1px;">${t}</h2>
       ${reasonHtml}
       <button onclick="location.reload()" 
-              style="margin-top:10px; background:white; border:1px solid #cbd5e1; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:14px; color:#64748b; font-weight:500;">
+              style="margin-top:30px; background:white; border:1px solid #cbd5e1; padding:10px 20px; border-radius:8px; cursor:pointer; font-size:14px; color:#64748b; font-weight:500;">
         처음부터 다시하기
       </button>
     </div>
   `;
   
-  setTimeout(() => {
-    rb.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }, 100);
+  setTimeout(() => { rb.scrollIntoView({ behavior: 'smooth', block: 'center' }); }, 100);
 }
-
 /* =========================================
    7. 탭 전환 기능 함수
    ========================================= */
