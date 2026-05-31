@@ -441,10 +441,10 @@ function calculateResult() {
     reasons.push(q5Reason);
   }
 
-  // --- [STEP 3] Q7 부적합 및 승선/생략 판정 ---
+  // --- [STEP 3] Q7 부적합 및 승선/생략 판정 (주석 및 순서 정렬 완료) ---
   const isQ7Yes = q(7) === "yes";
 
-  // [최종 판정 1] 조사생략 (딱 1가지 경우)
+  // [최종 판정 1] 조사생략 (딱 1가지 경우) - 문구 없이 깔끔하게 출력
   if (isExemptionCondition && reasons.length === 0) {
     renderResult("조사생략", "", "#22c55e");
     return;
@@ -460,7 +460,7 @@ function calculateResult() {
     // 승선검역: 수집된 사유(박스)와 함께 출력
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    // 서류검역: 사유 박스 없이 출력 (Q6 잠복기 등 나머지는 모두 여기로 옴)
+    // 서류검역: 사유 박스 없이 출력 (나머지 모든 예외 케이스는 여기로 옴)
     renderResult("서류검역", "", "#f59e0b");
   }
 }
