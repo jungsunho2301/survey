@@ -440,7 +440,7 @@ function validateForm(f, formId) {
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수 (원본 로직 유지 + 하선자 안내 추가)
+   5. 결과 계산 메인 함수 (잠복기 내 + 미접안 상황에만 안내 문구 출력)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
@@ -455,11 +455,13 @@ function calculateResult() {
 
   let reasons = [];
 
+  // 기본 승선검역 사유 체크
   if (q(1) === "yes") reasons.push("Q1: 선박 내 환자 또는 의심환자 발생");
   if (q(2) === "yes") reasons.push("Q2: 선박 내 사망자 발생");
   if (q(3) === "yes") reasons.push("Q3: 선원 또는 승객 중 유증상자 발생");
   if (q(4) === "yes") reasons.push("Q4: 선박 내 감염병 매개체 서식 또는 흔적 확인");
 
+  // Q5 잠복기 및 중점지역 체크
   let q5InIncubation = false;
   let q5Reason = "";
   if (q(5) === "yes") {
@@ -476,11 +478,15 @@ function calculateResult() {
     }
   }
 
+  // 잠복기 이내이면서 접안하는 경우 승선검역 사유 추가
   if (q5InIncubation && isDock) {
     reasons.push(q5Reason);
   }
 
   const isQ7Yes = q(7) === "yes";
+
+  // 🌟 핵심: 잠복기 이내이면서 접안하지 않은 상황(그 4가지 상황) 판단
+  const isTargetCondition = (q5InIncubation && !isDock);
 
   if (isExemptionCondition && reasons.length === 0) {
     renderResult("조사생략", "", "#22c55e");
@@ -494,8 +500,8 @@ function calculateResult() {
   if (reasons.length > 0) {
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    // 🌟 이 부분이 질문하신 4가지 상황(서류검역) 결과값입니다.
-    const comment = "<br><br><span style='color: #d97706; font-weight: bold;'>[안내] 하선자가 있을 경우 하선자 검역 필요</span>";
+    // 🌟 오직 그 4가지 상황에서만 코멘트가 뜨도록 분기 처리
+    let comment = isTargetCondition ? "<br><br><span style='color: #d97706; font-weight: bold;'>[안내] 하선자가 있을 경우 하선자 검역 필요</span>" : "";
     renderResult("서류검역", comment, "#f59e0b");
   }
 }
