@@ -323,6 +323,19 @@ function regionLabelQ6(v) {
    4. 폼 유효성 검사 (개별 문항 안내)
    ========================================= */
 function validateForm(f) {
+
+   // 🌟 [추가] 사용자가 입력창에 채운 한글을 시스템용 영문 코드로 완벽하게 역치환하는 필터링 엔진
+  const q5List = document.getElementById("q5_region_list");
+  if (q5List && f.get("q5_region")) {
+    const matched = Array.from(q5List.options).find(opt => opt.value === f.get("q5_region"));
+    if (matched) f.set("q5_region", matched.textContent);
+  }
+  const coreList = document.getElementById("core_region_list");
+  if (coreList && f.get("core_region")) {
+    const matched = Array.from(coreList.options).find(opt => opt.value === f.get("core_region"));
+    if (matched) f.set("core_region", matched.textContent);
+  }
+   
   // ⚠️ 기존 q6 점검 삭제 및 화면 문항 매칭 정렬 완벽 수정
   const questions = [
     { id: "q1", msg: "Q1번 문항을 선택해주세요." },
