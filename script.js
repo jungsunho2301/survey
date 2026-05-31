@@ -439,9 +439,6 @@ function validateForm(f, formId) {
   return true;
 }
 
-/* =========================================
-   5. 결과 계산 메인 함수 (첫 번째 탭)
-   ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
   if (!validateForm(f, "surveyForm")) return;
@@ -482,8 +479,12 @@ function calculateResult() {
 
   const isQ7Yes = q(7) === "yes";
 
+  // 🌟 [하선자 안내용 고정 코멘트 정의]
+  const disembarkComment = "<br><br><span style='color: #d97706; font-weight: bold;'>[안내] 하선자가 있을 경우 반드시 하선자 검역을 별도 실시하십시오.</span>";
+
   if (isExemptionCondition && reasons.length === 0) {
-    renderResult("조사생략", "", "#22c55e");
+    // 조사생략인 경우
+    renderResult("조사생략", disembarkComment, "#22c55e");
     return;
   }
 
@@ -492,9 +493,12 @@ function calculateResult() {
   }
 
   if (reasons.length > 0) {
+    // 승선검역인 경우 (하선자 안내 추가)
+    reasons.push(disembarkComment);
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    renderResult("서류검역", "", "#f59e0b");
+    // 서류검역인 경우
+    renderResult("서류검역", disembarkComment, "#f59e0b");
   }
 }
 
