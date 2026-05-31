@@ -311,3 +311,99 @@ input[type="radio"] {
   display: none; /* 초기 상태 숨김 */
   word-break: keep-all; /* 한글 줄바꿈 최적화 */
 }
+
+/* =========================================
+   🚢 커스텀 검색 드롭다운 상시 노출 스타일
+   ========================================= */
+.search-select-container {
+  position: relative;
+  width: 100%;
+}
+
+.search-select-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+/* 입력창 우측에 화살표 단추가 고정될 공간 확보 */
+.search-select-input {
+  width: 100%;
+  padding-right: 40px !important; 
+}
+
+/* PC, 모바일 기기 가리지 않고 상시 고정 노출되는 우측 화살표 단추 */
+.search-select-arrow {
+  position: absolute;
+  right: 14px;
+  font-size: 11px;
+  color: #64748b;
+  cursor: pointer;
+  pointer-events: none; /* 클릭 타겟터가 텍스트 input에 부드럽게 걸리도록 제어 */
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 드롭다운 목록이 열렸을 때 화살표를 부드럽게 180도 뒤집는 모션 효과 */
+.search-select-container.open .search-select-arrow {
+  transform: rotate(180deg);
+  color: var(--main-navy); /* 활성화 시 포인트 색상으로 변경 */
+}
+
+/* 아래로 툭 떨어지는 국가 목록 팝업 레이어 */
+.search-select-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 230px; /* 너무 길어져서 화면 가리지 않게 최적화 */
+  overflow-y: auto;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 9999; /* 다른 카드나 레이아웃에 절대 가려지지 않게 방어 */
+  margin-top: 5px;
+  animation: fadeIn 0.2s ease-out; /* 주신 페이드인 효과 재활용 */
+}
+
+/* 스크롤바 디자인 커스텀 (모바일/PC 깔끔하게 정돈) */
+.search-select-dropdown::-webkit-scrollbar {
+  width: 6px;
+}
+.search-select-dropdown::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* 드롭다운 내부 국가 목록 개별 아이템 */
+.search-select-dropdown div {
+  padding: 11px 14px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #334155;
+  text-align: left;
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.search-select-dropdown div:last-child {
+  border-bottom: none;
+}
+
+/* 마우스 호버 및 모바일 터치(클릭) 피드백 */
+.search-select-dropdown div:hover {
+  background-color: #f1f5f9;
+  color: var(--main-navy);
+  font-weight: 500;
+}
+
+/* 검색 필터링 결과가 아예 없을 때 예외 팝업 안내 */
+.search-select-dropdown div.no-result {
+  color: #94a3b8;
+  text-align: center;
+  padding: 20px 14px;
+  cursor: default;
+  background: none !important;
+  font-weight: normal;
+}
