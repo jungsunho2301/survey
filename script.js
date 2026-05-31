@@ -251,10 +251,10 @@ const q6Data = {
   polynesia_q6: [{d:"뎅기열", day:7}],
   puerto_rico_q6: [{d:"뎅기열", day:7}],
   fiji_q6: [{d:"뎅기열", day:7}],
-  timor_leste_q6: [{d:"뎅기열", day:7}]
+  timor_leste_q6: [{d:"뎅기열", day:7}],
+  hoju_q6: "호주"
 };
 
-/* 한글 이름 라벨 매칭 (전체 수동 정렬) */
 function regionLabelQ6(v) {
   const l = {
     ghana_q6: "가나", gabon_q6: "가봉", guyana_q6: "가이아나", gambia_q6: "감비아", 
@@ -318,27 +318,89 @@ function regionLabelQ6(v) {
 }
 
 /* =========================================
-   3. 폼 유효성 검사 (개별 문항 안내)
+   3. 커스텀 검색 드롭다운 UI 제어 로직 (상시 화살표 및 클릭 액션 활성화)
+   ========================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const initCustomSelect = (containerId, inputId, dropdownId, hiddenId) => {
+    const container = document.getElementById(containerId);
+    const input = document.getElementById(inputId);
+    const dropdown = document.getElementById(dropdownId);
+    const hidden = document.getElementById(hiddenId);
+    
+    if (!container || !input || !dropdown || !hidden) return;
+
+    const options = Array.from(dropdown.querySelectorAll("div"));
+
+    const showDropdown = () => {
+      container.classList.add("open");
+      dropdown.style.display = "block";
+      if (!input.value.trim()) {
+        options.forEach(opt => opt.style.display = "block");
+        const noRes = dropdown.querySelector(".no-result");
+        if (noRes) noRes.remove();
+      }
+    };
+
+    const hideDropdown = () => {
+      setTimeout(() => {
+        container.classList.remove("open");
+        dropdown.style.display = "none";
+      }, 200); 
+    };
+
+    input.addEventListener("click", showDropdown);
+    input.addEventListener("focus", showDropdown);
+    input.addEventListener("blur", hideDropdown);
+
+    input.addEventListener("input", () => {
+      const filter = input.value.trim().toLowerCase();
+      let hasItem = false;
+
+      options.forEach(opt => {
+        const txt = opt.textContent.toLowerCase();
+        if (txt.includes(filter)) {
+          opt.style.display = "block";
+          hasItem = true;
+        } else {
+          opt.style.display = "none";
+        }
+      });
+
+      let noRes = dropdown.querySelector(".no-result");
+      if (!hasItem) {
+        if (!noRes) {
+          noRes = document.createElement("div");
+          noRes.classList.add("no-result");
+          noRes.textContent = "검색 결과가 없습니다.";
+          dropdown.appendChild(noRes);
+        }
+      } else if (noRes) {
+        noRes.remove();
+      }
+      
+      const matched = options.find(opt => opt.textContent.trim() === input.value.trim());
+      hidden.value = matched ? matched.getAttribute("data-code") : "";
+    });
+
+    options.forEach(opt => {
+      opt.addEventListener("click", (e) => {
+        e.stopPropagation();
+        input.value = opt.textContent.trim();
+        hidden.value = opt.getAttribute("data-code");
+        container.classList.remove("open");
+        dropdown.style.display = "none";
+      });
+    });
+  };
+
+  initCustomSelect("q5_container", "q5_region_input", "q5_dropdown", "q5_region_hidden");
+  initCustomSelect("core_container", "core_region_input", "core_dropdown", "core_region_hidden");
+});
+
+/* =========================================
+   4. 폼 유효성 검사 (개별 문항 안내)
    ========================================= */
 function validateForm(f, formId) {
-  // [🌟 필터 변환 장치] 검사 및 계산 시작 직전에 한글명을 영문 코드로 가로챕니다.
-  if (formId === "surveyForm") {
-    const q5Input = document.getElementById("q5_region_input");
-    const q5List = document.getElementById("q5_region_list");
-    if (q5Input && q5List) {
-      const matched = Array.from(q5List.options).find(opt => opt.value === q5Input.value.trim());
-      if (matched) f.set("q5_region", matched.getAttribute("data-code"));
-    }
-  } else if (formId === "coreForm") {
-    const coreInput = document.getElementById("core_region_input");
-    const coreList = document.getElementById("core_region_list");
-    if (coreInput && coreList) {
-      const matched = Array.from(coreList.options).find(opt => opt.value === coreInput.value.trim());
-      if (matched) f.set("core_region", matched.getAttribute("data-code"));
-    }
-  }
-
-  // 1번 탭 검사 시에만 수행
   if (formId === "surveyForm") {
     const questions = [
       { id: "q1", msg: "Q1번 문항(환자/의심환자 여부)을 선택해주세요." },
@@ -364,7 +426,7 @@ function validateForm(f, formId) {
       const arrDate = f.get("q5_arrival_date");
 
       if (!f.get("q5_region") || !depDate || !arrDate) {
-        alert("Q5 상세 항목(출항·경유지역, 날짜)을 모두 입력해주세요.");
+        alert("Q5 상세 항목(출항·경유지역 선택, 날짜)을 모두 입력해주세요.");
         return false;
       }
 
@@ -378,7 +440,7 @@ function validateForm(f, formId) {
 }
 
 /* =========================================
-   4. 결과 계산 메인 함수 (첫 번째 탭)
+   5. 결과 계산 메인 함수 (첫 번째 탭)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
@@ -437,7 +499,7 @@ function calculateResult() {
 }
 
 /* =========================================
-   5. 디자인 출력 함수 (사유 박스 조건부 렌더링)
+   6. 디자인 출력 함수 (사유 박스 조건부 렌더링)
    ========================================= */
 function renderResult(t, r, c) {
   const rb = document.getElementById("result");
@@ -472,7 +534,7 @@ function renderResult(t, r, c) {
 }
 
 /* =========================================
-   6. 탭 전환 기능 함수
+   7. 탭 전환 기능 함수
    ========================================= */
 function openTab(evt, tabName) {
   const tabContents = document.getElementsByClassName("tab-content");
@@ -490,7 +552,7 @@ function openTab(evt, tabName) {
 }
 
 /* =========================================
-   7. 두 번째 탭: 중점·검역관리 통합 판정 로직
+   8. 두 번째 탭: 중점·검역관리 통합 판정 로직
    ========================================= */
 function calculateCoreResult() {
   const coreForm = document.getElementById("coreForm");
