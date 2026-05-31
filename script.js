@@ -440,7 +440,7 @@ function validateForm(f, formId) {
 }
 
 /* =========================================
-   5. 결과 계산 메인 함수 (주석 형태 안내 적용)
+   5. 결과 계산 메인 함수 (사유 박스 없이 하선자 안내만 출력)
    ========================================= */
 function calculateResult() {
   const f = new FormData(document.getElementById("surveyForm"));
@@ -448,21 +448,15 @@ function calculateResult() {
 
   const q = n => f.get(`q${n}`);
   const isDock = f.get("dock") === "yes";
-  const isDepart48 = f.get("depart48") === "yes";
-  const isNoBoarding = f.get("boarding") === "no";
   
-  // 🌟 [핵심] 잠복기 이내(Q5=yes)이면서 접안하지 않은(dock=no) 경우를 판별
-  const isTargetCondition = (q(5) === "yes" && !isDock);
-
+  // 1. 승선검역 사유 배열
   let reasons = [];
-
-  // 기본 승선검역 사유 체크
   if (q(1) === "yes") reasons.push("Q1: 선박 내 환자 또는 의심환자 발생");
   if (q(2) === "yes") reasons.push("Q2: 선박 내 사망자 발생");
   if (q(3) === "yes") reasons.push("Q3: 선원 또는 승객 중 유증상자 발생");
   if (q(4) === "yes") reasons.push("Q4: 선박 내 감염병 매개체 서식 또는 흔적 확인");
 
-  // Q5 잠복기 및 중점지역 체크
+  // Q5 잠복기 및 중점지역 체크 (기존 로직 유지)
   let q5InIncubation = false;
   let q5Reason = "";
   if (q(5) === "yes") {
@@ -478,33 +472,30 @@ function calculateResult() {
       }
     }
   }
-
-  if (q5InIncubation && isDock) {
-    reasons.push(q5Reason);
-  }
+  if (q5InIncubation && isDock) reasons.push(q5Reason);
 
   const isQ7Yes = q(7) === "yes";
-  const isExemptionCondition = (q(7) === "yes" && !isDock && isDepart48 && isNoBoarding);
-
-  // 🌟 하선자 안내 텍스트 (박스 없음, 18px 노란색 글씨, 가운데 정렬)
-  const commentNote = "<div style='font-size: 18px; color: #f59e0b; margin-top: 15px; text-align: center; font-weight: bold;'>※ 하선자가 있을 경우 하선자 검역 필요</div>";
-
-  if (isExemptionCondition && reasons.length === 0) {
-    renderResult("조사생략", "", "#22c55e");
-    return;
-  }
+  const isExemptionCondition = (q(7) === "yes" && !isDock && f.get("depart48") === "yes" && f.get("boarding") === "no");
 
   if (isQ7Yes && !isExemptionCondition) {
     reasons.push("Q6: 선박위생관리(면제)증명서 미소지 또는 유효기간 만료");
   }
 
+  // 2. 판정 및 렌더링
+  if (isExemptionCondition && reasons.length === 0) {
+    renderResult("조사생략", "", "#22c55e");
+    return;
+  }
+
   if (reasons.length > 0) {
-    // 승선검역인 경우: 사유 출력
+    // 승선검역: 사유 출력
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
-    // 서류검역인 경우: 4가지 상황일 때만 아래에 주석 추가
-    let displayComment = isTargetCondition ? commentNote : "";
-    renderResult("서류검역", displayComment, "#f59e0b");
+    // 서류검역: 4가지 상황이면 안내 문구만 출력 (reasons가 비어있으므로 사유 박스 안 나옴)
+    const isTargetCondition = (q(5) === "yes" && !isDock);
+    const commentNote = isTargetCondition ? "<div style='font-size: 18px; color: #f59e0b; margin-top: 15px; text-align: center; font-weight: bold;'>※ 하선자가 있을 경우 하선자 검역 필요</div>" : "";
+    
+    renderResult("서류검역", commentNote, "#f59e0b");
   }
 }
 /* =========================================
