@@ -51,22 +51,20 @@ const q5Data = {
   china_hb_q5: {l:"중국(후베이성)", d:"AI", day:10}, 
   qatar_q5: {l:"카타르", d:"MERS", day:14},
   cambodia_q5: {l:"캄보디아", d:"AI", day:10}, 
+  kuwait_q5: {l:"쿠웨이트", d:"MERS", day:14},
   congo_q5: {
     l: "콩고민주공화국",
     diseases: [
       { name: "페스트", day: 6 },
-      { name: "에볼라", day: 21 }
+      { name: "에볼라바이러스병", day: 21 }
     ]
   },
-  kuwait_q5: {l:"쿠웨이트", d:"MERS", day:14},
-   
-  south_sudan_q5: {l:"남수단", d:"에볼라", day:21},
-  rwanda_q5: {l:"르완다", d:"에볼라", day:21},
-  ethiopia_q5: {l:"에티오피아", d:"에볼라", day:21},
-  uganda_q5: {l:"우간다", d:"에볼라", day:21}
+  south_sudan_q5: {l:"남수단", d:"에볼라바이러스병", day:21},
+  rwanda_q5: {l:"르완다", d:"에볼라바이러스병", day:21},
+  ethiopia_q5: {l:"에티오피아", d:"에볼라바이러스병", day:21},
+  uganda_q5: {l:"우간다", d:"에볼라바이러스병", day:21}
 };
 
-/* 두 번째 탭 연동을 위해 q6Data 데이터셋은 안전하게 보존합니다 */
 const q6Data = {
   mexico_q6: [{d:"AI", day:10}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   wa_usa_q6: [{d:"AI", day:10}],
@@ -278,7 +276,7 @@ function regionLabelQ6(v) {
     virgin_islands_usa_q6: "미국령 버진아일랜드", myanmar_q6: "미얀마",
     vanuatu_q6: "바누아투", bahrain_q6: "바레인", barbados_q6: "바베이도스", bangladesh_q6: "방글라데시", 
     benin_q6: "베냉", venezuela_q6: "베네수엘라", vietnam_q6: "베트남", vietnam_se_q6: "베트남(남동부)", 
-    belgium_q6: "벨기에", belize_q6: "벨리즈", bosnia_q6: "보스니아 헤르체고비나", botswana_q6: "보츠와나", 
+    belgium_q6: "벨기에", belize_q6: "벨리즈", bosnia_q6: "보스nia 헤르체고비나", botswana_q6: "보츠와나", 
     bolivia_q6: "볼리비아", burundi_q6: "부룬디", burkina_faso_q6: "부르키나파소", brazil_q6: "브라질",
     samoa_q6: "사모아", saudi_q6: "사우디아라비아", cyprus_q6: "사이프러스", st_barthelemy_q6: "생바르텔르미", 
     senegal_q6: "세네갈", serbia_q6: "세르비아", seychelles_q6: "세이셸", st_lucia_q6: "세인트루시아", 
@@ -320,33 +318,49 @@ function regionLabelQ6(v) {
 }
 
 /* =========================================
+   3. 실시간 한글명 ➔ 영문 코드 동기화 리스너 정의 (🌟 신규 추가)
+   ========================================= */
+document.addEventListener("DOMContentLoaded", () => {
+  const syncCode = (inputId, listId, hiddenId) => {
+    const input = document.getElementById(inputId);
+    const list = document.getElementById(listId);
+    const hidden = document.getElementById(hiddenId);
+    
+    if (!input || !list || !hidden) return;
+
+    const handleSync = () => {
+      const val = input.value.trim();
+      const matchedOption = Array.from(list.options).find(opt => opt.value === val);
+      if (matchedOption) {
+        hidden.value = matchedOption.getAttribute("data-code");
+      } else {
+        hidden.value = ""; // 목록에 없는 값을 손으로 직접 쳤을 때 오염 차단
+      }
+    };
+
+    input.addEventListener("input", handleSync);
+    input.addEventListener("change", handleSync);
+  };
+
+  syncCode("q5_region_input", "q5_region_list", "q5_region_hidden");
+  syncCode("core_region_input", "core_region_list", "core_region_hidden");
+});
+
+/* =========================================
    4. 폼 유효성 검사 (개별 문항 안내)
    ========================================= */
 function validateForm(f) {
-
-   // 🌟 [추가] 사용자가 입력창에 채운 한글을 시스템용 영문 코드로 완벽하게 역치환하는 필터링 엔진
-  const q5List = document.getElementById("q5_region_list");
-  if (q5List && f.get("q5_region")) {
-    const matched = Array.from(q5List.options).find(opt => opt.value === f.get("q5_region"));
-    if (matched) f.set("q5_region", matched.textContent);
-  }
-  const coreList = document.getElementById("core_region_list");
-  if (coreList && f.get("core_region")) {
-    const matched = Array.from(coreList.options).find(opt => opt.value === f.get("core_region"));
-    if (matched) f.set("core_region", matched.textContent);
-  }
-   
-  // ⚠️ 기존 q6 점검 삭제 및 화면 문항 매칭 정렬 완벽 수정
+  // 🌟 [안내] 이제 한글명 매칭 필터링은 위쪽 실시간 이벤트 리스너(3번)가 hidden에 다이렉트로 안전하게 주입해줍니다!
   const questions = [
-    { id: "q1", msg: "Q1번 문항을 선택해주세요." },
-    { id: "q2", msg: "Q2번 문항을 선택해주세요." },
-    { id: "q3", msg: "Q3번 문항을 선택해주세요." },
-    { id: "q4", msg: "Q4번 문항을 선택해주세요." },
-    { id: "q5", msg: "Q5번 문항을 선택해주세요." },
-    { id: "q7", msg: "Q6번 문항을 선택해주세요." }, // 화면 기준 Q6
-    { id: "dock", msg: "Q7번 문항(접안 여부)을 선택해주세요." }, 
-    { id: "depart48", msg: "Q8번 문항(출항 예정)을 선택해주세요." }, 
-    { id: "boarding", msg: "Q9번 문항(승선자 여부)을 선택해주세요." } 
+    { id: "q1", msg: "Q1번 문항(환자/의심환자 여부)을 선택해주세요." },
+    { id: "q2", msg: "Q2번 문항(사망자 발생 여부)을 선택해주세요." },
+    { id: "q3", msg: "Q3번 문항(선원/승객 유증상자 여부)을 선택해주세요." },
+    { id: "q4", msg: "Q4번 문항(감염병 매개체 서식 여부)을 선택해주세요." },
+    { id: "q5", msg: "Q5번 문항(중점검역관리지역 출항/경유 여부)을 선택해주세요." },
+    { id: "q7", msg: "Q6번 문항(선박위생관리 증명서 부적합 여부)을 선택해주세요." },
+    { id: "dock", msg: "Q7번 문항(선박 접안 여부)을 선택해주세요." }, 
+    { id: "depart48", msg: "Q8번 문항(48시간 이내 출항 여부)을 선택해주세요." }, 
+    { id: "boarding", msg: "Q9번 문항(승선자/방선자 유무)을 선택해주세요." } 
   ];
 
   // [1] 기본 라디오 버튼 체크 여부 확인
@@ -362,8 +376,9 @@ function validateForm(f) {
     const depDate = f.get("q5_departure_date");
     const arrDate = f.get("q5_arrival_date");
 
+    // 🌟 텍스트 상자 디자인이 찢어지지 않았는지 확인
     if (!f.get("q5_region") || !depDate || !arrDate) {
-      alert("Q5 상세 항목(지역, 날짜)을 모두 입력해주세요.");
+      alert("Q5 상세 항목(출항·경유지역, 날짜)을 모두 입력해주세요.");
       return false;
     }
 
@@ -372,8 +387,6 @@ function validateForm(f) {
       return false;
     }
   }
-
-  // ⚠️ [3] 옛날 Q6 상세 데이터 및 날짜 검증 논리 블록 통째로 삭제 완료!
 
   return true;
 }
@@ -390,18 +403,15 @@ function calculateResult() {
   const isDepart48 = f.get("depart48") === "yes";
   const isNoBoarding = f.get("boarding") === "no";
   
-  // [1] 조사생략 유일 조건: Q6(증명서 부적합) + 미접안 + 48시간 내 출항 + 승선자 없음
   const isExemptionCondition = (q(7) === "yes" && !isDock && isDepart48 && isNoBoarding);
 
   let reasons = [];
 
-  // --- [STEP 1] 절대 승선검역 사유 (Q1 ~ Q4) ---
   if (q(1) === "yes") reasons.push("Q1: 선박 내 환자 또는 의심환자 발생");
   if (q(2) === "yes") reasons.push("Q2: 선박 내 사망자 발생");
   if (q(3) === "yes") reasons.push("Q3: 선원 또는 승객 중 유증상자 발생");
   if (q(4) === "yes") reasons.push("Q4: 선박 내 감염병 매개체 서식 또는 흔적 확인");
 
-  // --- [STEP 2] Q5 잠복기 및 접안 체크 ---
   let q5InIncubation = false;
   let q5Reason = "";
   if (q(5) === "yes") {
@@ -418,26 +428,21 @@ function calculateResult() {
     }
   }
 
-  // Q5는 잠복기 이내이면서 '접안'했을 때만 승선 사유 추가
   if (q5InIncubation && isDock) {
     reasons.push(q5Reason);
   }
 
-  // --- [STEP 3] Q7 부적합 및 승선/생략 판정 ---
   const isQ7Yes = q(7) === "yes";
 
-  // [최종 판정 1] 조사생략 (딱 1가지 경우) - 문구 없이 깔끔하게 출력
   if (isExemptionCondition && reasons.length === 0) {
     renderResult("조사생략", "", "#22c55e");
     return;
   }
 
-  // [최종 판정 2] Q7 승선검역 (조사생략 조건을 만족하지 못한 Q7 부적합 선박)
   if (isQ7Yes && !isExemptionCondition) {
     reasons.push("Q6: 선박위생관리(면제)증명서 미소지 또는 유효기간 만료");
   }
 
-  // --- [STEP 4] 최종 출력 ---
   if (reasons.length > 0) {
     renderResult("승선검역", reasons.join("<br>"), "#ef4444");
   } else {
