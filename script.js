@@ -51,8 +51,19 @@ const q5Data = {
   china_hb_q5: {l:"중국(후베이성)", d:"AI", day:10}, 
   qatar_q5: {l:"카타르", d:"MERS", day:14},
   cambodia_q5: {l:"캄보디아", d:"AI", day:10}, 
-  congo_q5: {l:"콩고민주공화국", d:"페스트", day:6},
-  kuwait_q5: {l:"쿠웨이트", d:"MERS", day:14}
+  congo_q5: {
+    l: "콩고민주공화국",
+    diseases: [
+      { name: "페스트", day: 6 },
+      { name: "에볼라", day: 21 }
+    ]
+  },
+  kuwait_q5: {l:"쿠웨이트", d:"MERS", day:14},
+   
+  south_sudan_q5: {l:"남수단", d:"에볼라", day:21},
+  rwanda_q5: {l:"르완다", d:"에볼라", day:21},
+  ethiopia_q5: {l:"에티오피아", d:"에볼라", day:21},
+  uganda_q5: {l:"우간다", d:"에볼라", day:21}
 };
 
 /* 두 번째 탭 연동을 위해 q6Data 데이터셋은 안전하게 보존합니다 */
