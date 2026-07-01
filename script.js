@@ -123,7 +123,7 @@ const q6Data = {
   comoros_q6: [{d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   ivory_coast_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   congo_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}, {d:"에볼라", day:21}],
-  togo_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}],
+  togo_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}, {d:"폴리오", day:21}],
   pakistan_q6: [{d:"콜레라", day:5}, {d:"크리미안콩고출혈열", day:14}, {d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   philippines_q6: [{d:"콜레라", day:5}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   gabon_q6: [{d:"황열", day:6}, {d:"홍역", day:21}],
