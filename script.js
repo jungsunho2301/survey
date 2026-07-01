@@ -192,7 +192,7 @@ const q6Data = {
   tajikistan_q6: [{d:"홍역", day:21}],
   thailand_q6: [{d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   tunisia_q6: [{d:"홍역", day:21}],
-  turkiye_q6: [{d:"홍역", day:21}],
+  turkiye_q6: [{d:"홍역", day:21}, {d:"크리미안콩고출혈열", day:14}],
   poland_q6: [{d:"홍역", day:21}],
   france_q6: [{d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   guadeloupe_q6: [{d:"뎅기열", day:7}],
