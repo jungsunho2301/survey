@@ -104,7 +104,7 @@ const q6Data = {
   ghana_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   nigeria_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"라싸열", day:21}, {d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   nepal_q6: [{d:"콜레라", day:5}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
-  niger_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"폴리오", day:21}, {d:"홍역", day:21}],
+  niger_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}],
   malawi_q6: [{d:"콜레라", day:5}, {d:"홍역", day:21}],
   mozambique_q6: [{d:"콜레라", day:5}, {d:"홍역", day:21}],
   myanmar_q6: [{d:"콜레라", day:5}, {d:"뎅기열", day:7}],
