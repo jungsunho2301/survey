@@ -143,7 +143,7 @@ const q6Data = {
   ecuador_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}],
   "equatorial_guinea_q6": [{d:"황열", day:6}, {d:"홍역", day:21}],
   중앙아프리카공화국_q6: [{d:"황열", day:6}, {d:"폴리오", day:21}, {d:"홍역", day:21}],
-  cameroon_q6: [{d:"황열", day:6}, {d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
+  cameroon_q6: [{d:"황열", day:6}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   colombia_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   trinidad_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}],
   panama_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
