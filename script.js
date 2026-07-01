@@ -101,7 +101,7 @@ const q6Data = {
   israel_q6: [{d:"MERS", day:14}, {d:"홍역", day:21}],
   qatar_q6: [{d:"MERS", day:14}, {d:"홍역", day:21}],
   kuwait_q6: [{d:"MERS", day:14}],
-  mada_q6: [{d:"페스트", day:6}, {d:"홍역", day:21}, {d:"치쿤구니야열", day:12}],
+  mada_q6: [{d:"페스트", day:6}, {d:"홍역", day:21}, {d:"치쿤구니야열", day:12}, {d:"폴리오", day:21}],
   mongolia_q6: [{d:"페스트", day:6}, {d:"홍역", day:21}],
   nm_usa_q6: [{d:"페스트", day:6}],
   ghana_q6: [{d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
