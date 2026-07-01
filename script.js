@@ -81,7 +81,7 @@ const q6Data = {
   china_hn2_q6: [{d:"AI", day:10}],
   china_hb_q6: [{d:"AI", day:10}],
   cambodia_q6: [{d:"AI", day:10}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
-  south_sudan_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}],
+  south_sudan_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"황열", day:6}, {d:"홍역", day:21}, {d:"폴리오", day:21}],
   rwanda_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"마버그열", day:21}, {d:"홍역", day:21}],
   ethiopia_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"황열", day:6}, {d:"마버그열", day:21}, {d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   uganda_q6: [{d:"에볼라", day:21}, {d:"콜레라", day:5}, {d:"황열", day:6}, {d:"마버그열", day:21}, {d:"크리미안콩고출혈열", day:14}, {d:"홍역", day:21}],
