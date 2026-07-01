@@ -208,7 +208,7 @@ const q6Data = {
   mayotte_q6: [{d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   micronesia_q6: [{d:"뎅기열", day:7}],
   mauritius_q6: [{d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
-  maldives_q6: [{d:"뎅기열", day:7}],
+  maldives_q6: [{d:"뎅기열", day:7}, {d:"지카바이러스", day:14}],
   usa_q6: [{d:"뎅기열", day:7}, {d:"홍역", day:21}, {d:"치쿤구니야열", day:12}],
   virgin_islands_usa_q6: [{d:"뎅기열", day:7}],
   vanuatu_q6: [{d:"뎅기열", day:7}],
