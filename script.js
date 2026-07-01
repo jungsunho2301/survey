@@ -248,7 +248,10 @@ const q6Data = {
   puerto_rico_q6: [{d:"뎅기열", day:7}],
   fiji_q6: [{d:"뎅기열", day:7}],
   timor_leste_q6: [{d:"뎅기열", day:7}],
-  bhutan_q6: [{d:"뎅기열", day:7}]
+  bhutan_q6: [{d:"뎅기열", day:7}],
+  chile_q6: [{d:"뎅기열", day:7}],
+  turks_q6: [{d:"뎅기열", day:7}],
+  tokelau_q6: [{d:"뎅기열", day:7}]
 };
 
 function regionLabelQ6(v) {
@@ -295,14 +298,14 @@ function regionLabelQ6(v) {
     china_yn_q6: "중국(원난성)", china_js_q6: "중국(장시성)", china_cq_q6: "중국(충칭시)", china_tj_q6: "중국(텐진시)", 
     china_hn_q6: "중국(허난성)", china_hn2_q6: "중국(후난성)", china_hb_q6: "중국(후베이성)", 
     중앙아프리카공화국_q6: "중앙아프리카공화국", 지부티_q6: "지부티", zimbabwe_q6: "짐바브웨",
-    chad_q6: "차드",
+    chad_q6: "차드", chile_q6: "칠레",
     kazakhstan_q6: "카자흐스탄", qatar_q6: "카타르", cape_verde_q6: "카보베르데", cameroon_q6: "카메룬", 
     cambodia_q6: "캄보디아", canada_q6: "캐나다", kenya_q6: "케냐", comoros_q6: "코모로", 
     costa_rica_q6: "코스타리카", ivory_coast_q6: "코트디부아르", colombia_q6: "콜롬비아", 
     congo_q6: "콩고", congo_dr_q6: "콩고민주공화국", cuba_q6: "쿠바", kuwait_q6: "쿠웨이트", 
     cook_islands_q6: "쿡제도", kyrgyzstan_q6: "키르기스스탄", kiribati_q6: "키리바시",
-    tajikistan_q6: "타지키스탄", tanzania_q6: "탄자니아", thailand_q6: "태국", togo_q6: "토고", 
-    tonga_q6: "통가", tunisia_q6: "튀니지", turkiye_q6: "튀르키예", tuvalu_q6: "투발루", 
+    tajikistan_q6: "타지키스탄", tanzania_q6: "탄자니아", turks_q6: "터크스", thailand_q6: "태국", togo_q6: "토고", 
+    tokelau_q6: "토켈라우", tonga_q6: "통가", tunisia_q6: "튀니지", turkiye_q6: "튀르키예", tuvalu_q6: "투발루", 
     trinidad_q6: "트리니다드토바고",
     panama_q6: "파나마", paraguay_q6: "파라과이", pakistan_q6: "파키스탄", papua_new_guinea_q6: "파푸아뉴기니", 
     palau_q6: "팔라우", palestine_q6: "팔레스타인", peru_q6: "페루", portugal_q6: "포르투갈", poland_q6: "폴란드", 
