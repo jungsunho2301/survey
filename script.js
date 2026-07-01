@@ -126,7 +126,7 @@ const q6Data = {
   gabon_q6: [{d:"황열", day:6}, {d:"홍역", day:21}],
   guyana_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   gambia_q6: [{d:"황열", day:6}, {d:"홍역", day:21}],
-  guinea_q6: [{d:"황열", day:6}, {d:"라싸열", day:21}, {d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
+  guinea_q6: [{d:"황열", day:6}, {d:"라싸열", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   guinea_bissau_q6: [{d:"황열", day:6}, {d:"홍역", day:21}],
   liberia_q6: [{d:"황열", day:6}, {d:"라싸열", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   mali_q6: [{d:"황열", day:6}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
