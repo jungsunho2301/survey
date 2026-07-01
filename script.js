@@ -70,8 +70,6 @@ const q6Data = {
   india_q6: [{d:"AI", day:10}, {d:"콜레라", day:5}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}, {d:"니파바이러스", day:14}],
   china_gd_q6: [{d:"AI", day:10}, {d:"치쿤구니야열", day:12}],
   china_gx_q6: [{d:"AI", day:10}],
-  china_gz_q6: [{d:"AI", day:10}],
-  china_sx_q6: [{d:"AI", day:10}],
   china_sc_q6: [{d:"AI", day:10}],
   china_yn_q6: [{d:"AI", day:10}],
   china_cq_q6: [{d:"AI", day:10}],
