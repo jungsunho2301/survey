@@ -67,7 +67,7 @@ const q6Data = {
   mexico_q6: [{d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   wa_usa_q6: [{d:"AI", day:10}],
   bangladesh_q6: [{d:"AI", day:10}, {d:"콜레라", day:5}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}, {d:"니파바이러스", day:14}],
-  india_q6: [{d:"AI", day:10}, {d:"콜레라", day:5}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}, {d:"니파바이러스", day:14}],
+  india_q6: [{d:"AI", day:10}, {d:"콜레라", day:5}, {d:"홍역", day:21}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"니파바이러스", day:14}],
   china_gd_q6: [{d:"AI", day:10}, {d:"치쿤구니야열", day:12}],
   china_gx_q6: [{d:"AI", day:10}],
   china_sc_q6: [{d:"AI", day:10}],
