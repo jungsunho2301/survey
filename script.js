@@ -151,7 +151,7 @@ const q6Data = {
   peru_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}, {d:"지카바이러스", day:14}],
   french_guiana_q6: [{d:"황열", day:6}, {d:"뎅기열", day:7}, {d:"치쿤구니야열", day:12}],
   greece_q6: [{d:"크리미안콩고출혈열", day:14}],
-  spain_q6: [{d:"크리미안콩고출혈열", day:14}, {d:"홍역", day:21}],
+  spain_q6: [{d:"홍역", day:21}],
   kazakhstan_q6: [{d:"크리미안콩고출혈열", day:14}, {d:"홍역", day:21}],
   laos_q6: [{d:"폴리오", day:21}, {d:"홍역", day:21}, {d:"뎅기열", day:7}],
   algeria_q6: [{d:"폴리오", day:21}, {d:"홍역", day:21}],
