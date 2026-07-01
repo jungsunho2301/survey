@@ -248,7 +248,7 @@ const q6Data = {
   puerto_rico_q6: [{d:"뎅기열", day:7}],
   fiji_q6: [{d:"뎅기열", day:7}],
   timor_leste_q6: [{d:"뎅기열", day:7}],
-  hoju_q6: "호주"
+  bhutan_q6: [{d:"뎅기열", day:7}]
 };
 
 function regionLabelQ6(v) {
@@ -273,7 +273,7 @@ function regionLabelQ6(v) {
     vanuatu_q6: "바누아투", bahrain_q6: "바레인", barbados_q6: "바베이도스", bangladesh_q6: "방글라데시", 
     benin_q6: "베냉", venezuela_q6: "베네수엘라", vietnam_q6: "베트남", vietnam_se_q6: "베트남(남동부)", 
     belgium_q6: "벨기에", belize_q6: "벨리즈", bosnia_q6: "보스nia 헤르체고비나", botswana_q6: "보츠와나", 
-    bolivia_q6: "볼리비아", burundi_q6: "부룬디", burkina_faso_q6: "부르키나파소", brazil_q6: "브라질",
+    bolivia_q6: "볼리비아", burundi_q6: "부룬디", burkina_faso_q6: "부르키나파소", bhutan_q6: "부탄", brazil_q6: "브라질",
     samoa_q6: "사모아", saudi_q6: "사우디아라비아", cyprus_q6: "사이프러스", st_barthelemy_q6: "생바르텔르미", 
     senegal_q6: "세네갈", serbia_q6: "세르비아", seychelles_q6: "세이셸", st_lucia_q6: "세인트루시아", 
     st_martin_q6: "세인트마틴", st_vincent_q6: "세인트빈센트그레나딘", st_kitts_q6: "세인트키츠 네비스", 
