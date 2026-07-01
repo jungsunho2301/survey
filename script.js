@@ -41,8 +41,6 @@ const q5Data = {
   },
   china_gd_q5: {l:"중국(광둥성)", d:"AI", day:10},
   china_gx_q5: {l:"중국(광시좡족자치구)", d:"AI", day:10}, 
-  china_gz_q5: {l:"중국(구이저우성)", d:"AI", day:10}, 
-  china_sx_q5: {l:"중국(산시성)", d:"AI", day:10},
   china_sc_q5: {l:"중국(쓰촨성)", d:"AI", day:10}, 
   china_tj_q5: {l:"중국(텐진시)", d:"AI", day:10}, 
   china_cq_q5: {l:"중국(충칭시)", d:"AI", day:10},
